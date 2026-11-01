@@ -25,7 +25,8 @@ Built to make official counselling data more accessible, searchable, and actiona
 Transform static counselling documents into an accessible data-analysis tool that helps medical aspirants explore speciality-wise cutoff trends and make more informed decisions.
 
 ## Live Project
-[Visit the Website](YOUR_WEBSITE_URL)
+[Visit the Website](https://neet-pg-cutoff-analysis.pages.dev/
+)
 
 ---
 
