@@ -856,6 +856,7 @@ async function selectRound(r){
 .ch-row .vals{display:contents}
 .ch-row .v{text-align:center;font-size:12.5px;font-weight:700;color:#e6e6e6;white-space:nowrap}
 .ch-row .v.na{color:var(--dim);font-weight:600}
+.ch-row .sub{display:block;margin-top:3px;font-size:11.5px;font-weight:600;color:var(--mut);line-height:1.35}
 @media(max-width:600px){
   .ch-hd{display:flex;flex-wrap:wrap;gap:6px;padding:0 0 8px}
   .ch-hd .h-name,.ch-hd .h-add{display:none}
@@ -963,8 +964,9 @@ $('ch-save').onclick=save;
 $('ch-clear').onclick=()=>{const w=W();if(!w.items.length)return;if(confirm('Remove all institutes from CHOICE? (Click Save afterwards to keep this change.)')){w.items=[];renderMine();syncAdd();}};
 
 /* ---------- Window 1: Available Institutes ---------- */
-/* Extra details (stipend, bond, penalty, beds) come from choice-data.json, which is generated from the private 1.csv at deploy time.
-   DATA: Map(institute name as in the existing database -> [stipend year 1, bond, penalty, beds]); null = not available. */
+/* Extra details come from choice-data.json, which the deploy workflow generates by matching 1.csv with all.csv.
+   DATA: Map(institute name as in the counselling data -> {m:[...],d:[...],s:state,k:sector}); m = DNB figures, d = Diploma figures,
+   each [stipend year 1, bond years, bond penalty, beds, stipend year 2, stipend year 3]; null = not available. */
 let DATA=null,DSTATE='loading',dataP=null;
 const F={sort:null,bond:null,pen:null};          // sort: 'stipend' | 'beds' | null ; bond / pen: selected value or null (= all)
 const num=v=>(typeof v==='number'&&Number.isFinite(v)&&v>=0)?v:null;
@@ -974,13 +976,18 @@ function loadData(){
   if(!dataP)dataP=fetch('choice-data.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();}).then(j=>{
     if(!j||typeof j.d!=='object'||j.d===null)throw new Error('bad format');
     const m=new Map();
-    for(const k of Object.keys(j.d)){const v=j.d[k];if(Array.isArray(v)&&v.length>=4)m.set(k,[num(v[0]),num(v[1]),num(v[2]),num(v[3])]);}
+    const arr=v=>(Array.isArray(v)&&v.length>=4)?[num(v[0]),num(v[1]),num(v[2]),num(v[3]),num(v[4]),num(v[5])]:null;
+    for(const k of Object.keys(j.d)){
+      const v=j.d[k];
+      const e=Array.isArray(v)?{m:arr(v),d:null,s:'',k:''}:(v&&typeof v==='object')?{m:arr(v.m),d:arr(v.d),s:typeof v.s==='string'?v.s:'',k:typeof v.k==='string'?v.k:''}:null;
+      if(e&&(e.m||e.d))m.set(k,e);
+    }
     DATA=m;DSTATE='ok';
   }).catch(()=>{DATA=null;DSTATE='err';});
   return dataP;
 }
 function optionValues(f){            // distinct real values only: no '#', empty or null
-  const s=new Set();if(DATA)for(const v of DATA.values())if(v[f]!==null)s.add(v[f]);
+  const s=new Set();if(DATA)for(const e of DATA.values())for(const a of [e.m,e.d])if(a&&a[f]!==null)s.add(a[f]);
   return [...s].sort((a,b)=>a-b);
 }
 function renderHead(){
@@ -997,7 +1004,8 @@ function renderAvail(){
   for(const [t,id] of [['M','ch-mc'],['D','ch-dc']]){const L=A.courseIdsOf(t,true);$(id).textContent=L.filter(x=>C.courses.has(A.ckey(x.c))).length+' / '+L.length+' selected';}
   renderHead();
   const note=$('ch-note');
-  if(DSTATE==='err'){note.hidden=false;note.textContent='Stipend, bond, penalty and beds details are unavailable right now. Institutes are listed without them.';}
+  const noData=DSTATE==='err'||(DSTATE==='ok'&&(!DATA||DATA.size===0));
+  if(noData){note.hidden=false;note.textContent='Institute details (stipend, bond, penalty, beds) are unavailable right now, so no institutes can be listed. Please try again later.';}
   else note.hidden=true;
   const box=$('ch-avail'),qs=A.idxSet(C.q,ds.quotas),cs=A.idxSet(C.c,ds.cats);
   const sel=ds.mcourses.map((c,i)=>({c,i})).filter(x=>C.courses.has(A.ckey(x.c)));
@@ -1007,10 +1015,14 @@ function renderAvail(){
     box.innerHTML='<div class="ch-empty">Select Quota, Category and at least one course to see institutes.</div>';return;
   }
   if(DSTATE==='loading'){$('ch-count').textContent='';box.innerHTML='<div class="ch-empty">Loading institute details…</div>';return;}
-  const ids=new Set();
-  for(const {i} of sel){const list=ds.byMCourse[i];for(let k=0;k<list.length;k++){const r=list[k];if(qs.has(ds.q[r])&&cs.has(ds.c[r]))ids.add(ds.inst[r]);}}
-  let rows=[...ids].map(i=>ds.insts[i]).filter(n=>n!==NOSPEC).map(n=>({n,v:DATA?(DATA.get(n)||null):[null,null,null,null]}));
-  if(DATA)rows=rows.filter(r=>r.v);                  // institutes without a confident match are left out
+  if(noData){$('ch-count').textContent='';box.innerHTML='<div class="ch-empty">Institute details are unavailable right now.</div>';return;}
+  const ids=new Map();                                // institute -> [lowest rank, highest rank] among the selected records
+  for(const {i} of sel){const list=ds.byMCourse[i];for(let k=0;k<list.length;k++){const r=list[k];if(qs.has(ds.q[r])&&cs.has(ds.c[r])){
+    const rk=ds.rank[r],o=ids.get(ds.inst[r]);if(!o)ids.set(ds.inst[r],[rk,rk]);else{if(rk<o[0])o[0]=rk;if(rk>o[1])o[1]=rk;}}}}
+  const hasM=sel.some(x=>x.c.t==='M'),hasD=sel.some(x=>x.c.t==='D');
+  const pick=e=>(hasD&&!hasM)?(e.d||e.m):(e.m||e.d);   // Diploma-only selection shows Diploma figures; otherwise DNB figures (falling back to the other if missing)
+  let rows=[];
+  for(const [i,rk] of ids){const n=ds.insts[i];if(n===NOSPEC)continue;const e=DATA.get(n);if(!e)continue;rows.push({n,e,v:pick(e),rk});}   // institutes without a match are left out
   const total=rows.length;
   if(F.bond!==null)rows=rows.filter(r=>r.v[1]===F.bond);
   if(F.pen!==null)rows=rows.filter(r=>r.v[2]===F.pen);
@@ -1026,7 +1038,12 @@ function renderAvail(){
   $('ch-count').textContent=(rows.length!==total?fmt(rows.length)+' of ':'')+fmt(total)+(total===1?' institute':' institutes');
   if(!rows.length){box.innerHTML='<div class="ch-empty">'+(total?'No institute matches the current filters or search.':'No institutes available for this combination.')+'</div>';return;}
   const cell=(l,t,na)=>`<span class="v${na?' na':''}" data-l="${l}">${t}</span>`;
-  box.innerHTML=rows.map((r,k)=>`<div class="ch-row"><span class="nm">${esc(r.n)}</span><span class="vals">`+
+  const sub=r=>{const p=[];
+    p.push('Rank '+(r.rk[0]===r.rk[1]?fmt(r.rk[0]):fmt(r.rk[0])+' – '+fmt(r.rk[1])));
+    if(r.e.s)p.push(r.e.s);if(r.e.k)p.push(r.e.k);
+    if(r.v[4]!==null)p.push('Stipend Y2 '+rupee(r.v[4]));if(r.v[5]!==null)p.push('Y3 '+rupee(r.v[5]));
+    return p.map(esc).join(' · ');};
+  box.innerHTML=rows.map((r,k)=>`<div class="ch-row"><span class="nm">${esc(r.n)}<span class="sub">${sub(r)}</span></span><span class="vals">`+
     cell('Stipend',rupee(r.v[0]),r.v[0]===null)+cell('Bond',plain(r.v[1]),r.v[1]===null)+cell('Penalty',rupee(r.v[2]),r.v[2]===null)+cell('Beds',plain(r.v[3]),r.v[3]===null)+
     `</span><button type="button" class="ch-add" data-k="${k}" aria-label="Add ${esc(r.n)}">ADD</button></div>`).join('');
   syncAdd();

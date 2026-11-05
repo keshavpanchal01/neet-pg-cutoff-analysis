@@ -28,12 +28,13 @@ jobs:
       - name: Assemble the public site (the raw all.csv / 1.csv is NOT copied)
         run: |
           mkdir _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='scripts' --exclude='_site' --exclude='all.csv' --exclude='1.csv' ./ _site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='scripts' --exclude='_site' --exclude='all.csv' --exclude='1.csv' --exclude='match-report.txt' ./ _site/
 
       - name: Generate choice-data.json from all.csv
         run: node scripts/build-choice-data.mjs --out _site/choice-data.json --report match-report.txt
 
       - name: Keep the match report (private to this repository)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: match-report
