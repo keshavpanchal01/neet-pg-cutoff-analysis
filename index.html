@@ -271,7 +271,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   </section>
 </div>
 
-<!-- Data is loaded at runtime from r1.csv (same folder as this page). Replace r1.csv to update the data. -->
+<!-- Data is loaded at runtime from 1.csv (same folder as this page). Replace 1.csv to update the data. -->
 
 <script>
 (()=>{
@@ -733,7 +733,7 @@ $('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b)show(b.dataset.v);};
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{renderScatter();renderDemand();},120);});
 
 /* ================= counselling rounds (each round = its own CSV file, loaded when the page opens) ================= */
-const ROUNDS=[{n:1,label:'Round 1',url:'r1.csv'}];
+const ROUNDS=[{n:1,label:'Round 1',url:'1.csv'}];
 const CACHE=new Map();            // round number -> its own parsed dataset (never merged)
 let current=null;
 function say(kind,main){const m=$('msg');m.hidden=false;m.className='msg '+kind;m.textContent=main;}
@@ -1020,9 +1020,9 @@ function renderAvail(){
   for(const {i} of sel){const list=ds.byMCourse[i];for(let k=0;k<list.length;k++){const r=list[k];if(qs.has(ds.q[r])&&cs.has(ds.c[r])){
     const rk=ds.rank[r],o=ids.get(ds.inst[r]);if(!o)ids.set(ds.inst[r],[rk,rk]);else{if(rk<o[0])o[0]=rk;if(rk>o[1])o[1]=rk;}}}}
   const hasM=sel.some(x=>x.c.t==='M'),hasD=sel.some(x=>x.c.t==='D');
-  const pick=e=>(hasD&&!hasM)?(e.d||e.m):(e.m||e.d);   // Diploma-only selection shows Diploma figures; otherwise DNB figures (falling back to the other if missing)
+  const pick=e=>(hasD&&!hasM)?e.d:(hasM&&!hasD)?e.m:(e.m||e.d);   // Diploma-only selection shows Diploma figures, DNB-only shows DNB figures (never the other sheet's); mixed selection shows DNB, else Diploma
   let rows=[];
-  for(const [i,rk] of ids){const n=ds.insts[i];if(n===NOSPEC)continue;const e=DATA.get(n);if(!e)continue;rows.push({n,e,v:pick(e),rk});}   // institutes without a match are left out
+  for(const [i,rk] of ids){const n=ds.insts[i];if(n===NOSPEC)continue;const e=DATA.get(n);if(!e)continue;const pv=pick(e);if(!pv)continue;rows.push({n,e,v:pv,rk});}   // institutes without a match are left out
   const total=rows.length;
   if(F.bond!==null)rows=rows.filter(r=>r.v[1]===F.bond);
   if(F.pen!==null)rows=rows.filter(r=>r.v[2]===F.pen);

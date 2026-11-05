@@ -2,14 +2,14 @@
 /*
   Builds choice-data.json for the Choice page.
 
-  Reads   1.csv   (counselling records: institute names + ranks)   [also r1.csv, r2.csv ... if present]
+  Reads   1.csv   (counselling records: institute names + ranks)
           all.csv (institute details: stipend, bond, penalty, beds)
   Matches institute names between the two files (strictly: when unsure, the institute is LEFT OUT),
   writes the matched details to choice-data.json and a human-readable match report.
 
   Usage (the GitHub workflow runs this for you):
     node scripts/build-choice-data.mjs --out _site/choice-data.json --report match-report.txt
-  Optional: --counselling 1.csv,r1.csv   --all all.csv   --dir .
+  Optional: --counselling 1.csv   --all all.csv   --dir .
   No third-party packages are needed.
 */
 import fs from 'node:fs';
@@ -30,7 +30,7 @@ const REPORT = args.report || 'match-report.txt';
 const ALL = path.join(DIR, args.all || 'all.csv');
 let COUNSEL = args.counselling
   ? args.counselling.split(',').map(s => path.join(DIR, s.trim()))
-  : [path.join(DIR, '1.csv'), ...fs.readdirSync(DIR).filter(f => /^r\d+\.csv$/i.test(f)).map(f => path.join(DIR, f))];
+  : [path.join(DIR, '1.csv')];
 COUNSEL = [...new Set(COUNSEL)];
 
 function fail(msg) {
@@ -72,9 +72,15 @@ function readTable(file, need) {           // need: {field: regex tested on the 
   const rows = parseCSV(text);
   if (rows.length < 2) return { error: `${file} has no data rows` };
   const hdr = rows[0].map(hkey), idx = {}, missing = [];
-  for (const k in need) { const i = hdr.findIndex(h => need[k].test(h)); if (i < 0) missing.push(k); else idx[k] = i; }
+  const dupH = hdr.filter((h, i) => h && hdr.indexOf(h) !== i);
+  if (dupH.length) return { error: `${file}: duplicate column header(s): ${[...new Set(dupH)].join(', ')}` };
+  for (const k in need) {
+    const hits = hdr.map((h, i) => need[k].test(h) ? i : -1).filter(i => i >= 0);
+    if (hits.length > 1) return { error: `${file}: column "${k}" is ambiguous - headers ${hits.map(i => '"' + rows[0][i] + '"').join(' and ')} both match` };
+    if (!hits.length) missing.push(k); else idx[k] = hits[0];
+  }
   if (missing.length) return { error: `${file}: required column(s) not found: ${missing.join(', ')}. Columns present: ${rows[0].join(' | ')}` };
-  return { rows: rows.slice(1), idx };
+  return { rows: rows.slice(1), idx, header: rows[0] };
 }
 
 /* ------------------------------ name normalisation ------------------------------ */
@@ -181,15 +187,16 @@ function detectStates(text) {
 }
 
 /* ------------------------------ numbers ------------------------------ */
-const money = s => { const d = String(s ?? '').replace(/[^0-9]/g, ''); return d === '' ? null : Number(d); };
+// Strict parsers: blank or unparseable -> null (never guessed). Accepts "₹ 60,823", "₹ 1,00,800", "₹ 45,000.00", "60823".
+const money = s => { const t = String(s ?? '').replace(/[₹\s]/g, '').replace(/^Rs\.?/i, '').replace(/,/g, ''); return /^\d+(\.\d+)?$/.test(t) ? Number(t) : null; };
 const intOrNull = s => { const t = String(s ?? '').trim(); return /^\d+$/.test(t) ? Number(t) : null; };
 
 /* ------------------------------ load all.csv ------------------------------ */
-const allT = readTable(ALL, { course: /^course/, state: /^state/, inst: /^institute/, y1: /year1/, y2: /year2/, y3: /year3/, bondYears: /^bond(years?|yrs?)?$/, penalty: /penalt/, beds: /^beds?$/ });
+const allT = readTable(ALL, { course: /^course/, state: /^state/, inst: /^institute/, y1: /^stipendyear1$/, y2: /^stipendyear2$/, y3: /^stipendyear3$/, bondYears: /^bond(years?|yrs?)$/, penalty: /^bondpenalty$/, beds: /^beds?$/ });
 if (allT.error) fail(allT.error);
 
 const catalog = new Map();                // state|name -> record
-let allRows = 0;
+let allRows = 0; const unclassified = [];
 for (const r of allT.rows) {
   const inst = (r[allT.idx.inst] || '').trim(), stRaw = (r[allT.idx.state] || '').trim();
   if (!inst) continue;
@@ -199,21 +206,28 @@ for (const r of allT.rows) {
   let rec = catalog.get(key);
   if (!rec) {
     const cw = canonWords(inst), stw = new Set([...words(state), ...(STATE_ABBR[state] || [])]);
-    rec = { key, name: inst, state, stateRaw: stRaw, tokens: [...new Set(distinctive(cw).filter(w => !stw.has(w)))], allTokens: cw, headGeneric: distinctive(canonWords(inst.split(',')[0])).filter(w => !stw.has(w)).length === 0, v: { m: null, d: null }, sector: new Set(), conflicts: [] };
+    rec = { key, name: inst, state, stateRaw: stRaw, tokens: [...new Set(distinctive(cw).filter(w => !stw.has(w)))], allTokens: cw, headGeneric: distinctive(canonWords(inst.split(',')[0])).filter(w => !stw.has(w)).length === 0, v: { m: null, d: null }, rows: { m: null, d: null }, sector: new Set(), conflicts: [] };
     catalog.set(key, rec);
   }
   const src = r[allT.idx.course] || '';
-  const variant = /dip/i.test(src) ? 'd' : 'm';      // d = Diploma sheets, m = DNB sheets
+  const variant = /di+plom/i.test(src) ? 'd' : /dnb/i.test(src) ? 'm' : null;   // d = Diploma sheets, m = DNB sheets
+  if (!variant) { unclassified.push(inst + ' [Course="' + src + '"]'); continue; }  // never guess the sheet type
   rec.sector.add(/private/i.test(src) ? 'Private' : /public/i.test(src) ? 'Public Sector' : /gov/i.test(src) ? 'Government' : '');
+  // Each field is read from exactly one designated column; blank / invalid stays null.
   const vals = [money(r[allT.idx.y1]), intOrNull(r[allT.idx.bondYears]), money(r[allT.idx.penalty]), intOrNull(r[allT.idx.beds]), money(r[allT.idx.y2]), money(r[allT.idx.y3])];
-  if (!rec.v[variant]) rec.v[variant] = vals;
-  else if (JSON.stringify(rec.v[variant]) !== JSON.stringify(vals)) {
-    const cur = rec.v[variant];                       // same institute twice with different numbers: fill blanks only, never overwrite
-    vals.forEach((x, i) => {
-      if (cur[i] === null && x !== null) cur[i] = x;
-      else if (cur[i] !== null && x !== null && cur[i] !== x) rec.conflicts.push(variant.toUpperCase() + ' field ' + i + ': ' + cur[i] + ' vs ' + x);
-    });
-  }
+  if (!rec.rows[variant]) rec.rows[variant] = [];
+  rec.rows[variant].push(vals);
+}
+// Same institute listed more than once in the same sheet type: a field is kept only if every row agrees exactly
+// (blank vs number counts as disagreement). Disagreeing fields become blank and are reported - nothing is picked or filled in.
+const FIELDS = ['Stipend Year 1', 'Bond Years', 'Bond Penalty', 'BED', 'Stipend Year 2', 'Stipend Year 3'];
+for (const rec of catalog.values()) for (const variant of ['m', 'd']) {
+  const list = rec.rows[variant]; if (!list) continue;
+  rec.v[variant] = list[0].map((x, i) => {
+    if (list.every(v => v[i] === x)) return x;
+    rec.conflicts.push((variant === 'd' ? 'Diploma' : 'DNB') + ' ' + FIELDS[i] + ': ' + list.map(v => v[i] === null ? 'blank' : v[i]).join(' vs ') + ' -> left blank');
+    return null;
+  });
 }
 const records = [...catalog.values()];
 const byState = new Map();

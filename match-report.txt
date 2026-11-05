@@ -43,7 +43,7 @@ all.csv institutes never matched: 631
 [token] Lakeshore Hospital and Research Centre Ltd., Maradu, Nettoor P.O. Kochi, Ernakulam, Kerala, Kerala-682040,Maradu, Nettoor P O, Kochi, Kerala, 682040
       => Lakeshore Hospital, Kochi (Kerala)
 [normalised] SDH KUPWARA, Kupwara Hospital Road Main Market, Jammu and Kashmir-193222,IQBAL MARKET KUPWARA, Jammu And Kashmir, 193222
-      => SDH Kupwara, Kupwara (Jammu and Kashmir)  [conflicting numbers in all.csv: M field 4: 50840 vs 52020]
+      => SDH Kupwara, Kupwara (Jammu and Kashmir)
 [token] Rajagiri Hospital, Chunangamveli Aluva Ernakulam District, Kerala-683112,Rajagiri Hospital, Chunagamvely, Aluva 683112, Kerala, 683112
       => Rajagiri Hospital, Ernakulam (Kerala)
 [token] Lourdes Hospital, Pachalam, Ernakulam, Cochin, Kerala-682012,Ernakulam, Pachalam, Kochi, Kerala, 682012
@@ -209,9 +209,9 @@ all.csv institutes never matched: 631
 [token] Manipal Hospitals, Opposite D-Mart Mhalunge Road , Baner, Pune, Maharashtra-411045,Manipal Hospital, Baner, Opposite D-Mart Mhalunge Road , Baner, Pune, Maharashtra-411045
       => Manipal Hospitals, Baner, Pune (Maharashtra)
 [token] GMERS Medical College, Nr. Pathikasharam, Civil Hospital Campus, Sector-12, Gandhinagar, Gujarat-382012,Office of the Dean, First Floor, Civil Hospital Campus, Sector-12, Gandhinagar, Gujarat, 382016
-      => GMERS MedColl Hosp,Gandhinagar (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedColl Hosp,Gandhinagar (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] GMERS Medical College and Hospital, Behind GMERS Medical College Majevdi Gate Junagadh, Gujarat-362001,paddoc road, near majewadi gate, junagadh
-      => GMERS Med Coll Hosp, Junagadh (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS Med Coll Hosp, Junagadh (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [normalised] Manipal Hospital (Formerly known as Advanced Medical Research Institute, AMRI Hospital) Plot No. 1, Beside Satya Sai Enclave, Khandagiri, Bhubaneswar-751030 Odisha,Manipal Hospital, Bhubaneswar (Formerly AMRI) Plot no-1, Besides Satya Sai Enclave, Khandagiri, Bhu
       => Manipal Hospital, Bhubaneswar (Odisha)
 [token] Habra State General Hospital, Habra, North 24 Parganas West Bengal , West Bengal-743263,Habra SGH, North 24 Pgs, Habra, Pin - 743263, West Bengal, 743263
@@ -251,7 +251,7 @@ all.csv institutes never matched: 631
 [token] Deen Dayal Upadhyay Hospital, Hari Nagar, New Delhi, Delhi-110064,DDU HOSPITAL, SHAHEED MANGAL PANDEY MARG, NANAK PURA, HARI NAGAR, NEW DELHI, DELHI-110064
       => Deen Dayal Upadhyay, Delhi (Delhi)
 [token] JLNM Hospital, Rainawari Srinagar, Jammu and Kashmir-190001,JLNM Hospital Rainawari Srinagar, Jammu And Kashmir, 190003
-      => JLNM Hosp, Rainawari (Jammu and Kashmir)  [conflicting numbers in all.csv: M field 4: 50840 vs 52020]
+      => JLNM Hosp, Rainawari (Jammu and Kashmir)
 [token] Siliguri District Hospital, Kachhari Road, Siliguri, Darjeeling, West Bengal-734001,Kachari Road, Siliguri, Dist- Darjeeling, West Bengal, West Bengal, 734001
       => Siliguri Dist Hosp, Darjeeling (West Bengal)
 [token] Kailash hospital neuro institute, Kailash hospital Neuro institute NH-1 ,SECTOR 71 NOIDA ,UP 201309 , Uttar Pradesh-201309,KAILASH HOSPITAL & NEURO INSTITUTE NH-1  SECTOR 71 NOIDA UP, Uttar Pradesh, 201309
@@ -273,7 +273,7 @@ all.csv institutes never matched: 631
 [token] Sanjay Gandhi Memorial Hospital, Mangol Puri, S Block, Delhi-110083,Sanjay Gandhi Memorial Hospital S-Block, Near Bus Terminal, Mangolpuri, North West, Delhi - 110083, Delhi (NCT), 110083
       => Sanjay Gandhi Mem Hosp, Delhi (Delhi)
 [token] Gheesibai Memorial Mittal Hospital and Research Centre, Pushkar Road, Ajmer, Rajasthan-305004,Gheesi Bai Memorial Mittal Hospital and Research Centre, Pushkar Road, Ajmer, Rajasthan, 305004
-      => Gheesibai Memorial, Ajmer (Rajasthan)  [conflicting numbers in all.csv: M field 0: 55200 vs 56100; M field 4: 58650 vs 58100; M field 0: 55200 vs 56100; M field 4: 58650 vs 58100]
+      => Gheesibai Memorial, Ajmer (Rajasthan)  [conflicting numbers in all.csv: DNB Stipend Year 1: 55200 vs 56100 -> left blank; DNB Stipend Year 2: 58650 vs 58100 -> left blank; DNB Stipend Year 3: blank vs 60100 -> left blank; Diploma Stipend Year 1: 55200 vs 56100 -> left blank; Diploma Stipend Year 2: 58650 vs 58100 -> left blank]
 [normalised] Kalinga Hospital, Bhubaneswar, Orissa-751023,GD-2C, NANDANKANAN ROAD, CHANDRASEKHARPUR, BHUBANESWAR KHORDHA, ODISHA - 751023, Odisha, 751023
       => Kalinga Hospital, Bhubaneswar (Odisha)
 [token] Ramakrishna Mission Sevashrama Charitable Hospital, Swami Vivekananda Marg Vrindavan PO, Mathura District, Uttar Pradesh-281121,Ramakrishna Marg, Vrindavan P.O., Mathura Dist.
@@ -397,7 +397,7 @@ all.csv institutes never matched: 631
 [token] HAJI ABDUL MAJID MEMORIAL HOSPITAL and RESEARCH CENTER, MAIN ROAD ,HOJAI, PUB DHANIRAM PATHAR Assam , Assam-782435,HAJI ABDUL MAJID MEMORIAL HOSPITAL MAIN ROAD HOJAI, Assam, 782435
       => Haji Abdul Majid, Hojai, Assam (Assam)
 [token] Shrimad Rajchandra Hospital And Research Centre, Dharampur Bypass Road, At. Sherimal Post. Bilpudi, Tal Dharampur District - Valsad, Gujrat, Gujarat-396050,Shrimad Rajchandra Hospital And Research Centre, Dharampur Bypass Road, At. Sherimal Post. Bilpudi,
-      => Shrimad Rajchandra, Bilpudi (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => Shrimad Rajchandra, Bilpudi (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Bhagwan Mahavir Cancer Hospital and Research Centre, Jawahar Lal Nehru Marg, Jaipur, Rajasthan-302017,Managed by K G Kothari Memorial Trust Jawahar Lal Nehru Marg, Jaipur 302 017
       => Bhagwan Mahavir Cancer, Jaipur (Rajasthan)
 [token] Kerudi Hospital and Research Centre, opp. Axis Bank, Extension Area, Bagalkot, Karnataka-587101,opp axis bank extension area bagalkot, Karnataka, 587101
@@ -457,7 +457,7 @@ all.csv institutes never matched: 631
 [token] DISHARI HEALTH POINT PRIVATE LIMITED, 19, B G ROAD, P.O -MOKDUMPUR, P.S-ENGLISH BAZAR, DISTRICT - MALDA West Bengal , West Bengal-732103,19 B G ROAD, P.O-MOKDUMPUR, P.S-ENGLISH BAZAR, DIST- MALDA, PIN-732103, West Bengal, 732103
       => Dishari Health Point, Mokdumpur (West Bengal)
 [token] GMERS Medical College and General Hospital , Near Government Polytechnic Hadiyol-Gadhoda Road Himmatnagar , Gujarat-383001,Hadiyol-Gadhoda Road, Near-Government Polytechnic, Hiimmatnagar, Gujarat, 383001
-      => GMERS MedColl Hosp,Himmatnagar (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedColl Hosp,Himmatnagar (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Cosmopolitan Hospital, Murinjapalam, Pattom P O, TRIVANDRUM, Kerala-695004,COSMOPOLITAN HOSPITALS Pvt.Ltd, Murinjapalam, Pattom P O, Thiruvananthapuram, Kerala, 695004
       => Cosmopolitan Hosp, Trivandrum (Kerala)
 [token] Star Hospital, 8-2-596/5, RD. NO-10, Banjara Hills, Hyderabad, Telangana-500034,Star Hospitals, 8-2-596/5, Road. No. 10, Banjara Hills, Hyderabad, Telangana, 500034
@@ -475,7 +475,7 @@ all.csv institutes never matched: 631
 [token] Popular Medicare, N-10/60 A-2 Dlw Road Kakarmatta, Varanasi, Uttar Pradesh-221004,POPULAR MEDICARE LTD N 10 60 A 2 BLW ROAD KAKARAMATTA VARANASI, Uttar Pradesh, 221106
       => Popular Medicare, Varanasi (Uttar Pradesh)
 [token] GMERS Medical College and Hospital, Unjha-Patan Highway, Near Dharpur Village, District: Patan, Gujarat-384265,GMERS Medical College and Hospital Campus, Dharpur, Patan-Unjha State Highway, Patan (North Gujarat,, Gujarat, 384265
-      => GMERS MedColl Hosp,Patan (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedColl Hosp,Patan (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Daya General Hospital, Shornur Road, Near Viyyur Bridge, Thrissur, Kerala-680022,Daya General Hospital Limited Shornur Road NEar Viyyur bridge Thiruvambady PO Thrissur, Kerala, 680022
       => Daya General Hosp, Thrissur (Kerala)
 [token] JLN Government Hospital, Nagaur Bikaner Road, Nagaur Rajasthan , Rajasthan-341001,NH 89 BIKANER ROAD, NAGAUR
@@ -507,7 +507,7 @@ all.csv institutes never matched: 631
 [token] District Hospital, Shivaji Ward, Tili Road, Sagar, Madhya Pradesh-470002,shivaji ward tilli road sagar
       => District Hospital, Sagar, MP (Madhya Pradesh)
 [token] GMERS Medical College and Hospital, (Formerly known as Bhavsinhji and Maharani Rupaliba General Hospital) S T Bus Station Road, Porbandar-360575 Gujarat,Near S. T. Bus Stand, Opp. Bhutnath Temple, Hospital Road, Porbandar, Gujarat, 360575
-      => GMERS MedCollHosp, Porbander (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedCollHosp, Porbander (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Apollo Hospital, Adjacent to Keyes High School, St. Johns Road, Secunderabad, Telangana-500003,Adjacent Keyes High School,  St Johns Road,Secunderabad, Telangana 500003, Telangana, 500003
       => Apollo Hospital, Secunderabad (Telangana)
 [token] District Hospital, Near Sangam Circle, Dr. Rajkumar Road, Ballari, Karnataka-583101,DISTRICT HOSPITAL NEAR SANGAM CIRCLE DR RAJ KUMAR ROAD BALLARI-583101 KARNATAKA, Karnataka, 583101
@@ -577,9 +577,9 @@ all.csv institutes never matched: 631
 [token] District Hospital, Killa Road, Dharwad, Karnataka-580008,Killa Road, Dharwad, Karnataka-580008
       => District Hospital, Dharwad (Karnataka)
 [token] District Hospital, Duderhama Ganderbal, Jammu and Kashmir-191201,DUDERHAMA GANDERBAL, Jammu And Kashmir, 191201
-      => District Hospital, Ganderbal,JK (Jammu and Kashmir)  [conflicting numbers in all.csv: M field 4: 50840 vs 52020]
+      => District Hospital, Ganderbal,JK (Jammu and Kashmir)
 [token] GMERS Medical College and Hospital, Nanakwada, Valsad , Gujarat-396001,GMERS Medical College Valsad,Nanakwada Halar Road,Valsad ,Gujarat, Gujarat, 396001
-      => GMERS MedColl Hosp,Valsad (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedColl Hosp,Valsad (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Yatharth Wellness Super Specialty Hospital and Heart Center, Plot No 1 , Gejha Road , Near Lotus Panache Sector 110, Uttar Pradesh-201304,Plot No, 1, Gejha Rd, Lotus Panache, Sector 110, Noida, Uttar Pradesh 201304, Uttar Pradesh, 201304
       => YatharthWellSSHosp,Sec110,Noida (Uttar Pradesh)
 [token] Shree Markendey Solapur Sahakari Rugnalya and Research Centre, Niyamit,Flat plot No. 19, New Pachha Peth, Solapur, Maharashtra-413005,Final Plot No.19, Pachha Peth,Solapur, Maharashtra, 413005
@@ -591,7 +591,7 @@ all.csv institutes never matched: 631
 [token] Sai Hospital, Mukhani Chauraha, Haldwani, Distt Nainital, Uttaranchal-263139,Mukhani Chauraha Haldwani Nainital  263139, Uttarakhand, 263139
       => SaiHospital,Haldwani,Uttarkhand (Uttarakhand)
 [token] GMERS Medical College and General Hospital, Kharavad Medan Sipor Road Ta :- Vadnagar Dist :- Mehsana, Gujarat-384355,Kharvad medan Sipor road Vadnagar, Gujarat, 384355
-      => GMERS MedColl Hosp,Mehsana (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => GMERS MedColl Hosp,Mehsana (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Cancer Hospital and Research Institute, Cancer Hills, Mandre Ki Mata Road, Lashkar Gwalior, Madhya Pradesh-474009,Cancer Hills, Mandre ki mata road, Lashkar, Gwalior, Madhya Pradesh, 474009
       => Cancer Hosp & Res Inst,Gwalior (Madhya Pradesh)
 [token] Yenepoya Specialty Hospital, (A unit of Yenepoya Institute of Medical Sciences and Research Pvt Ltd) V.T Road Kodialbail Mangalore, Karnataka-575003,Yenepoya Specialty Hospital, Opp Bishops House, Kodialbail, Mangalore 575003, Karnataka, 575003
@@ -659,7 +659,7 @@ all.csv institutes never matched: 631
 [token] SRCC Children`s Hoapital, 1A-A Haji Ali Park, K Khadye Marg, mahalaxmi, Maharashtra-400034,1 A Haji Ali Park, K Khadye Marg, Near MCGN Pump Station, Mahalaxmi, Mumbai, Maharashtra, 400034
       => SRCC Children's Hosp, Mumbai (Maharashtra)
 [token] District Hospital , Pulwama, Jammu and Kashmir-192301,Court road pulwama, Jammu And Kashmir, 192301
-      => District Hospital, Pulwama, JK (Jammu and Kashmir)  [conflicting numbers in all.csv: M field 4: 50840 vs 52020]
+      => District Hospital, Pulwama, JK (Jammu and Kashmir)
 [normalised] Civil Hospital Palwal, Near Old Sohna Road Palwal , Haryana-121102,Civil Hospital Palwal, Haryana, 121102
       => Civil Hospital, Palwal, Haryana (Haryana)
 [token] Chaithanya Eye Institute, (A Unit of KGR Visionary LLP Palarivattom, Ernakulam , Kerala-682024,Palarivattom, Ernakulam, Kerala, Kerala, 682024
@@ -675,7 +675,7 @@ all.csv institutes never matched: 631
 [token] Civil Hospital GURDASPUR, NEAR BYEPASS JEEVANWAL BABBRI,GURDASPUR Punjab , Punjab-143521,smodhgsp@gmail.com, Punjab, 143521
       => Civil Hospital, Gurdaspur, Punjab (Punjab)
 [token] KMC Specialty Hospital, No. 6, Royal Road, Cantonment, Trichy, Tamil Nadu-620001,No-6, Royal Road, Cantonment, Trichy-620001, Tamil Nadu, 620001
-      => KMC SpecHosp,Cantonment,Trichy (Tamil Nadu)  [conflicting numbers in all.csv: M field 0: 45000 vs 48000; M field 4: 47500 vs 49000; M field 0: 45000 vs 48000; M field 4: 47500 vs 49000]
+      => KMC SpecHosp,Cantonment,Trichy (Tamil Nadu)  [conflicting numbers in all.csv: DNB Stipend Year 1: 45000 vs 48000 -> left blank; DNB Stipend Year 2: 47500 vs 49000 -> left blank; DNB Stipend Year 3: blank vs 50000 -> left blank; Diploma Stipend Year 1: 45000 vs 48000 -> left blank; Diploma Stipend Year 2: 47500 vs 49000 -> left blank]
 [token] Rangadore Memorial Hospital, 1st Cross, Shankarapuram, basavanagudi, Bangalore , Karnataka-560004,1ST CROSS, SHANKARAPURAM, BANGALORE, Karnataka, 560004
       => Rangadore Mem Hosp, Bangalore (Karnataka)
 [token] GG Hospital, Murinjapalam Junction, Medical College Post, Trivandrum, Kerala-695011,Murinjapalam Junction, Medical College Post, Trivandrum-695011, Kerala, 695011
@@ -863,7 +863,7 @@ all.csv institutes never matched: 631
 [token] Malabar Cancer Centre, Moozhikkara P O, Kodiyeri, Thalassery, Kannur, Kerala-670103,Moozhikkara PO, Thalassery, Kannur, Kerala, 670103
       => MalabarCancerCentre,Thalassery (Kerala)
 [normalised] District Hospital, Kulgam, Jammu and Kashmir-192231,DISTRICT HOSPITAL KULGAM NEAR FRUIT MANDI, Jammu And Kashmir, 192231
-      => District Hospital, Kulgam (Jammu and Kashmir)  [conflicting numbers in all.csv: M field 4: 50840 vs 52020]
+      => District Hospital, Kulgam (Jammu and Kashmir)
 [token] Goverment District Hospital Bundi, Goverment District Hospital In Front Of Bus Stand Bundi Rajasthan , Rajasthan-323001,IN FRONT OF COLLECTORATE BUNDI
       => Govt District Hosp, Bundi (Rajasthan)
 [token] Vasavi Hospital, No.15, 70th Cross, 2nd Stage, Kumaraswamy Layout, Bangalore, Karnataka-560078,#15, 70th Cross, 14th Main, Kumaraswamy Layout
@@ -967,7 +967,7 @@ all.csv institutes never matched: 631
 [token] SARJI SUPER SPECIALITY HOSPITAL, NEAR RAGHAVENDRA SWAMI MUTT, TILAK NAGAR, DURGIGUDI, SHIVAMOGGA, Karnataka-577201,SARJI SUPER SPECIALITY HOSPITAL, NEAR RAGHAVENDRA SWAMI MUTT, TILAK NAGAR, DURGIGUDI, SHIVAMOGGA, Karnataka-577201
       => Sarji Hospital, Shimoga (Karnataka)
 [token] Bhima Bhoi Medical College and Hospital, Balangir At-Laltikra Po- Rajendra College, Balangir , Orissa-767002,At-Laltikra Po-Rajendra College, Balangir, Odisha - 767002
-      => Bhima Bhoi Med Coll, Balangir (Odisha)  [conflicting numbers in all.csv: M field 2: 3589488 vs 5509464; M field 2: 3589488 vs 5509464]
+      => Bhima Bhoi Med Coll, Balangir (Odisha)  [conflicting numbers in all.csv: DNB Bond Penalty: 5509464 vs 3589488 -> left blank; DNB Stipend Year 3: 81547 vs blank -> left blank; Diploma Bond Penalty: 3589488 vs 5509464 -> left blank]
 [token] Mahanadi Netra Chitsalaya, Pandapali, Birmaharajpur, Dist- Subarnapur, Orissa , Orissa-767018,At Pandapali PO & Via Biramaharajpur Dist Subarnapur, Odisha, 767018
       => MahanadiNetra,Subarnapur,Odisha (Odisha)
 [token] NEMCARE Hospital, G. S Road, Bhangagarh Guwahati, Assam-781005,G.S.Road, Bhangagarh, Guwahati, Assam, 781005
@@ -1415,7 +1415,7 @@ all.csv institutes never matched: 631
 [token] SKR Hospital And Trauma Centre Pvt. Ltd, Malikpur Chowk Pathankot, Punjab-145001,SKR HOSPITAL AND TRAUMA CENTRE PVT LTD, MALIKPUR CHOWK, PATHANKOT, Punjab, 145001
       => SKR Hosp& Trauma Cent,Pathankot (Punjab)
 [token] Bhailal Amin General Hospital, Bhailal Amin Marg, Gorwa, Vadodara, Gujarat-390003,Bhailal Amin General Hospital, Bhailal Amin Marg, Gorwa, Vadodara, Gujarat, 390003
-      => Bhailal Amin Gen Hosp, Vadodara (Gujarat)  [conflicting numbers in all.csv: M field 0: 75600 vs 100800; M field 4: 82320 vs 102480]
+      => Bhailal Amin Gen Hosp, Vadodara (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
 [token] Virinchi Hospital, Door No. 6-3-2,3 and 3/1 Road No 1, Banjara Hills, Virinchi Circle, Hyderabad, Telangana-500034,Virinchi Hospital, Door No. 6-3-2,3 and 3/1 Road No 1, Banjara Hills, Virinchi Circle, Hyderabad, Telangana-500034
       => Virinchi Hospital, Hyderabad (Telangana)
 [token] Hartej Hospital (Hartej Nursing Home), A-290-192, Ranjit Avenue, Amritsar, Punjab-143001,A-290-292,RANJIT AVENUE,AMRITSAR,PUNJAB, Punjab, 143001
