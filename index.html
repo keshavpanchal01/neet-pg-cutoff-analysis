@@ -149,6 +149,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
     <button class="tab" role="tab" data-v="cutoff" aria-selected="true">Cutoff</button>
     <button class="tab" role="tab" data-v="scatter" aria-selected="false">Scatter Plot</button>
     <button class="tab" role="tab" data-v="demand" aria-selected="false">Demand</button>
+    <button class="tab" role="tab" data-v="choice" aria-selected="false">Choice</button>
   </div>
   <div class="cwrap">
     <button type="button" class="mini contactbtn" id="contactbtn" aria-expanded="false" aria-controls="cpop">Contact</button>
@@ -224,6 +225,39 @@ button{font-family:inherit;cursor:pointer;color:inherit}
       <div id="dplotbox"></div>
       <div class="note" id="dc-note"></div>
       <div class="tip" id="dtip"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-choice" hidden>
+    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="ch-qc"></span>
+      <div class="acts"><button class="mini" data-ca="q-all">Select all</button><button class="mini" data-ca="q-none">Clear all</button></div></div>
+      <div class="chips" id="ch-q"></div></div>
+    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="ch-cc"></span>
+      <div class="acts"><button class="mini" data-ca="c-all">Select all</button><button class="mini" data-ca="c-none">Clear all</button></div></div>
+      <div class="chips" id="ch-c"></div></div>
+    <div class="group"><div class="ghead"><h3>MD / MS / DNB</h3><span class="cnt" id="ch-mc"></span>
+      <div class="acts"><button class="mini" data-ca="m-all">Select all</button><button class="mini" data-ca="m-none">Clear all</button></div></div>
+      <div class="chips" id="ch-m"></div></div>
+    <div class="group"><div class="ghead"><h3>Diploma</h3><span class="cnt" id="ch-dc"></span>
+      <div class="acts"><button class="mini" data-ca="d-all">Select all</button><button class="mini" data-ca="d-none">Clear all</button></div></div>
+      <div class="chips" id="ch-d"></div></div>
+
+    <div class="ch-grid">
+      <div class="ch-panel" id="ch-w1">
+        <div class="ch-ph"><h2>Available Institutes</h2><span class="cnt" id="ch-count"></span>
+          <a class="ch-jump" href="#ch-w2">My choices <b id="ch-jn">0</b> ↓</a></div>
+        <input type="search" class="ch-search" id="ch-search" placeholder="Search institutes…" aria-label="Search institutes">
+        <div class="ch-list" id="ch-avail"></div>
+      </div>
+      <div class="ch-panel ch-sticky" id="ch-w2">
+        <div class="ch-ph"><h2>CHOICE</h2><span class="cnt" id="ch-n">0</span></div>
+        <div class="ch-bar">
+          <button type="button" class="ch-save" id="ch-save">Save</button>
+          <button type="button" class="mini" id="ch-clear">Clear all</button>
+          <span class="ch-status" id="ch-status" role="status" aria-live="polite"></span>
+        </div>
+        <div class="ch-list" id="ch-mine"></div>
+      </div>
     </div>
   </section>
 </div>
@@ -731,6 +765,8 @@ async function selectRound(r){
     first=false;
   }
   buildCutoff();buildScatter();buildDemand();show(view);
+  /* hook for the CHOICE page: shares the already-loaded dataset and helpers (read-only; changes no existing behaviour) */
+  window.__neetAPI={ds:DS,round:r,courseIdsOf,ckey,sortNames,cmp,idxSet,gchips,quotaMain,catMain};document.dispatchEvent(new Event('neet:round'));
   return true;
 }
 (function init(){
@@ -743,6 +779,205 @@ async function selectRound(r){
   selectRound(ROUNDS[0]);
 })();
 
+})();
+</script>
+
+<!-- ============ CHOICE page (independent; uses the dataset loaded above) ============ -->
+<style>
+.ch-grid{margin-top:26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.ch-panel{background:#101010;border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.ch-sticky{position:sticky;top:76px}
+.ch-ph{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.ch-ph h2{font-size:16px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.ch-ph .cnt{font-size:12px;color:var(--red);font-weight:700}
+.ch-jump{display:none;margin-left:auto;font-size:12px;font-weight:700;color:var(--mut);text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:4px 12px}
+.ch-jump b{color:var(--red)}
+.ch-search{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:13px;font-weight:600;color:var(--txt);margin-bottom:10px}
+.ch-search:focus-visible{outline:2px solid #fff;outline-offset:1px}
+.ch-list{max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;background:var(--bg2)}
+.ch-empty{padding:26px 16px;text-align:center;color:var(--mut);font-size:13.5px;font-weight:600}
+.ch-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:13.5px;font-weight:600}
+.ch-row:last-child{border-bottom:0}
+.ch-row .nm{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.3}
+.ch-add{flex:none;background:var(--red);border:1px solid var(--red);color:#fff;border-radius:8px;padding:6px 16px;font-size:12px;font-weight:800;letter-spacing:.06em;transition:.15s}
+.ch-add:hover{background:var(--red2)}
+.ch-add:disabled{background:transparent;border-color:var(--line2);color:var(--ok);cursor:default}
+.ch-add:focus-visible,.ch-ic:focus-visible,.ch-save:focus-visible,.ch-pos:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ch-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ch-save{background:var(--red);border:1px solid var(--red);color:#fff;border-radius:8px;padding:8px 26px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 16px var(--redglow)}
+.ch-save:hover{background:var(--red2)}
+.ch-status{font-size:12.5px;font-weight:700;color:var(--mut)}
+.ch-status.ok{color:var(--ok)}.ch-status.dirty{color:#ffb86b}.ch-status.err{color:#ffb3b7}
+.ch-mrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:13.5px;font-weight:600}
+.ch-mrow:last-child{border-bottom:0}
+.ch-mrow.drag{opacity:.4}.ch-mrow.over{box-shadow:inset 0 2px 0 var(--red)}
+.ch-no{flex:none;min-width:30px;color:var(--red);font-weight:900;font-size:13px;text-align:right}
+.ch-mrow .nm{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.3;cursor:grab}
+.ch-pos{flex:none;width:52px;background:var(--card2);border:1px solid var(--line2);border-radius:6px;padding:5px 4px;font-family:inherit;font-size:12px;font-weight:700;color:var(--txt);text-align:center}
+.ch-ic{flex:none;background:var(--card2);border:1px solid var(--line2);color:#d6d6d6;border-radius:6px;width:30px;height:30px;font-size:13px;font-weight:800;line-height:1}
+.ch-ic:hover:not(:disabled){border-color:#777}.ch-ic:disabled{opacity:.3;cursor:default}
+.ch-ic.rm:hover{border-color:var(--red);color:#ffb3b7}
+@media(max-width:860px){
+  .ch-grid{grid-template-columns:1fr}
+  .ch-sticky{position:static}
+  .ch-jump{display:inline-block}
+  .ch-list{max-height:440px}
+}
+@media(max-width:600px){.ch-pos{display:none}.ch-panel{padding:12px}.ch-mrow{gap:6px;padding:8px 6px}}
+</style>
+<script>
+(()=>{
+"use strict";
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('en-IN');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let A=null;                                   // shared API from the main script (dataset + helpers)
+const C={q:new Set(),c:new Set(),courses:new Set(),init:false};
+const WORK=new Map();                         // round number -> {items:[], saved:json|null, savedAt, err}
+let avail=[];                                 // institute names currently shown in Window 1
+const NOSPEC='Institute not specified';
+const key=n=>'neetpg2026_choice_r'+n;
+
+/* ---------- saved choices (per counselling round, in this browser) ---------- */
+function W(){
+  const n=A.round.n;
+  if(!WORK.has(n)){
+    let items=[],savedAt=null;
+    try{const o=JSON.parse(localStorage.getItem(key(n))||'null');if(o&&Array.isArray(o.items)){items=[...new Set(o.items.filter(x=>typeof x==='string'))];savedAt=o.savedAt||null;}}catch(e){}
+    WORK.set(n,{items,saved:savedAt?JSON.stringify(items):null,savedAt,err:false});
+  }
+  return WORK.get(n);
+}
+const isDirty=w=>JSON.stringify(w.items)!==(w.saved===null?'[]':w.saved);
+function status(){
+  const w=W(),el=$('ch-status');
+  if(w.err){el.className='ch-status err';el.textContent='Could not save — browser storage is blocked.';return;}
+  if(isDirty(w)){el.className='ch-status dirty';el.textContent='Unsaved changes';return;}
+  if(w.savedAt){el.className='ch-status ok';el.textContent='Saved · '+new Date(w.savedAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});return;}
+  el.className='ch-status';el.textContent='';
+}
+function save(){
+  const w=W();
+  try{
+    const at=new Date().toISOString();
+    localStorage.setItem(key(A.round.n),JSON.stringify({v:1,savedAt:at,items:w.items}));
+    w.saved=JSON.stringify(w.items);w.savedAt=at;w.err=false;
+  }catch(e){w.err=true;}
+  status();
+}
+
+/* ---------- Window 2: CHOICE ---------- */
+function renderMine(scrollEnd){
+  const w=W(),box=$('ch-mine'),st=box.scrollTop,N=w.items.length;
+  $('ch-n').textContent=N+(N===1?' institute':' institutes');$('ch-jn').textContent=N;
+  if(!N){box.innerHTML='<div class="ch-empty">No institutes added yet. Use ADD in Available Institutes.</div>';status();return;}
+  box.innerHTML=w.items.map((nm,i)=>`<div class="ch-mrow" draggable="true" data-i="${i}"><span class="ch-no">${i+1}.</span><span class="nm">${esc(nm)}</span>`+
+    `<input class="ch-pos" type="number" min="1" max="${N}" value="${i+1}" aria-label="Move ${esc(nm)} to position" title="Move to position">`+
+    `<button type="button" class="ch-ic" data-act="up" aria-label="Move up" ${i===0?'disabled':''}>▲</button>`+
+    `<button type="button" class="ch-ic" data-act="down" aria-label="Move down" ${i===N-1?'disabled':''}>▼</button>`+
+    `<button type="button" class="ch-ic rm" data-act="rm" aria-label="Remove">✕</button></div>`).join('');
+  box.scrollTop=scrollEnd?box.scrollHeight:st;
+  status();
+}
+function move(from,to){
+  const w=W(),N=w.items.length;to=Math.max(0,Math.min(N-1,to));
+  if(from===to||from<0||from>=N)return;
+  const [x]=w.items.splice(from,1);w.items.splice(to,0,x);renderMine();
+}
+function addInst(nm){
+  const w=W();if(w.items.includes(nm))return false;
+  w.items.push(nm);renderMine(true);return true;
+}
+function syncAdd(){
+  const have=new Set(W().items);
+  $('ch-avail').querySelectorAll('.ch-add').forEach(b=>{const on=have.has(avail[+b.dataset.k]);b.disabled=on;b.textContent=on?'ADDED':'ADD';});
+}
+$('ch-avail').addEventListener('click',e=>{
+  const b=e.target.closest('.ch-add');if(!b||b.disabled||!A)return;
+  addInst(avail[+b.dataset.k]);syncAdd();
+});
+$('ch-mine').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const i=+b.closest('.ch-mrow').dataset.i,w=W();
+  if(b.dataset.act==='up')move(i,i-1);
+  else if(b.dataset.act==='down')move(i,i+1);
+  else{w.items.splice(i,1);renderMine();syncAdd();}
+});
+$('ch-mine').addEventListener('change',e=>{
+  const inp=e.target.closest('.ch-pos');if(!inp)return;
+  const i=+inp.closest('.ch-mrow').dataset.i,v=parseInt(inp.value,10);
+  if(Number.isNaN(v)){renderMine();return;}
+  move(i,v-1);renderMine();
+});
+let dragI=-1;
+$('ch-mine').addEventListener('dragstart',e=>{const r=e.target.closest('.ch-mrow');if(!r)return;dragI=+r.dataset.i;r.classList.add('drag');try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(dragI));}catch(x){}});
+$('ch-mine').addEventListener('dragover',e=>{const r=e.target.closest('.ch-mrow');if(!r||dragI<0)return;e.preventDefault();
+  $('ch-mine').querySelectorAll('.over').forEach(x=>x.classList.remove('over'));r.classList.add('over');});
+$('ch-mine').addEventListener('drop',e=>{const r=e.target.closest('.ch-mrow');if(!r||dragI<0)return;e.preventDefault();const to=+r.dataset.i,f=dragI;dragI=-1;move(f,to);});
+$('ch-mine').addEventListener('dragend',()=>{dragI=-1;$('ch-mine').querySelectorAll('.drag,.over').forEach(x=>x.classList.remove('drag','over'));});
+$('ch-save').onclick=save;
+$('ch-clear').onclick=()=>{const w=W();if(!w.items.length)return;if(confirm('Remove all institutes from CHOICE? (Click Save afterwards to keep this change.)')){w.items=[];renderMine();syncAdd();}};
+
+/* ---------- Window 1: Available Institutes ---------- */
+function renderAvail(){
+  const ds=A.ds;
+  $('ch-qc').textContent=C.q.size+' selected';$('ch-cc').textContent=C.c.size+' selected';
+  for(const [t,id] of [['M','ch-mc'],['D','ch-dc']]){const L=A.courseIdsOf(t,true);$(id).textContent=L.filter(x=>C.courses.has(A.ckey(x.c))).length+' / '+L.length+' selected';}
+  const box=$('ch-avail'),qs=A.idxSet(C.q,ds.quotas),cs=A.idxSet(C.c,ds.cats);
+  const sel=ds.mcourses.map((c,i)=>({c,i})).filter(x=>C.courses.has(A.ckey(x.c)));
+  avail=[];
+  if(!qs.size||!cs.size||!sel.length){
+    $('ch-count').textContent='';
+    box.innerHTML='<div class="ch-empty">Select Quota, Category and at least one course to see institutes.</div>';return;
+  }
+  const ids=new Set();
+  for(const {i} of sel){const list=ds.byMCourse[i];for(let k=0;k<list.length;k++){const r=list[k];if(qs.has(ds.q[r])&&cs.has(ds.c[r]))ids.add(ds.inst[r]);}}
+  let names=[...ids].map(i=>ds.insts[i]).filter(n=>n!==NOSPEC).sort(A.cmp);
+  const q=$('ch-search').value.trim().toLowerCase();
+  const total=names.length;
+  if(q)names=names.filter(n=>n.toLowerCase().includes(q));
+  avail=names;
+  $('ch-count').textContent=(q?fmt(names.length)+' of ':'')+fmt(total)+(total===1?' institute':' institutes');
+  if(!names.length){box.innerHTML='<div class="ch-empty">'+(total?'No institute matches your search.':'No institutes available for this combination.')+'</div>';return;}
+  box.innerHTML=names.map((n,k)=>`<div class="ch-row"><span class="nm">${esc(n)}</span><button type="button" class="ch-add" data-k="${k}" aria-label="Add ${esc(n)}">ADD</button></div>`).join('');
+  syncAdd();
+}
+$('ch-search').addEventListener('input',()=>{if(A)renderAvail();});
+
+function build(){
+  const ds=A.ds,SQ=A.sortNames(ds.quotas),SC=A.sortNames(ds.cats);
+  const keep=(set,arr)=>{for(const v of [...set])if(!arr.includes(v))set.delete(v);};
+  keep(C.q,ds.quotas);keep(C.c,ds.cats);keep(C.courses,ds.mcourses.map(A.ckey));
+  if(!C.init){
+    C.q.add(ds.quotas.includes('All India')?'All India':SQ[0]);C.c.add(ds.cats.includes('Open')?'Open':SC[0]);C.init=true;
+  }
+  A.gchips($('ch-q'),SQ,i=>C.q.has(SQ[i]),i=>{C.q.has(SQ[i])?C.q.delete(SQ[i]):C.q.add(SQ[i]);renderAvail();},A.quotaMain(SQ),'Other Quotas',false);
+  A.gchips($('ch-c'),SC,i=>C.c.has(SC[i]),i=>{C.c.has(SC[i])?C.c.delete(SC[i]):C.c.add(SC[i]);renderAvail();},A.catMain(SC),'PwD',false);
+  for(const [t,el] of [['M','ch-m'],['D','ch-d']]){
+    const L=A.courseIdsOf(t,true);
+    A.gchips($(el),L.map(x=>x.c.n),j=>C.courses.has(A.ckey(L[j].c)),j=>{const k=A.ckey(L[j].c);C.courses.has(k)?C.courses.delete(k):C.courses.add(k);renderAvail();},L.map((_,j)=>j).slice(0,6),'More specialties',true);
+  }
+  renderAvail();renderMine();
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-ca]');if(!b||!A)return;
+  const [w,m]=b.dataset.ca.split('-'),on=m==='all',ds=A.ds;
+  const setAll=(set,arr)=>{on?arr.forEach(x=>set.add(x)):arr.forEach(x=>set.delete(x));};
+  if(w==='q')setAll(C.q,ds.quotas);else if(w==='c')setAll(C.c,ds.cats);
+  else setAll(C.courses,A.courseIdsOf(w==='m'?'M':'D',true).map(x=>A.ckey(x.c)));
+  build();
+});
+
+/* ---------- tab / round wiring ---------- */
+const isOn=()=>!$('v-choice').hidden;
+$('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  const on=b.dataset.v==='choice';$('v-choice').hidden=!on;
+  if(on)$('h-word').textContent='choice';
+});
+function start(){A=window.__neetAPI;build();if(isOn())$('h-word').textContent='choice';}
+document.addEventListener('neet:round',start);
+if(window.__neetAPI)start();
 })();
 </script>
 </body>
