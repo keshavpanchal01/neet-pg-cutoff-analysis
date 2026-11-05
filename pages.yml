@@ -1,6 +1,6 @@
 name: Build and deploy site
 
-# Runs on every commit, so a new 1.csv is picked up automatically.
+# Runs on every commit, so a new all.csv is picked up automatically.
 on:
   push:
     branches: [main]
@@ -25,13 +25,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Assemble the public site (the raw 1.csv is NOT copied)
+      - name: Assemble the public site (the raw all.csv / 1.csv is NOT copied)
         run: |
           mkdir _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='scripts' --exclude='_site' --exclude='1.csv' ./ _site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='scripts' --exclude='_site' --exclude='all.csv' --exclude='1.csv' ./ _site/
 
-      - name: Generate choice-data.json from 1.csv
-        run: node scripts/build-choice-data.mjs --src 1.csv --out _site/choice-data.json --report match-report.txt
+      - name: Generate choice-data.json from all.csv
+        run: node scripts/build-choice-data.mjs --out _site/choice-data.json --report match-report.txt
 
       - name: Keep the match report (private to this repository)
         uses: actions/upload-artifact@v4

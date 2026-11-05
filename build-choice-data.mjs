@@ -2,9 +2,9 @@
 /*
  * Builds choice-data.json for the CHOICE page.
  *
- *   node scripts/build-choice-data.mjs [--src 1.csv] [--rounds r1.csv,r2.csv] [--out choice-data.json] [--report match-report.txt]
+ *   node scripts/build-choice-data.mjs [--src all.csv] [--rounds r1.csv,r2.csv] [--out choice-data.json] [--report match-report.txt]
  *
- * - Reads the private source file (1.csv) and the institute names of the counselling-round CSVs
+ * - Reads the private source file (all.csv, or 1.csv if that is the name used) and the institute names of the counselling-round CSVs
  *   (r1.csv, r2.csv, ... = the existing institute database).
  * - Fuzzy-matches institutes conservatively. An institute that cannot be matched with confidence is left out.
  * - Writes ONLY: institute name (as spelled in the existing database) -> [stipend year 1, bond, penalty, beds].
@@ -273,7 +273,7 @@ export function buildData(sourceText, instituteMaps) {
 function arg(name, def) { const i = process.argv.indexOf('--' + name); return i > 0 ? process.argv[i + 1] : def; }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    const src = arg('src', '1.csv');
+    const src = arg('src', fs.existsSync('all.csv') ? 'all.csv' : '1.csv');   // the file you commit daily: all.csv (or 1.csv)
     let rounds = arg('rounds', null);
     rounds = rounds ? rounds.split(',').map(s => s.trim()).filter(Boolean)
       : fs.readdirSync('.').filter(f => /^r\d+\.csv$/i.test(f)).sort();
