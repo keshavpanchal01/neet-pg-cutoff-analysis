@@ -247,6 +247,15 @@ button{font-family:inherit;cursor:pointer;color:inherit}
         <div class="ch-ph"><h2>Available Institutes</h2><span class="cnt" id="ch-count"></span>
           <a class="ch-jump" href="#ch-w2">My choices <b id="ch-jn">0</b> ↓</a></div>
         <input type="search" class="ch-search" id="ch-search" placeholder="Search institutes…" aria-label="Search institutes">
+        <div class="ch-note" id="ch-note" hidden></div>
+        <div class="ch-hd" id="ch-hd">
+          <span class="h-name">Institute Name</span>
+          <button type="button" class="hb" data-s="stipend" aria-pressed="false" title="Sort by Year 1 stipend, highest first">Stipend <i>▼</i></button>
+          <span class="ch-dd"><button type="button" class="hb" data-f="bond" aria-haspopup="true" aria-expanded="false" title="Filter by bond">Bond <i>▾</i></button><div class="ch-menu" id="ch-menu-bond" hidden></div></span>
+          <span class="ch-dd"><button type="button" class="hb" data-f="pen" aria-haspopup="true" aria-expanded="false" title="Filter by penalty">Penalty <i>▾</i></button><div class="ch-menu right" id="ch-menu-pen" hidden></div></span>
+          <button type="button" class="hb" data-s="beds" aria-pressed="false" title="Sort by beds, highest first">Beds <i>▼</i></button>
+          <span class="h-add"></span>
+        </div>
         <div class="ch-list" id="ch-avail"></div>
       </div>
       <div class="ch-panel ch-sticky" id="ch-w2">
@@ -824,6 +833,41 @@ async function selectRound(r){
   .ch-list{max-height:440px}
 }
 @media(max-width:600px){.ch-pos{display:none}.ch-panel{padding:12px}.ch-mrow{gap:6px;padding:8px 6px}}
+/* Window 1 columns: Institute Name | Stipend | Bond | Penalty | Beds | ADD */
+@media(min-width:861px){.ch-grid{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}}
+.ch-hd,.ch-row{--chcols:minmax(0,1fr) 90px 50px 100px 56px 62px}
+.ch-hd{display:grid;grid-template-columns:var(--chcols);gap:8px;align-items:center;padding:0 12px 8px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.ch-hd .hb{background:transparent;border:0;color:var(--mut);font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 2px;border-radius:6px;text-align:center;width:100%;white-space:nowrap}
+.ch-hd .hb:hover{color:var(--txt)}
+.ch-hd .hb:focus-visible{outline:2px solid #fff;outline-offset:1px}
+.ch-hd .hb i{font-style:normal;font-size:10px;opacity:.6}
+.ch-hd .hb[aria-pressed=true],.ch-hd .hb.on{color:#fff;background:var(--red)}
+.ch-hd .hb[aria-pressed=true] i,.ch-hd .hb.on i{opacity:1}
+.ch-dd{position:relative;display:block;min-width:0}
+.ch-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:35;min-width:130px;max-height:280px;overflow-y:auto;background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:5px;box-shadow:0 10px 40px #000c;display:flex;flex-direction:column;gap:4px;text-transform:none;letter-spacing:0}
+.ch-menu.right{left:auto;right:0}
+.ch-menu[hidden]{display:none}
+.ch-menu button{background:var(--card2);border:1px solid var(--line2);color:#d6d6d6;border-radius:7px;padding:7px 10px;font-family:inherit;font-size:12.5px;font-weight:700;text-align:left;white-space:nowrap}
+.ch-menu button:hover{border-color:#777}
+.ch-menu button:focus-visible{outline:2px solid #fff;outline-offset:1px}
+.ch-menu button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+.ch-note{margin-bottom:10px;padding:9px 12px;border:1px solid var(--line2);border-radius:8px;background:#111;color:var(--mut);font-size:12.5px;font-weight:600}
+.ch-row{display:grid;grid-template-columns:var(--chcols);gap:8px;align-items:center}
+.ch-row .vals{display:contents}
+.ch-row .v{text-align:center;font-size:12.5px;font-weight:700;color:#e6e6e6;white-space:nowrap}
+.ch-row .v.na{color:var(--dim);font-weight:600}
+@media(max-width:600px){
+  .ch-hd{display:flex;flex-wrap:wrap;gap:6px;padding:0 0 8px}
+  .ch-hd .h-name,.ch-hd .h-add{display:none}
+  .ch-hd .hb{border:1px solid var(--line2);background:var(--card2);width:auto;padding:6px 10px}
+  .ch-hd .hb[aria-pressed=true],.ch-hd .hb.on{border-color:var(--red)}
+  .ch-dd{display:inline-block}
+  .ch-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"nm add" "vals add";row-gap:5px}
+  .ch-row .nm{grid-area:nm}.ch-row .ch-add{grid-area:add}
+  .ch-row .vals{grid-area:vals;display:flex;flex-wrap:wrap;gap:4px 12px}
+  .ch-row .v{text-align:left;font-size:12px}
+  .ch-row .v::before{content:attr(data-l) " ";color:var(--dim);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+}
 </style>
 <script>
 (()=>{
@@ -919,10 +963,42 @@ $('ch-save').onclick=save;
 $('ch-clear').onclick=()=>{const w=W();if(!w.items.length)return;if(confirm('Remove all institutes from CHOICE? (Click Save afterwards to keep this change.)')){w.items=[];renderMine();syncAdd();}};
 
 /* ---------- Window 1: Available Institutes ---------- */
+/* Extra details (stipend, bond, penalty, beds) come from choice-data.json, which is generated from the private 1.csv at deploy time.
+   DATA: Map(institute name as in the existing database -> [stipend year 1, bond, penalty, beds]); null = not available. */
+let DATA=null,DSTATE='loading',dataP=null;
+const F={sort:null,bond:null,pen:null};          // sort: 'stipend' | 'beds' | null ; bond / pen: selected value or null (= all)
+const num=v=>(typeof v==='number'&&Number.isFinite(v)&&v>=0)?v:null;
+const rupee=v=>v===null?'—':'₹'+v.toLocaleString('en-IN');
+const plain=v=>v===null?'—':fmt(v);
+function loadData(){
+  if(!dataP)dataP=fetch('choice-data.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();}).then(j=>{
+    if(!j||typeof j.d!=='object'||j.d===null)throw new Error('bad format');
+    const m=new Map();
+    for(const k of Object.keys(j.d)){const v=j.d[k];if(Array.isArray(v)&&v.length>=4)m.set(k,[num(v[0]),num(v[1]),num(v[2]),num(v[3])]);}
+    DATA=m;DSTATE='ok';
+  }).catch(()=>{DATA=null;DSTATE='err';});
+  return dataP;
+}
+function optionValues(f){            // distinct real values only: no '#', empty or null
+  const s=new Set();if(DATA)for(const v of DATA.values())if(v[f]!==null)s.add(v[f]);
+  return [...s].sort((a,b)=>a-b);
+}
+function renderHead(){
+  document.querySelectorAll('#ch-hd [data-s]').forEach(b=>b.setAttribute('aria-pressed',F.sort===b.dataset.s));
+  for(const [f,k,label] of [['bond','bond','Bond'],['pen','pen','Penalty']]){
+    const b=document.querySelector('#ch-hd [data-f="'+f+'"]');
+    b.classList.toggle('on',F[k]!==null);
+    b.firstChild.nodeValue=label+(F[k]!==null?': '+(f==='pen'?rupee(F[k]):F[k])+' ':' ');
+  }
+}
 function renderAvail(){
   const ds=A.ds;
   $('ch-qc').textContent=C.q.size+' selected';$('ch-cc').textContent=C.c.size+' selected';
   for(const [t,id] of [['M','ch-mc'],['D','ch-dc']]){const L=A.courseIdsOf(t,true);$(id).textContent=L.filter(x=>C.courses.has(A.ckey(x.c))).length+' / '+L.length+' selected';}
+  renderHead();
+  const note=$('ch-note');
+  if(DSTATE==='err'){note.hidden=false;note.textContent='Stipend, bond, penalty and beds details are unavailable right now. Institutes are listed without them.';}
+  else note.hidden=true;
   const box=$('ch-avail'),qs=A.idxSet(C.q,ds.quotas),cs=A.idxSet(C.c,ds.cats);
   const sel=ds.mcourses.map((c,i)=>({c,i})).filter(x=>C.courses.has(A.ckey(x.c)));
   avail=[];
@@ -930,18 +1006,52 @@ function renderAvail(){
     $('ch-count').textContent='';
     box.innerHTML='<div class="ch-empty">Select Quota, Category and at least one course to see institutes.</div>';return;
   }
+  if(DSTATE==='loading'){$('ch-count').textContent='';box.innerHTML='<div class="ch-empty">Loading institute details…</div>';return;}
   const ids=new Set();
   for(const {i} of sel){const list=ds.byMCourse[i];for(let k=0;k<list.length;k++){const r=list[k];if(qs.has(ds.q[r])&&cs.has(ds.c[r]))ids.add(ds.inst[r]);}}
-  let names=[...ids].map(i=>ds.insts[i]).filter(n=>n!==NOSPEC).sort(A.cmp);
+  let rows=[...ids].map(i=>ds.insts[i]).filter(n=>n!==NOSPEC).map(n=>({n,v:DATA?(DATA.get(n)||null):[null,null,null,null]}));
+  if(DATA)rows=rows.filter(r=>r.v);                  // institutes without a confident match are left out
+  const total=rows.length;
+  if(F.bond!==null)rows=rows.filter(r=>r.v[1]===F.bond);
+  if(F.pen!==null)rows=rows.filter(r=>r.v[2]===F.pen);
   const q=$('ch-search').value.trim().toLowerCase();
-  const total=names.length;
-  if(q)names=names.filter(n=>n.toLowerCase().includes(q));
-  avail=names;
-  $('ch-count').textContent=(q?fmt(names.length)+' of ':'')+fmt(total)+(total===1?' institute':' institutes');
-  if(!names.length){box.innerHTML='<div class="ch-empty">'+(total?'No institute matches your search.':'No institutes available for this combination.')+'</div>';return;}
-  box.innerHTML=names.map((n,k)=>`<div class="ch-row"><span class="nm">${esc(n)}</span><button type="button" class="ch-add" data-k="${k}" aria-label="Add ${esc(n)}">ADD</button></div>`).join('');
+  if(q)rows=rows.filter(r=>r.n.toLowerCase().includes(q));
+  rows.sort((x,y)=>{
+    if(F.sort){const f=F.sort==='stipend'?0:3,a=x.v[f],b=y.v[f];
+      if(a===null&&b!==null)return 1;if(b===null&&a!==null)return -1;   // unknown values always last
+      if(a!==b&&a!==null)return b-a;}                                   // highest first
+    return A.cmp(x.n,y.n);
+  });
+  avail=rows.map(r=>r.n);
+  $('ch-count').textContent=(rows.length!==total?fmt(rows.length)+' of ':'')+fmt(total)+(total===1?' institute':' institutes');
+  if(!rows.length){box.innerHTML='<div class="ch-empty">'+(total?'No institute matches the current filters or search.':'No institutes available for this combination.')+'</div>';return;}
+  const cell=(l,t,na)=>`<span class="v${na?' na':''}" data-l="${l}">${t}</span>`;
+  box.innerHTML=rows.map((r,k)=>`<div class="ch-row"><span class="nm">${esc(r.n)}</span><span class="vals">`+
+    cell('Stipend',rupee(r.v[0]),r.v[0]===null)+cell('Bond',plain(r.v[1]),r.v[1]===null)+cell('Penalty',rupee(r.v[2]),r.v[2]===null)+cell('Beds',plain(r.v[3]),r.v[3]===null)+
+    `</span><button type="button" class="ch-add" data-k="${k}" aria-label="Add ${esc(r.n)}">ADD</button></div>`).join('');
   syncAdd();
 }
+/* heading clicks: Stipend / Beds sort (highest first; click again to go back to A-Z); Bond / Penalty open a filter dropdown */
+function closeChMenus(){document.querySelectorAll('.ch-menu').forEach(m=>{m.hidden=true;});document.querySelectorAll('#ch-hd [data-f]').forEach(b=>b.setAttribute('aria-expanded','false'));}
+function openChMenu(f){
+  const menu=$(f==='bond'?'ch-menu-bond':'ch-menu-pen'),btn=document.querySelector('#ch-hd [data-f="'+f+'"]'),was=!menu.hidden;
+  closeChMenus();if(was)return;
+  const vals=optionValues(f==='bond'?1:2),cur=F[f];
+  const lab=v=>f==='pen'?rupee(v):String(v);
+  menu.innerHTML=`<button type="button" data-o="" aria-pressed="${cur===null}">All</button>`+vals.map(v=>`<button type="button" data-o="${v}" aria-pressed="${cur===v}">${esc(lab(v))}</button>`).join('')+(vals.length?'':'<div class="ddnone">No data</div>');
+  menu.hidden=false;btn.setAttribute('aria-expanded','true');
+}
+$('ch-hd').addEventListener('click',e=>{
+  const s=e.target.closest('[data-s]');
+  if(s){closeChMenus();F.sort=F.sort===s.dataset.s?null:s.dataset.s;if(A)renderAvail();return;}
+  const f=e.target.closest('[data-f]');if(f)openChMenu(f.dataset.f);
+});
+for(const [id,f] of [['ch-menu-bond','bond'],['ch-menu-pen','pen']])$(id).addEventListener('click',e=>{
+  const o=e.target.closest('[data-o]');if(!o)return;
+  F[f]=o.dataset.o===''?null:Number(o.dataset.o);closeChMenus();if(A)renderAvail();
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.ch-dd'))closeChMenus();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeChMenus();});
 $('ch-search').addEventListener('input',()=>{if(A)renderAvail();});
 
 function build(){
@@ -975,7 +1085,7 @@ $('tabs').addEventListener('click',e=>{
   const on=b.dataset.v==='choice';$('v-choice').hidden=!on;
   if(on)$('h-word').textContent='choice';
 });
-function start(){A=window.__neetAPI;build();if(isOn())$('h-word').textContent='choice';}
+function start(){A=window.__neetAPI;build();if(isOn())$('h-word').textContent='choice';if(DSTATE==='loading')loadData().then(()=>{if(A)renderAvail();});}
 document.addEventListener('neet:round',start);
 if(window.__neetAPI)start();
 })();

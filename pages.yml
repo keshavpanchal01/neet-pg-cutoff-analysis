@@ -1,0 +1,54 @@
+name: Build and deploy site
+
+# Runs on every commit, so a new 1.csv is picked up automatically.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Assemble the public site (the raw 1.csv is NOT copied)
+        run: |
+          mkdir _site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='scripts' --exclude='_site' --exclude='1.csv' ./ _site/
+
+      - name: Generate choice-data.json from 1.csv
+        run: node scripts/build-choice-data.mjs --src 1.csv --out _site/choice-data.json --report match-report.txt
+
+      - name: Keep the match report (private to this repository)
+        uses: actions/upload-artifact@v4
+        with:
+          name: match-report
+          path: match-report.txt
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
