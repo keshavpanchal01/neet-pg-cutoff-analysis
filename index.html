@@ -593,7 +593,7 @@ function renderDemand(){
   $('dc-title').textContent='Demand by speciality · '+(D.type==='M'?'MD / MS / DNB':'Diploma');
   $('dc-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
   const pts=[],none=[];
-  for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt,dem:r.cnt/r.max}):none.push(c.n);}
+  for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt,dem:r.cnt/r.max*100}):none.push(c.n);}
   $('dc-note').textContent=(none.length?'No allotments for these filters: '+none.join(', ')+'.  ':'')+'Demand = total allotments ÷ cutoff rank.';
   if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
   if(D.sort==='desc')pts.sort((a,b)=>b.dem-a.dem||a.name.localeCompare(b.name));
