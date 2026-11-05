@@ -137,6 +137,9 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .rk:hover{border-color:#777}
 .rk:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .rk[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+/* demand page (reuses the scatter styles) */
+#dplot{width:100%;display:block}
+#dplot text{font-family:var(--font)}
 </style>
 </head>
 <body>
@@ -145,6 +148,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <div class="tabs" role="tablist" id="tabs">
     <button class="tab" role="tab" data-v="cutoff" aria-selected="true">Cutoff</button>
     <button class="tab" role="tab" data-v="scatter" aria-selected="false">Scatter Plot</button>
+    <button class="tab" role="tab" data-v="demand" aria-selected="false">Demand</button>
   </div>
   <div class="cwrap">
     <button type="button" class="mini contactbtn" id="contactbtn" aria-expanded="false" aria-controls="cpop">Contact</button>
@@ -157,7 +161,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 
 <div class="wrap">
   <section class="hero">
-    <h1><span id="h-round">Round 1</span> <em>cutoff</em></h1>
+    <h1><span id="h-round">Round 1</span> <em id="h-word">cutoff</em></h1>
     <div class="rounds" role="group" aria-label="Counselling round">
       <span class="rlab">Counselling Round</span>
       <div class="rbtns" id="rbtns"></div>
@@ -199,6 +203,27 @@ button{font-family:inherit;cursor:pointer;color:inherit}
       <div id="plotbox"></div>
       <div class="note" id="c-note"></div>
       <div class="tip" id="tip"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-demand" hidden>
+    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="d-qc"></span>
+      <div class="acts"><button class="mini" data-da="q-all">Select all</button><button class="mini" data-da="q-none">Clear all</button></div></div>
+      <div class="chips" id="d-q"></div></div>
+    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="d-cc"></span>
+      <div class="acts"><button class="mini" data-da="c-all">Select all</button><button class="mini" data-da="c-none">Clear all</button></div></div>
+      <div class="chips" id="d-c"></div></div>
+    <div class="group"><div class="ghead"><h3>Course type</h3>
+      <div class="seg" id="d-type"><button data-v="M" aria-pressed="true">MD / MS / DNB</button><button data-v="D" aria-pressed="false">Diploma</button></div>
+      <span class="cnt" id="d-sc"></span>
+      <div class="acts"><button class="mini" data-da="s-all">Select all</button><button class="mini" data-da="s-none">Clear all</button></div></div>
+      <div class="chips" id="d-courses"></div></div>
+    <div class="chartcard" id="dchartcard" hidden>
+      <div class="charthead"><span class="t" id="dc-title"></span><span class="s" id="dc-sub"></span>
+        <div class="sortbtn" id="dc-sort"><button data-v="desc" aria-pressed="true">Highest demand first</button><button data-v="asc" aria-pressed="false">Lowest first</button></div></div>
+      <div id="dplotbox"></div>
+      <div class="note" id="dc-note"></div>
+      <div class="tip" id="dtip"></div>
     </div>
   </section>
 </div>
@@ -528,6 +553,105 @@ $('s-type').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.type=b
 $('c-sort').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.sort=b.dataset.v;
   [...$('c-sort').children].forEach(x=>x.setAttribute('aria-pressed',x===b));renderScatter();};
 
+/* ================= DEMAND VIEW =================
+   Demand = total allotments / cutoff (closing) rank, per speciality, for the selected Quota x Category.
+   Same structure as the Scatter Plot page; default filters: All India + DNB Quota, Open + OBC. */
+const D={q:new Set(),c:new Set(),sel:new Set(),type:'M',sort:'desc'};
+let dInit=false;
+const dfmt=v=>v.toFixed(4);
+function buildDemand(){
+  const ds=DS;
+  const SQ=sortNames(ds.quotas),SC=sortNames(ds.cats);
+  if(!dInit){
+    ['All India','DNB Quota'].forEach(x=>{if(ds.quotas.includes(x))D.q.add(x);});
+    ['Open','OBC'].forEach(x=>{if(ds.cats.includes(x))D.c.add(x);});
+    ds.courses.forEach(c=>{if(c.t==='M')D.sel.add(ckey(c));});
+    dInit=true;
+  }
+  const keep=(set,arr)=>{for(const v of [...set])if(!arr.includes(v))set.delete(v);};
+  keep(D.q,ds.quotas);keep(D.c,ds.cats);keep(D.sel,ds.courses.map(ckey));
+  gchips($('d-q'),SQ,i=>D.q.has(SQ[i]),i=>{D.q.has(SQ[i])?D.q.delete(SQ[i]):D.q.add(SQ[i]);renderDemand();},quotaMain(SQ),'Other Quotas',false);
+  gchips($('d-c'),SC,i=>D.c.has(SC[i]),i=>{D.c.has(SC[i])?D.c.delete(SC[i]):D.c.add(SC[i]);renderDemand();},catMain(SC),'PwD',false);
+  buildDemandCourses();renderDemand();
+}
+function buildDemandCourses(){
+  const L=courseIdsOf(D.type);
+  chips($('d-courses'),L.map(x=>x.c.n),j=>D.sel.has(ckey(L[j].c)),j=>{const k=ckey(L[j].c);D.sel.has(k)?D.sel.delete(k):D.sel.add(k);renderDemand();});
+}
+function renderDemand(){
+  if(!DS||$('v-demand').hidden)return;
+  const ds=DS;
+  $('d-qc').textContent=D.q.size+' selected';$('d-cc').textContent=D.c.size+' selected';
+  const L=courseIdsOf(D.type);
+  $('d-sc').textContent=L.filter(x=>D.sel.has(ckey(x.c))).length+' / '+L.length+' selected';
+  const card=$('dchartcard'),box=$('dplotbox'),tip=$('dtip');tip.classList.remove('on');
+  const qs=idxSet(D.q,ds.quotas),cs=idxSet(D.c,ds.cats);
+  const sel=L.filter(x=>D.sel.has(ckey(x.c)));
+  if(!qs.size||!cs.size||!sel.length){card.hidden=true;box.innerHTML='';return;}
+  card.hidden=false;
+  const qn=[...qs].map(i=>ds.quotas[i]).sort(cmp),cn=[...cs].map(i=>ds.cats[i]).sort(cmp);
+  $('dc-title').textContent='Demand by speciality · '+(D.type==='M'?'MD / MS / DNB':'Diploma');
+  $('dc-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
+  const pts=[],none=[];
+  for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt,dem:r.cnt/r.max}):none.push(c.n);}
+  $('dc-note').textContent=(none.length?'No allotments for these filters: '+none.join(', ')+'.  ':'')+'Demand = total allotments ÷ cutoff rank.';
+  if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
+  if(D.sort==='desc')pts.sort((a,b)=>b.dem-a.dem||a.name.localeCompare(b.name));
+  else pts.sort((a,b)=>a.dem-b.dem||a.name.localeCompare(b.name));
+  box.innerHTML='<svg id="dplot" role="img" aria-label="Demand by speciality"></svg>';
+  const sv=$('dplot');
+  const W=Math.max(300,box.clientWidth||900),narrow=W<560;
+  const rowH=narrow?30:28,mt=14,mb=44,ml=narrow?Math.round(W*.4):Math.min(300,Math.round(W*.27)),mr=narrow?56:74;
+  const H=mt+mb+pts.length*rowH;
+  sv.setAttribute('viewBox',`0 0 ${W} ${H}`);sv.setAttribute('width',W);sv.setAttribute('height',H);sv.style.height=H+'px';
+  const xmax=niceMax(Math.max(...pts.map(p=>p.dem))*1.02),step=niceStep(xmax,narrow?4:8);
+  const dec=Math.max(0,Math.min(6,-Math.floor(Math.log10(step)+1e-9)));
+  const x=v=>ml+(v/xmax)*(W-ml-mr);
+  for(let v=0;v<=xmax+step*1e-6;v+=step){
+    el('line',{x1:x(v),x2:x(v),y1:mt-4,y2:H-mb+4,stroke:'#262626'},sv);
+    const t=el('text',{x:x(v),y:H-mb+22,'text-anchor':'middle',fill:'#8a8a8a','font-size':11},sv);t.textContent=v.toFixed(dec);
+  }
+  const at=el('text',{x:ml+(W-ml-mr)/2,y:H-8,'text-anchor':'middle',fill:'#a3a3a3','font-size':11.5,'font-weight':700,'letter-spacing':'.08em'},sv);
+  at.textContent=narrow?'DEMAND':'DEMAND  (allotments ÷ cutoff rank)';
+  el('line',{x1:ml,x2:W-mr,y1:H-mb+4,y2:H-mb+4,stroke:'#555'},sv);
+  const maxChars=Math.floor((ml-16)/(narrow?7.6:8.2));
+  pts.forEach((p,k)=>{
+    const cy=mt+k*rowH+rowH/2,cx=x(p.dem);
+    const row=el('g',{tabindex:0,role:'img','aria-label':`${p.name}: demand ${dfmt(p.dem)}`},sv);row.style.outline='none';
+    const hl=el('rect',{x:0,y:cy-rowH/2,width:W,height:rowH,fill:'#fff','fill-opacity':0},row);
+    el('line',{x1:ml,x2:cx,y1:cy,y2:cy,stroke:'#3a3a3a','stroke-width':1.2,'stroke-dasharray':'2 3'},row);
+    const lbl=el('text',{x:ml-10,y:cy+4,'text-anchor':'end',fill:'#d6d6d6','font-size':narrow?11:12.5,'font-weight':600},row);
+    lbl.textContent=p.name.length>maxChars?p.name.slice(0,maxChars-1)+'…':p.name;
+    const glow=el('circle',{cx,cy,r:11,fill:'#e50914','fill-opacity':0},row);
+    const dot=el('circle',{cx,cy,r:6.5,fill:'#e50914',stroke:'#fff','stroke-width':1.6},row);
+    const val=el('text',{x:cx+13,y:cy+4,fill:'#f5f5f1','font-size':11.5,'font-weight':800},row);val.textContent=dfmt(p.dem);
+    if(cx+13+val.getComputedTextLength()>W-4){val.setAttribute('x',cx-13);val.setAttribute('text-anchor','end');}
+    const on=()=>{hl.setAttribute('fill-opacity',.06);glow.setAttribute('fill-opacity',.3);dot.setAttribute('r',8);
+      tip.innerHTML=`<div class="n">${esc(p.name)}</div><div class="r">${dfmt(p.dem)}</div><div class="m">Allotments: ${fmt(p.cnt)}<br>Cutoff rank: ${fmt(p.max)}<br>Quota: ${esc(qn.join(', '))}<br>Category: ${esc(cn.join(', '))}</div>`;
+      const cr=card.getBoundingClientRect(),br=box.getBoundingClientRect();
+      const tw=Math.min(300,cr.width-16);tip.style.maxWidth=tw+'px';
+      let left=br.left-cr.left+cx+18;if(left+tw>cr.width-8)left=br.left-cr.left+cx-tw-18;if(left<8)left=8;
+      tip.style.left=left+'px';
+      const th=tip.offsetHeight||110;let top=br.top-cr.top+cy-th/2;top=Math.max(40,Math.min(top,cr.height-th-8));tip.style.top=top+'px';
+      tip.classList.add('on');};
+    const off=()=>{hl.setAttribute('fill-opacity',0);glow.setAttribute('fill-opacity',0);dot.setAttribute('r',6.5);tip.classList.remove('on');};
+    row.addEventListener('mouseenter',on);row.addEventListener('mouseleave',off);
+    row.addEventListener('focus',on);row.addEventListener('blur',off);row.addEventListener('touchstart',on,{passive:true});
+  });
+}
+$('d-type').onclick=e=>{const b=e.target.closest('button');if(!b)return;D.type=b.dataset.v;
+  [...$('d-type').children].forEach(x=>x.setAttribute('aria-pressed',x===b));buildDemandCourses();renderDemand();};
+$('dc-sort').onclick=e=>{const b=e.target.closest('button');if(!b)return;D.sort=b.dataset.v;
+  [...$('dc-sort').children].forEach(x=>x.setAttribute('aria-pressed',x===b));renderDemand();};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-da]');if(!b||!DS)return;
+  const [w,m]=b.dataset.da.split('-'),on=m==='all',ds=DS;
+  const setAll=(set,arr)=>{on?arr.forEach(x=>set.add(x)):arr.forEach(x=>set.delete(x));};
+  if(w==='q')setAll(D.q,ds.quotas);else if(w==='c')setAll(D.c,ds.cats);
+  else setAll(D.sel,courseIdsOf(D.type).map(x=>ckey(x.c)));
+  buildDemand();
+});
+
 /* ================= bulk buttons ================= */
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b||!DS)return;
@@ -557,12 +681,13 @@ document.addEventListener('click',e=>{if(!e.target.closest('.cwrap'))closeContac
 let view='cutoff';
 function show(v){
   view=v;
-  $('v-cutoff').hidden=v!=='cutoff';$('v-scatter').hidden=v!=='scatter';
+  $('v-cutoff').hidden=v!=='cutoff';$('v-scatter').hidden=v!=='scatter';$('v-demand').hidden=v!=='demand';
+  $('h-word').textContent=v==='demand'?'demand':'cutoff';
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
-  if(DS){v==='cutoff'?renderCutoff():renderScatter();}
+  if(DS){v==='cutoff'?renderCutoff():v==='demand'?renderDemand():renderScatter();}
 }
 $('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b)show(b.dataset.v);};
-let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(renderScatter,120);});
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{renderScatter();renderDemand();},120);});
 
 /* ================= counselling rounds (each round = its own CSV file, loaded when the page opens) ================= */
 const ROUNDS=[{n:1,label:'Round 1',url:'r1.csv'}];
@@ -605,7 +730,7 @@ async function selectRound(r){
     ds.courses.forEach(c=>{if(c.t==='M')S.sel.add(ckey(c));});
     first=false;
   }
-  buildCutoff();buildScatter();show(view);
+  buildCutoff();buildScatter();buildDemand();show(view);
   return true;
 }
 (function init(){
