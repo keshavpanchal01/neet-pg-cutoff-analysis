@@ -81,7 +81,7 @@ try { J = JSON.parse(fs.readFileSync(JSONF, 'utf8')); R = fs.readFileSync(REPORT
 
 const sec = name => { const a = R.indexOf('== ' + name); if (a < 0) return []; const rest = R.slice(a).split('\n').slice(1); const out = []; for (const l of rest) { if (l.startsWith('== ')) break; out.push(l); } return out; };
 const matchedBlock = sec('MATCHED'), ambBlock = sec('AMBIGUOUS'), noneBlock = sec('NO CONFIDENT');
-const pairs = []; for (let i = 0; i < matchedBlock.length; i++) { const m = matchedBlock[i].match(/^\[(\w+)\] (.*)$/); if (m) { const t = (matchedBlock[i + 1] || '').match(/^\s+=> (.*) \(([^()]*)\)(.*)$/); pairs.push({ tier: m[1], counsel: m[2], allName: t && t[1], allState: t && t[2], note: t && t[3] }); } }
+const pairs = []; for (let i = 0; i < matchedBlock.length; i++) { const m = matchedBlock[i].match(/^\[([\w-]+)\] (.*)$/); if (m) { const t = (matchedBlock[i + 1] || '').match(/^\s+=> (.*) \(([^()]*)\)(.*)$/); pairs.push({ tier: m[1], counsel: m[2], allName: t && t[1], allState: t && t[2], note: t && t[3] }); } }
 const firstLines = b => b.filter(l => l && !l.startsWith('      ') && !l.startsWith(' '));
 const ambNames = firstLines(ambBlock), noneNames = firstLines(noneBlock);
 
@@ -89,11 +89,11 @@ const ambNames = firstLines(ambBlock), noneNames = firstLines(noneBlock);
 say(''); say('CHECK 2 - INSTITUTE MATCHING INTEGRITY');
 const names = new Set(one.rows.map(r => (r[oneI] || '').trim()).filter(n => n && n !== 'Institute not specified'));
 const jkeys = Object.keys(J.d);
-ok(jkeys.length === pairs.length, 'published institutes (' + jkeys.length + ') = matched institutes in the report (' + pairs.length + ')');
+ok(jkeys.length === pairs.length, 'institutes with details (' + jkeys.length + ') = matched institutes in the report (' + pairs.length + ')');
 ok(jkeys.every(k => names.has(k)), 'every published institute exists in 1.csv (nothing invented)');
 ok(pairs.length + ambNames.length + noneNames.length === names.size, 'matched ' + pairs.length + ' + ambiguous ' + ambNames.length + ' + unmatched ' + noneNames.length + ' = ' + names.size + ' distinct institutes in 1.csv');
-ok(ambNames.every(n => !(n in J.d)), 'no ambiguous institute is published (' + ambNames.length + ' excluded)');
-ok(noneNames.every(n => !(n in J.d)), 'no unmatched institute is published (' + noneNames.length + ' excluded)');
+ok(ambNames.every(n => !(n in J.d)), 'no ambiguous institute carries all.csv details (' + ambNames.length + ' listed with blank details)');
+ok(noneNames.every(n => !(n in J.d)), 'no unmatched institute carries all.csv details (' + noneNames.length + ' listed with blank details)');
 const missing = pairs.filter(p => !(p.counsel in J.d)); ok(missing.length === 0, 'every matched institute is present in the output (nothing accidentally dropped)');
 const allKeys = new Map(); all.rows.forEach(r => allKeys.set(nrm(r[AI.State]) + '|' + nrm(r[AI.Institute]), true));
 const noRec = pairs.filter(p => !allKeys.has(nrm(p.allState) + '|' + nrm(p.allName)));
@@ -106,7 +106,7 @@ ok(suspicious.length === 0, 'false-positive screen: each match shares at least o
 const claims = new Map(); pairs.forEach(p => { const k = nrm(p.allState) + '|' + nrm(p.allName); if (!claims.has(k)) claims.set(k, []); claims.get(k).push(p.counsel); });
 const multi = [...claims.entries()].filter(([, v]) => v.length > 1);
 info('all.csv records shared by several 1.csv names (same institute written differently): ' + multi.length);
-info('match tiers: ' + ['exact', 'normalised', 'token'].map(t => t + '=' + pairs.filter(p => p.tier === t).length).join(', '));
+info('match tiers: ' + ['exact', 'normalised', 'token', 'leading-words'].map(t => t + '=' + pairs.filter(p => p.tier === t).length).join(', '));
 
 /* ---------------- CHECK 3 ---------------- */
 say(''); say('CHECK 3 - COLUMN MAPPING AND DATA ACCURACY');

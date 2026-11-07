@@ -2,16 +2,19 @@ CHOICE PAGE - INSTITUTE MATCH REPORT
 
 Counselling files read: 1.csv
 Institutes in counselling files: 1823
-all.csv rows: 2658  (distinct institutes: 1459)
-Matched (shown on the Choice page): 832
-   exact: 0   normalised: 44   word-by-word (controlled fuzzy): 788
-Ambiguous (excluded): 15
-No confident match (excluded): 976
-all.csv institutes never matched: 631
+all.csv rows: 1460  (distinct institutes: 1459)
+Matched (shown with all.csv details): 860
+   exact: 0   normalised: 45   word-by-word (controlled fuzzy): 793   leading-words (short all.csv names): 22
+Ambiguous (still listed on the Choice page, details left blank): 15
+No confident match (still listed, details left blank): 948
+Institutes listed on the Choice page in total: 1823
+all.csv institutes never matched: 608
 
 == MATCHED ==
 [token] Lady Hardinge Medical College, New Delhi,Lady Hardinge Medical College
       => Lady Hardinge Med Coll,NewDelhi (Delhi)
+[token] Kasturba Medical College, Mangalore,Light house Hill Road, Hampankatta, Mangalore, India
+      => Kasturba MedCollHosp,Mangalore (Karnataka)
 [token] Sir Ganga Ram Hospital, Rajinder Nagar, New Delhi , Delhi-110060,Rajinder Nagar, New Delhi, Delhi (NCT), 110060
       => Sir Ganga Ram Hospital, Delhi (Delhi)
 [token] Narayana Hrudayalaya Hospital, (NH-Narayana Health City, Bangalore) #258/A, Bommasandra Industrial Area, Anekal Taluk, Bangalore, Karnataka-560099,#258 Bommasandra Industrial Area, Bangalore, Karnataka, 560099
@@ -22,10 +25,14 @@ all.csv institutes never matched: 631
       => Baby Memorial, Kozhikode (Kerala)
 [token] Jaslok Hospital and Research Centre, 15, Dr. Gopalrao Deshmukh Marg, Mumbai, Maharashtra-400026,15, Dr. G. Deshmukh Marg, Mumbai - 400026, Maharashtra, 400026
       => Jaslok Hospital, Mumbai (Maharashtra)
+[token] MP Shah Medical College, Jamnagar,M. P. SHAH GOVERNMENT MEDICAL COLLEGE
+      => MP Shah Govt MC,Jamnagar (Gujarat)
 [token] Kovai Medical Centre, Post Box No. 3209, Avinashi Road, Civil Arodrom Post, COIMBATORE, Tamil Nadu-641014,Kovai Medical Center and Hospital, 99, Avanashi Road, Coimbatore - 641014, Tamil Nadu, 641014
       => Kovai MedicalCentre,Coimbatore (Tamil Nadu)
 [token] Holy Family Hospital, Okhla road New Delhi, Delhi-110025,Okhla Road, New Delhi, Delhi (NCT), 110025
       => Holy Family Hospital, Delhi (Delhi)
+[leading-words] St. Stephen`s Hospital, Tees Hazari, New Delhi, Delhi-110054,Tis Hazari, Delhi (NCT), 110054
+      => St Stephen's Hospital, Delhi (Delhi)
 [token] Indraprastha Apollo Hospital, Delhi-Mathura Road, Sarita Vihar, New Delhi, Delhi-110076,Sarita Vihar, New Delhi 110 076, Delhi (NCT), 110076
       => Indraprastha Apollo Hosp,Delhi (Delhi)
 [token] Aster Medcity, Kuttisahib Road, Near Kothad Bridge, South Chittoor P. O., Cheranalloor, Kochi, Kerala-682027,Aster Medcity Kuttisahib Road South Chittoor P.O. Cheranalloor Kochi, Kerala, 682027
@@ -64,6 +71,8 @@ all.csv institutes never matched: 631
       => Jupiter Hospital, Thane (Maharashtra)
 [token] Meenakshi Mission Hospital and Research Centre, Lake Area, Melur Road, MADURAI, Tamil Nadu-625107,Lake Area, Melur Road, Madurai
       => Meenakshi Mission Hosp,Madurai (Tamil Nadu)
+[normalised] Post Graduate Institute of Medical Education and Research & Capital Hospital, Bhubaneswar,Post Graduate Institute of Medical Education & Research and Capital Hospital, Bhubaneswar,Udyan Marg
+      => Capital Hospital, Bhubaneswar (Odisha)
 [token] Human care Medical Charitable Trust, Sector-06, Dwarka, Delhi-110075,Human Care Medical Charitable Trust. MANIPAL HOSPITAL, Sector 6, DWARKA, NEW DELHI, Delhi (NCT), 110075
       => Human Care Med Trust Dwarka (Delhi)
 [token] Medanta The Medicity, Sector-38, Gurgaon, Haryana-122001,Medanta The Medicity Sector 38 Gurgoan, Haryana, 122001
@@ -209,9 +218,9 @@ all.csv institutes never matched: 631
 [token] Manipal Hospitals, Opposite D-Mart Mhalunge Road , Baner, Pune, Maharashtra-411045,Manipal Hospital, Baner, Opposite D-Mart Mhalunge Road , Baner, Pune, Maharashtra-411045
       => Manipal Hospitals, Baner, Pune (Maharashtra)
 [token] GMERS Medical College, Nr. Pathikasharam, Civil Hospital Campus, Sector-12, Gandhinagar, Gujarat-382012,Office of the Dean, First Floor, Civil Hospital Campus, Sector-12, Gandhinagar, Gujarat, 382016
-      => GMERS MedColl Hosp,Gandhinagar (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedColl Hosp,Gandhinagar (Gujarat)
 [token] GMERS Medical College and Hospital, Behind GMERS Medical College Majevdi Gate Junagadh, Gujarat-362001,paddoc road, near majewadi gate, junagadh
-      => GMERS Med Coll Hosp, Junagadh (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS Med Coll Hosp, Junagadh (Gujarat)
 [normalised] Manipal Hospital (Formerly known as Advanced Medical Research Institute, AMRI Hospital) Plot No. 1, Beside Satya Sai Enclave, Khandagiri, Bhubaneswar-751030 Odisha,Manipal Hospital, Bhubaneswar (Formerly AMRI) Plot no-1, Besides Satya Sai Enclave, Khandagiri, Bhu
       => Manipal Hospital, Bhubaneswar (Odisha)
 [token] Habra State General Hospital, Habra, North 24 Parganas West Bengal , West Bengal-743263,Habra SGH, North 24 Pgs, Habra, Pin - 743263, West Bengal, 743263
@@ -273,7 +282,7 @@ all.csv institutes never matched: 631
 [token] Sanjay Gandhi Memorial Hospital, Mangol Puri, S Block, Delhi-110083,Sanjay Gandhi Memorial Hospital S-Block, Near Bus Terminal, Mangolpuri, North West, Delhi - 110083, Delhi (NCT), 110083
       => Sanjay Gandhi Mem Hosp, Delhi (Delhi)
 [token] Gheesibai Memorial Mittal Hospital and Research Centre, Pushkar Road, Ajmer, Rajasthan-305004,Gheesi Bai Memorial Mittal Hospital and Research Centre, Pushkar Road, Ajmer, Rajasthan, 305004
-      => Gheesibai Memorial, Ajmer (Rajasthan)  [conflicting numbers in all.csv: DNB Stipend Year 1: 55200 vs 56100 -> left blank; DNB Stipend Year 2: 58650 vs 58100 -> left blank; DNB Stipend Year 3: blank vs 60100 -> left blank; Diploma Stipend Year 1: 55200 vs 56100 -> left blank; Diploma Stipend Year 2: 58650 vs 58100 -> left blank]
+      => Gheesibai Memorial, Ajmer (Rajasthan)
 [normalised] Kalinga Hospital, Bhubaneswar, Orissa-751023,GD-2C, NANDANKANAN ROAD, CHANDRASEKHARPUR, BHUBANESWAR KHORDHA, ODISHA - 751023, Odisha, 751023
       => Kalinga Hospital, Bhubaneswar (Odisha)
 [token] Ramakrishna Mission Sevashrama Charitable Hospital, Swami Vivekananda Marg Vrindavan PO, Mathura District, Uttar Pradesh-281121,Ramakrishna Marg, Vrindavan P.O., Mathura Dist.
@@ -330,6 +339,8 @@ all.csv institutes never matched: 631
       => ILS Hosp, Kunjaban, Agartala (Tripura)
 [token] Dr. Rangarajan Memorial Hospital, (Sundaram Medical Foundation) Santhi Colony, Fourth Avenue, Anna Nagar, CHENNAI, Tamil Nadu-600040,Sundaram Medical Foundation, Shanthi Colony, 4th Avenue, Anna Nagar, Chennai, Tamil Nadu, 600040
       => Dr Rangarajan Mem Hosp,Chennai (Tamil Nadu)
+[token] Chittaranjan Seva Sadan Hospital, Kolkata,37, S.P. Mukherjee Road, P.S. Bhawanipore, Kolkata
+      => Chittaranjan SevaSadan,Kolkata (West Bengal)
 [token] Dr. Rela Institute and Medical Centre, A Unit of JR Super Speciality Hospitals Pvt. Ltd. No. 7, CLC Works Road, Chrompet, Chennai, Tamil Nadu-600044,NO.7, CLC WORKS ROAD, CHROMPET CHENNAI, Tamil Nadu, 600044
       => Dr Rela Inst, Chrompet,Chennai (Tamil Nadu)
 [token] Apollo Hospital, Village Lingiadih, Seepat Road, Bilaspur, Chhattisgarh-495006,Apollo Hospitals Bilaspur Seepat Road  Lingyadih Village  Bilaspur, Chhattisgarh, 495006
@@ -358,6 +369,8 @@ all.csv institutes never matched: 631
       => Assoc Hosp Govt MC, Baramulla (Jammu and Kashmir)
 [token] Bharath Hospital, Azad Lane Kottayam-1 686001 Kerala , Kerala-686001,AZAD LANE, KOTTAYAM, KERALA 686001, Kerala, 686001
       => Bharath Hosp, Kottayam, Kerala (Kerala)
+[leading-words] Government Hospital, Gandhi Nagar Jammu, Jammu and Kashmir-180004,Government Hospital Gandhi Nagar Jammu, Jammu And Kashmir, 180004
+      => Govt Hosp, Gandhi Nagar, JK (Jammu and Kashmir)
 [token] Bethany Hospital, Pokhran Road 2, Thane West, Thane , Maharashtra-400610,Pokhran road No. 2, Thane West, Maharashtra, 400610
       => Bethany Hospital, Thane (Maharashtra)
 [token] Shree Mahavir Health and Medical Relief Society Hospital, (Smt. R B Shah Mahavir Super Specialty Hospital and Shri B D Mehta Mahavir Heart Institute) Shree Mahavir Health Campus, Athwagate, Ring Road, Surat, Gujarat-395001,SHREE MAHAVIR HEALTH CAMPUS, OPP JIVANBHARTI SCHOOL, NANPURA SURAT, Gujarat, 395001
@@ -397,7 +410,7 @@ all.csv institutes never matched: 631
 [token] HAJI ABDUL MAJID MEMORIAL HOSPITAL and RESEARCH CENTER, MAIN ROAD ,HOJAI, PUB DHANIRAM PATHAR Assam , Assam-782435,HAJI ABDUL MAJID MEMORIAL HOSPITAL MAIN ROAD HOJAI, Assam, 782435
       => Haji Abdul Majid, Hojai, Assam (Assam)
 [token] Shrimad Rajchandra Hospital And Research Centre, Dharampur Bypass Road, At. Sherimal Post. Bilpudi, Tal Dharampur District - Valsad, Gujrat, Gujarat-396050,Shrimad Rajchandra Hospital And Research Centre, Dharampur Bypass Road, At. Sherimal Post. Bilpudi,
-      => Shrimad Rajchandra, Bilpudi (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => Shrimad Rajchandra, Bilpudi (Gujarat)
 [token] Bhagwan Mahavir Cancer Hospital and Research Centre, Jawahar Lal Nehru Marg, Jaipur, Rajasthan-302017,Managed by K G Kothari Memorial Trust Jawahar Lal Nehru Marg, Jaipur 302 017
       => Bhagwan Mahavir Cancer, Jaipur (Rajasthan)
 [token] Kerudi Hospital and Research Centre, opp. Axis Bank, Extension Area, Bagalkot, Karnataka-587101,opp axis bank extension area bagalkot, Karnataka, 587101
@@ -412,6 +425,8 @@ all.csv institutes never matched: 631
       => Mark Hospital, Bilaspur (Chhattisgarh)
 [token] PRASHANTH HOSPITALS, No.36 and 36A, Velachery Main Road, Velachery, Tamil Nadu-600042,No 36  36 A Velachery Main road Velachery Chennai 600042, Tamil Nadu, 600042
       => PrashanthHosp,Velachery,Chennai (Tamil Nadu)
+[token] Shri Krishna Medical College, Muzzafarpur,Sri Krishna Medical College and Hospital, Umanagar, Muzaffarpur Pin-842004
+      => SriKrishna MedColl,Muzaffarpur (Bihar)
 [token] Sri Narayani Hospital and Res. Centre, Thirumalaikodi, Distt. Vellore, Tamil Nadu-632055,Sripuram Thirumalaikodi Vellore, Tamil Nadu, 632055
       => Sri Narayani Hospital, Vellore (Tamil Nadu)
 [token] Meenakshi Hospital, 244/2, Trichy Main Road, Near New Bus Stand Nilagiri Therkku Thottam, Tanjore, Tamil Nadu-613005,244-2, Trichy Main Road, Near New Bus stand, Thanjavur, Tamil Nadu, 613005
@@ -452,12 +467,14 @@ all.csv institutes never matched: 631
       => Tata Motors Hosp, Jamshedpur (Jharkhand)
 [token] ESIC MEDICAL COLLEGE AND HOSPITAL, DESULA , MIA , ALWAR, Rajasthan-301030,MIA, DESULA, ALWAR, RAJASTHAN (INDIA), 301030
       => ESIC MedColl&Hosp,Alwar (Rajasthan)
+[leading-words] GOVERNMENT MEDICAL COLLEGE, GONDIA GMC,GONDIA, KTS HOSPITAL COMPOUND, NEHRU SQUARE, GONDIA, Maharashtra-441601,Nehru Chowk, KTS General Hospital Campus, Govt. Medical College, Gondia. 4441601 Maharashtra, Maharashtra, 441601
+      => Government Med College, Gondia (Maharashtra)
 [token] Balrampur Hospital, Golaganj Lucknow, Uttar Pradesh-226018,Gola Ganj, lucknow, Uttar Pradesh, 226018
       => Balrampur Hospital, Lucknow (Uttar Pradesh)
 [token] DISHARI HEALTH POINT PRIVATE LIMITED, 19, B G ROAD, P.O -MOKDUMPUR, P.S-ENGLISH BAZAR, DISTRICT - MALDA West Bengal , West Bengal-732103,19 B G ROAD, P.O-MOKDUMPUR, P.S-ENGLISH BAZAR, DIST- MALDA, PIN-732103, West Bengal, 732103
       => Dishari Health Point, Mokdumpur (West Bengal)
 [token] GMERS Medical College and General Hospital , Near Government Polytechnic Hadiyol-Gadhoda Road Himmatnagar , Gujarat-383001,Hadiyol-Gadhoda Road, Near-Government Polytechnic, Hiimmatnagar, Gujarat, 383001
-      => GMERS MedColl Hosp,Himmatnagar (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedColl Hosp,Himmatnagar (Gujarat)
 [token] Cosmopolitan Hospital, Murinjapalam, Pattom P O, TRIVANDRUM, Kerala-695004,COSMOPOLITAN HOSPITALS Pvt.Ltd, Murinjapalam, Pattom P O, Thiruvananthapuram, Kerala, 695004
       => Cosmopolitan Hosp, Trivandrum (Kerala)
 [token] Star Hospital, 8-2-596/5, RD. NO-10, Banjara Hills, Hyderabad, Telangana-500034,Star Hospitals, 8-2-596/5, Road. No. 10, Banjara Hills, Hyderabad, Telangana, 500034
@@ -475,7 +492,7 @@ all.csv institutes never matched: 631
 [token] Popular Medicare, N-10/60 A-2 Dlw Road Kakarmatta, Varanasi, Uttar Pradesh-221004,POPULAR MEDICARE LTD N 10 60 A 2 BLW ROAD KAKARAMATTA VARANASI, Uttar Pradesh, 221106
       => Popular Medicare, Varanasi (Uttar Pradesh)
 [token] GMERS Medical College and Hospital, Unjha-Patan Highway, Near Dharpur Village, District: Patan, Gujarat-384265,GMERS Medical College and Hospital Campus, Dharpur, Patan-Unjha State Highway, Patan (North Gujarat,, Gujarat, 384265
-      => GMERS MedColl Hosp,Patan (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedColl Hosp,Patan (Gujarat)
 [token] Daya General Hospital, Shornur Road, Near Viyyur Bridge, Thrissur, Kerala-680022,Daya General Hospital Limited Shornur Road NEar Viyyur bridge Thiruvambady PO Thrissur, Kerala, 680022
       => Daya General Hosp, Thrissur (Kerala)
 [token] JLN Government Hospital, Nagaur Bikaner Road, Nagaur Rajasthan , Rajasthan-341001,NH 89 BIKANER ROAD, NAGAUR
@@ -507,7 +524,7 @@ all.csv institutes never matched: 631
 [token] District Hospital, Shivaji Ward, Tili Road, Sagar, Madhya Pradesh-470002,shivaji ward tilli road sagar
       => District Hospital, Sagar, MP (Madhya Pradesh)
 [token] GMERS Medical College and Hospital, (Formerly known as Bhavsinhji and Maharani Rupaliba General Hospital) S T Bus Station Road, Porbandar-360575 Gujarat,Near S. T. Bus Stand, Opp. Bhutnath Temple, Hospital Road, Porbandar, Gujarat, 360575
-      => GMERS MedCollHosp, Porbander (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedCollHosp, Porbander (Gujarat)
 [token] Apollo Hospital, Adjacent to Keyes High School, St. Johns Road, Secunderabad, Telangana-500003,Adjacent Keyes High School,  St Johns Road,Secunderabad, Telangana 500003, Telangana, 500003
       => Apollo Hospital, Secunderabad (Telangana)
 [token] District Hospital, Near Sangam Circle, Dr. Rajkumar Road, Ballari, Karnataka-583101,DISTRICT HOSPITAL NEAR SANGAM CIRCLE DR RAJ KUMAR ROAD BALLARI-583101 KARNATAKA, Karnataka, 583101
@@ -579,7 +596,7 @@ all.csv institutes never matched: 631
 [token] District Hospital, Duderhama Ganderbal, Jammu and Kashmir-191201,DUDERHAMA GANDERBAL, Jammu And Kashmir, 191201
       => District Hospital, Ganderbal,JK (Jammu and Kashmir)
 [token] GMERS Medical College and Hospital, Nanakwada, Valsad , Gujarat-396001,GMERS Medical College Valsad,Nanakwada Halar Road,Valsad ,Gujarat, Gujarat, 396001
-      => GMERS MedColl Hosp,Valsad (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedColl Hosp,Valsad (Gujarat)
 [token] Yatharth Wellness Super Specialty Hospital and Heart Center, Plot No 1 , Gejha Road , Near Lotus Panache Sector 110, Uttar Pradesh-201304,Plot No, 1, Gejha Rd, Lotus Panache, Sector 110, Noida, Uttar Pradesh 201304, Uttar Pradesh, 201304
       => YatharthWellSSHosp,Sec110,Noida (Uttar Pradesh)
 [token] Shree Markendey Solapur Sahakari Rugnalya and Research Centre, Niyamit,Flat plot No. 19, New Pachha Peth, Solapur, Maharashtra-413005,Final Plot No.19, Pachha Peth,Solapur, Maharashtra, 413005
@@ -591,7 +608,7 @@ all.csv institutes never matched: 631
 [token] Sai Hospital, Mukhani Chauraha, Haldwani, Distt Nainital, Uttaranchal-263139,Mukhani Chauraha Haldwani Nainital  263139, Uttarakhand, 263139
       => SaiHospital,Haldwani,Uttarkhand (Uttarakhand)
 [token] GMERS Medical College and General Hospital, Kharavad Medan Sipor Road Ta :- Vadnagar Dist :- Mehsana, Gujarat-384355,Kharvad medan Sipor road Vadnagar, Gujarat, 384355
-      => GMERS MedColl Hosp,Mehsana (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => GMERS MedColl Hosp,Mehsana (Gujarat)
 [token] Cancer Hospital and Research Institute, Cancer Hills, Mandre Ki Mata Road, Lashkar Gwalior, Madhya Pradesh-474009,Cancer Hills, Mandre ki mata road, Lashkar, Gwalior, Madhya Pradesh, 474009
       => Cancer Hosp & Res Inst,Gwalior (Madhya Pradesh)
 [token] Yenepoya Specialty Hospital, (A unit of Yenepoya Institute of Medical Sciences and Research Pvt Ltd) V.T Road Kodialbail Mangalore, Karnataka-575003,Yenepoya Specialty Hospital, Opp Bishops House, Kodialbail, Mangalore 575003, Karnataka, 575003
@@ -606,6 +623,8 @@ all.csv institutes never matched: 631
       => Sacred Heart Hosp, Jalandhar (Punjab)
 [token] Aarogya Hospital, Plot No-27/28 Chitra Vihar Viaksh Marg East Delhi, Delhi-110019,27/28 Chitra Vihar, Vikas Mard
       => AarogyaHos,ChitraVihar,EastDelhi (Delhi)
+[leading-words] Bokaro General Hospital, Bokaro Steel City, Sec. 4, BOKARO, Jharkhand-827004,SECTOR - 4 BOKARO STEEL CITY DIST - BOKARO
+      => Bokaro General Hosp, Bokaro (Jharkhand)
 [token] District Hospital, B H Road, Tumakuru, Karnataka-0, B.H.Road, Tumakuru-572101, Karnataka, 572101
       => District Hospital, Tumakuru (Karnataka)
 [token] Paras Hospital, plotno.1 Lane shobhagpura circle, Udaipur, Rajasthan-313001,Paras Health Plot No 1 Shobhagpura Circle Udaipur, Rajasthan, 313001
@@ -646,6 +665,8 @@ all.csv institutes never matched: 631
       => District Hospital, Vijayapura (Karnataka)
 [token] Gautam Hospital, Kicha Road, Near Radha Swami Satsang Bhawan, Udham Singh Nagar, Rudrapur, Bigbara , Uttaranchal-233153,GAUTAM HOSPITAL'KICHHA ROAD NEAR ARDHA SWAMI SATSANG BIGWRA RUDRAPUR UDHAM SINGH NAGAR, UTTARAJGAND-263153
       => Gautam Hosp,Bigbara (Uttarakhand)
+[leading-words] General Hospital, Karauli Old Sabji Mandi Hinduan Gate Rajasthan , Rajasthan-322241,OLD SABJI MANDI, HINDUAN GATE, KARAULI
+      => General Hospital, Karauli (Rajasthan)
 [token] Healthway Hospital, Plot no.132/1 (Part), Ella Village, Kadamba Plateau, Tiswadi Taluka, Old Goa- , Goa-403402,plot no 132, Ella, Tiswadi, Old Goa, Goa, 403402
       => Healthway Hosp, Old Goa, Goa (Goa)
 [token] Aster Prime Hospital, (A Unit of Sri Sainatha Multi Specialty Hospital) Plot No. 2 and 4, Behind Mitrivanam Building, Ameerpet, Hyderabad Telangana , Telangana-500038,plot no 2 and 4, satyam theatre road, behind mythrivanam building, ameerpet, hyderabad,telangana, Telangana, 500038
@@ -675,7 +696,7 @@ all.csv institutes never matched: 631
 [token] Civil Hospital GURDASPUR, NEAR BYEPASS JEEVANWAL BABBRI,GURDASPUR Punjab , Punjab-143521,smodhgsp@gmail.com, Punjab, 143521
       => Civil Hospital, Gurdaspur, Punjab (Punjab)
 [token] KMC Specialty Hospital, No. 6, Royal Road, Cantonment, Trichy, Tamil Nadu-620001,No-6, Royal Road, Cantonment, Trichy-620001, Tamil Nadu, 620001
-      => KMC SpecHosp,Cantonment,Trichy (Tamil Nadu)  [conflicting numbers in all.csv: DNB Stipend Year 1: 45000 vs 48000 -> left blank; DNB Stipend Year 2: 47500 vs 49000 -> left blank; DNB Stipend Year 3: blank vs 50000 -> left blank; Diploma Stipend Year 1: 45000 vs 48000 -> left blank; Diploma Stipend Year 2: 47500 vs 49000 -> left blank]
+      => KMC SpecHosp,Cantonment,Trichy (Tamil Nadu)
 [token] Rangadore Memorial Hospital, 1st Cross, Shankarapuram, basavanagudi, Bangalore , Karnataka-560004,1ST CROSS, SHANKARAPURAM, BANGALORE, Karnataka, 560004
       => Rangadore Mem Hosp, Bangalore (Karnataka)
 [token] GG Hospital, Murinjapalam Junction, Medical College Post, Trivandrum, Kerala-695011,Murinjapalam Junction, Medical College Post, Trivandrum-695011, Kerala, 695011
@@ -742,6 +763,8 @@ all.csv institutes never matched: 631
       => BIG Apollo Spectra, Patna (Bihar)
 [token] Area Hospital, Nuzvidu House No.1-9,2-9 Revenue ward No -24, Locality- Near RDO Office, City-Nuzvidu,District - Krishna Andhra Pradesh , Andhra Pradesh-521201,monuzvidu atherateof gmail dot com, Andhra Pradesh, 521201
       => Area Hospital, Nuzvidu, AP (Andhra Pradesh)
+[leading-words] Government Medical College, Bettiah,Government Medical College Bettiah West Champaran Bihar
+      => Govt Med Coll, Bettiah (Bihar)
 [token] CURA HOSPITALS, NO.1, BETHEL STREET HRBR LAYOUT, 2ND BLOCK OPP EAST GATE OF JAL VAYU VIHAR, KALYAN NAGAR, BANGALORE , Karnataka-560043,1, Bethel St, HRBR Layout 2nd Block, Kalyan Nagar, Kammanahalli, Bengaluru, Karnataka 560043
       => Cura Hospitals,Bangalore (Karnataka)
 [token] Mallige Medical Centre, 31/32 Crescent Road, BANGALORE, Karnataka-1,No 31 32 Crescent Road Bangalore 560001, Karnataka, 560001
@@ -816,6 +839,10 @@ all.csv institutes never matched: 631
       => Govt Dist Hosp,Anakapalli (Andhra Pradesh)
 [token] INFECTIOUS DISEASES AND BELIAGHATA GENERAL HOSPITAL, KOLKATA 57 BELIAGHATA MAIN ROAD, KOLKATA, West Bengal-700010,57 BELIAGHATA MAIN ROAD,KOLKATA, West Bengal, 700010
       => InfectiousDiseasesHosp, Kolkata (West Bengal)
+[leading-words] Jabalpur Hospital and Research Centre, Russel Crossing, Jabalpur, Madhya Pradesh-482002,Russel Chowk Napier Town Jabalpur, Madhya Pradesh, 482002
+      => Jabalpur Hosp & Res Center, MP (Madhya Pradesh)
+[leading-words] Government Medical College, Gondia,Nehru Chowk, KTS General Hospital Campus, Govt. Medical College, Gondia. 441601. Maharashtra.
+      => Government Med College, Gondia (Maharashtra)
 [token] Ahalia Foundation Eye Hospital, Palakkad, Kerala-678557,Ahalia Campus Kozhippara Post Palakkad Kerala 678557, Kerala, 678557
       => Ahalia Eye Hospital, Palakkad (Kerala)
 [token] Malabar Hospitals Pvt. Ltd., Karuvambrum Post, Manjeri, Malappuram, Kerala-67612,Karuvambrum PO, Manjeri, Malappuram, Kerala, Kerala, 676123
@@ -950,6 +977,8 @@ all.csv institutes never matched: 631
       => DrAnjiReddySuperSpecHosp,Guntur (Andhra Pradesh)
 [token] KINDER HOSPITALS, Kochi-Salem HWY, Changampuzha Nagar, Pathadipalam, Kalamasseri, Kochi, Ernakulam, Kerala-682033,Kinder Hospitals, Kochi-Salem HWY, Changampuzha Nagar, Pathadipalam, Kalamasseri, Kochi
       => Kinder Hosp,Ernakulam (Kerala)
+[leading-words] Government Medical College and Hospital, Nandurbar Civil hospital campus, Sakri Road, Nandurbar, Maharashtra-425412,Nandurbar Civil hospital campus, Sakri Road, Nandurbar-425412 Maharashtra
+      => Govt Med Coll & Hosp,Nandurbar (Maharashtra)
 [token] Raja Sukhdev Singh DH Poonch, Dh Poonch Radio Station Road, Jammu and Kashmir-185101,RAJA SUKDEV SINGH DISTRIC HOSPITAL POONCH, Jammu And Kashmir, 185101
       => Raja Sukhdev Singh District Hosp, Poonch (Jammu and Kashmir)
 [token] Fernandez Hospital, 4-1-1230, Bogulkunta, Hyderabad, Telangana-500001,4-1-1230, Bogulkunta, Hyderabad, Telangana-500001, Telangana, 500001
@@ -958,6 +987,8 @@ all.csv institutes never matched: 631
       => Gunam SS Hosp, Hosur (Tamil Nadu)
 [token] ESIC Hospital, Sri Maa Anandmayee Marg, Okhla Phase-1, Delhi-110020,ESIC Hospital, Sri Maa Anandmayee Marg, Okhla Phase I, New Delhi, Delhi (NCT), 110020
       => ESIC Hospital, Okhla (Delhi)
+[leading-words] General Hospital, Tiptur Karnataka , Karnataka-572201,General Hospital Tiptur, Tumkur District, Karnataka Pin 572201, Karnataka, 572201
+      => General Hospital, Tiptur, Kar (Karnataka)
 [token] Kurji Holy Family Hospital, PO Sadaquat Ashram, PATNA, Bihar-800010,Kurji Holy Family Hospital P.O - Sadaquat Ashram, Bihar, 800010
       => Kurji Holy Family, Patna (Bihar)
 [token] HealthCare Global Specialty Hospital, (Formerly Bangalore Institute of Oncology) Deans Office #8, P. Kalinga Rao Road, Sampangiram Nagar, Bangalore, Karnataka-560027,HCG Towers, No. 8, P Kalinga Rao Road, Sampangi Ram Nagar, Bangalore, Karnataka, 560027
@@ -967,7 +998,7 @@ all.csv institutes never matched: 631
 [token] SARJI SUPER SPECIALITY HOSPITAL, NEAR RAGHAVENDRA SWAMI MUTT, TILAK NAGAR, DURGIGUDI, SHIVAMOGGA, Karnataka-577201,SARJI SUPER SPECIALITY HOSPITAL, NEAR RAGHAVENDRA SWAMI MUTT, TILAK NAGAR, DURGIGUDI, SHIVAMOGGA, Karnataka-577201
       => Sarji Hospital, Shimoga (Karnataka)
 [token] Bhima Bhoi Medical College and Hospital, Balangir At-Laltikra Po- Rajendra College, Balangir , Orissa-767002,At-Laltikra Po-Rajendra College, Balangir, Odisha - 767002
-      => Bhima Bhoi Med Coll, Balangir (Odisha)  [conflicting numbers in all.csv: DNB Bond Penalty: 5509464 vs 3589488 -> left blank; DNB Stipend Year 3: 81547 vs blank -> left blank; Diploma Bond Penalty: 3589488 vs 5509464 -> left blank]
+      => Bhima Bhoi Med Coll, Balangir (Odisha)
 [token] Mahanadi Netra Chitsalaya, Pandapali, Birmaharajpur, Dist- Subarnapur, Orissa , Orissa-767018,At Pandapali PO & Via Biramaharajpur Dist Subarnapur, Odisha, 767018
       => MahanadiNetra,Subarnapur,Odisha (Odisha)
 [token] NEMCARE Hospital, G. S Road, Bhangagarh Guwahati, Assam-781005,G.S.Road, Bhangagarh, Guwahati, Assam, 781005
@@ -994,6 +1025,8 @@ all.csv institutes never matched: 631
       => Hayat Hospital, Guwahati (Assam)
 [token] Sub District Hospital Sopore, Kupwara-Road Sopore , Jammu and Kashmir-193201,Sir Syed Colony Kupwara Road Sopore-193201, District Barmulla ,Jammu and Kashmir, Jammu And Kashmir, 193201
       => Sub District Hosp, Sopore, JK (Jammu and Kashmir)
+[leading-words] Government Medical College, Bettiah, West Champaran, Bihar-845438,GOVERNMENT MEDICAL COLLEGE, BETTIAH, WEST CHAMPARAN, BIHAR 845438
+      => Govt Med Coll, Bettiah (Bihar)
 [token] National Institute Of Ophthalmology, 1187/30 Off Ghole Road, Shivaji Nagar, PUNE, Maharashtra-411005,1187.30 ShivajiNagar, off Ghole Road, Pune, Maharashtra, 411005
       => National Inst of Ophthal, Pune (Maharashtra)
 [token] Kabra Eye Hospital, C-59,60,Jamna Nagar Sodala Jaipur Raj Rajasthan , Rajasthan-302019,C-59,60 JAMNA NAGAR, SODALA, JAIPUR, Rajasthan, 302006
@@ -1192,6 +1225,8 @@ all.csv institutes never matched: 631
       => Vijaya Ortho,Belagavi (Karnataka)
 [token] Petals Newborn and Children Hospital, Bheemsen Bhawan Marg, Krishna Talkies Road, Samta Colony, Raipur Chhattisgarh , Chhattisgarh-492001,BHEEMSEN BHAWAN MARG, SAMTA COLONY, RAIPUR CHHATTISGARH, Chhattisgarh, 492001
       => PetalsNewborn&Child Hosp,Raipur (Chhattisgarh)
+[leading-words] Darbhanga Medical College Hospital, Laheriasarai P.O. -DMC, Laheriasarai, Darbhanga, Bihar-846003,Sheetal Prasad Marg, Laheriasarai, Darbhanga, Bihar
+      => Darbhanga Med Coll Hosp (Bihar)
 [token] Shaheed Bhai Mani Singh District Hospital, Opp. Police Line, Mansa Road, Bathinda, Punjab-151001,opposite Police Line, Mansa Road Bathinda, Distt. Bathinda. 151001, Punjab, 151001
       => ShaheedBhai DistHosp, Bathinda (Punjab)
 [token] Dr. Agarwal`s Eye Hospital and Research Centre, 19 Cathedral Road CHENNAI, Tamil Nadu-600086,222, TTK Road, Alwarpet, Chennai, Tamil Nadu, 600018
@@ -1290,6 +1325,8 @@ all.csv institutes never matched: 631
       => Anand Rishiji Hosp, Ahmednagar (Maharashtra)
 [token] ICON HOSPITAL, NH-1, SECTOR-F, SAHARA STATE ROAD, JANKIPURAM, LUCKNOW , Uttar Pradesh-226021,NH 1 CP 1 NH Sector F Jankipuram Lucknow, Uttar Pradesh, 226021
       => IconHospital,Jankipuram,Lucknow (Uttar Pradesh)
+[leading-words] General Hospital, Chintamani MG Road. Chintamani. Chikkaballapur District Karnataka 563125, Karnataka-0,General Hospital Chintamani M G Road. CHINTAMANI Chikkaballapur district, Karnataka, 563125
+      => General Hosp, Chintamani, KAR (Karnataka)
 [token] Coimbatore childtrust hospitals pvt ltd, 111,112 nanjappa nagar,Trichy Road Singanallur Coimbatore, Tamil Nadu-641045,111 Nanjappa Nagar Trichy Main Road Singanallur Coimbatore, Tamil Nadu, 641005
       => Coimbatore Child Trust Hosp, TN (Tamil Nadu)
 [token] Manipal Hospital Pvt. Ltd., (Formerly Columbia Asia Referral Hospital) 26/1, Brigade Gateway, Beside Metro station, Malleshwarm west, Bangalore, Karnataka-560055,No 26 4 Brigade Gateway, Malleshwaram West, Beside Metro, Bengaluru- 560055, Karnataka, 560055
@@ -1404,6 +1441,8 @@ all.csv institutes never matched: 631
       => Dist Women Hosp,Ailwal,Azamgarh (Uttar Pradesh)
 [token] JAG PRAVESH CHANDRA HOSPITAL, PANDUK SHILA MARG, NEAR NORTHERN ENGINEERING COLLEGE, SHASTRI PARK, SHAHDARA, Delhi-110053,PANDUK SHILA MARG, NEAR NORTHERN ENGINEERING COLLEGE, SHASTRI PARK, DELHI-110053, Delhi (NCT), 110053
       => JagPravesh ChandraHosp,Shahdara (Delhi)
+[leading-words] General Hospital KGF, General Hospital Robertsonpet KGF Karnataka , Karnataka-563122,GENERAL HOSPITAL, ROBERTSONPET, KGF TALUK, KOLAR DISTRICT., Karnataka, 563122
+      => General Hospital, KGF (Karnataka)
 [token] Sadar Hospital, Biharsharif, Nalanda, Bihar-803101,SADAR HOSPITAL, HOSPITAL MORE, BIHARSHARIF, NALANDA, BIHAR-803101, Bihar, 803101
       => SadarHosp, Biharsharif, Nalanda (Bihar)
 [token] DISTRICT HEAD QUARTER HOSPITAL NAYAGARH, DIST-NAYAGARH, Odisha-752069,District Headquarter Hospital, Nayagarh Dist - Nayagarh, Odisha, PIN - 752069
@@ -1415,7 +1454,7 @@ all.csv institutes never matched: 631
 [token] SKR Hospital And Trauma Centre Pvt. Ltd, Malikpur Chowk Pathankot, Punjab-145001,SKR HOSPITAL AND TRAUMA CENTRE PVT LTD, MALIKPUR CHOWK, PATHANKOT, Punjab, 145001
       => SKR Hosp& Trauma Cent,Pathankot (Punjab)
 [token] Bhailal Amin General Hospital, Bhailal Amin Marg, Gorwa, Vadodara, Gujarat-390003,Bhailal Amin General Hospital, Bhailal Amin Marg, Gorwa, Vadodara, Gujarat, 390003
-      => Bhailal Amin Gen Hosp, Vadodara (Gujarat)  [conflicting numbers in all.csv: DNB Stipend Year 1: 100800 vs 75600 -> left blank; DNB Stipend Year 2: 102480 vs 82320 -> left blank; DNB Stipend Year 3: 105000 vs blank -> left blank]
+      => Bhailal Amin Gen Hosp, Vadodara (Gujarat)
 [token] Virinchi Hospital, Door No. 6-3-2,3 and 3/1 Road No 1, Banjara Hills, Virinchi Circle, Hyderabad, Telangana-500034,Virinchi Hospital, Door No. 6-3-2,3 and 3/1 Road No 1, Banjara Hills, Virinchi Circle, Hyderabad, Telangana-500034
       => Virinchi Hospital, Hyderabad (Telangana)
 [token] Hartej Hospital (Hartej Nursing Home), A-290-192, Ranjit Avenue, Amritsar, Punjab-143001,A-290-292,RANJIT AVENUE,AMRITSAR,PUNJAB, Punjab, 143001
@@ -1526,6 +1565,8 @@ all.csv institutes never matched: 631
       => Dist Women Hosp, Amravati (Maharashtra)
 [token] Mittal Medicare and hospital Pvt.Ltd., 10, Tilak marg, Narsing Choupati Dhar, M.P., Madhya Pradesh , Madhya Pradesh-454001,10 TILAK MARG NARSINGH CHOUPATI DHAR, Madhya Pradesh, 454001
       => Mittal Medicare & Hosp, Dhar,MP (Madhya Pradesh)
+[leading-words] General Hospital Shikaripura, General Hospital Shikaripura Near Ib Circle Doddapete Main Road Karnataka , Karnataka-577427,mohshikaripur, Karnataka, 577427
+      => General Hosp, Shikaripura (Karnataka)
 [normalised] Civil Hospital, Ambala Cantt , Ambala Haryana , Haryana-133001,JAGADHARI ROAD, CIVIL HOSPITAL , AMBALA CANTT, Haryana, 133001
       => Civil Hospital, Ambala Cantt (Haryana)
 [token] Regional Cancer Centre, Medical College Campus, Trivandrum, Kerala-695011,Director, Regional Cancer Centre, Medical College PO, Thiruvananthapuram 695011, Kerala
@@ -1546,6 +1587,8 @@ all.csv institutes never matched: 631
       => Civil Hospital,Pathankot,Punjab (Punjab)
 [token] Kanumuri Hospital, D.No-12 Sanakkayala Factory Road Kothapet, Guntur, Andhra Pradesh-522001,D-NO 12 , SANAKKAYALA FACTORY ROAD , KOTHAPET , GUNTUR, Andhra Pradesh, 522001
       => Kanumuri Hosp, Kothapet, Guntur (Andhra Pradesh)
+[leading-words] General Hospital, Pavagada Tumakuru District Karnataka , Karnataka-561202,General Hospital Pavagada Tumakuru District Karnataka 561202, Karnataka, 561202
+      => General Hosp, Pavagada (Karnataka)
 [token] SADAR HOSPITAL, HOSPITAL ROAD, KHAGARIA , Bihar-851204,Sadar Hospital Road Khagaria
       => Sadar Hospital,Khagaria (Bihar)
 [token] Medica North Bengal Clinic, Meghnad Saha Sarani, Pradhan Nagar, Siliguri, West Bengal-734003,Meghnad Saha Sarani, Pradhan Nagar, Siliguri
@@ -1560,6 +1603,8 @@ all.csv institutes never matched: 631
       => Area Hospital, Gudur (Andhra Pradesh)
 [token] Pushpagiri Eye Institute, Plot No.241, Uma Plaza Door No.10-2-342, Road No.9, West Marredpally, Secunderabad, Telangana-500026,Plot No 241 Uma Plaza Door No 10 – 2- 342 Road No 9 West Marredpally Secunderabad 500026, Telangana, 500026
       => PushpagiriEyeInst,Secunderabad (Telangana)
+[leading-words] GOVERNMENT MEDICAL COLLEGE OSMANABAD OSMANABAD-413501 Maharashtra,Government Medical College and Hospital, Marwad Galli, Civil Campus, Dharashiv Osmanabad 413 501
+      => Govt Medical College, Osmanabad (Maharashtra)
 [token] SADAR HOSPITAL, HAJIPUR HOSPITAL ROAD, HAJIPUR DIS-VAISHALI, BIHAR , Bihar-844101,Hospital Road, Hajipur, Vaishali
       => Sadar Hospital,Vaishali (Bihar)
 [token] JYOTHI HOSPITAL, 19-1350, MIRYALAGUDA, NALGONDA DISTRICT, Telangana-508207,19-1350, JYOTHI HOSPITAL, NEAR ANJANEYA SWAMI TEMPLE, MIRYALAGUDA, NALGONDA DISTRICT, TELANGANA, Telangana, 508207
@@ -1584,6 +1629,8 @@ all.csv institutes never matched: 631
       => Kushabhau Thakre Hosp, Rewa (Madhya Pradesh)
 [token] Pushpanjali Hospital, Plot No 1, Sector 4 Rewari Haryana, Haryana-123401,plot number 1 sector 4 rajesh pilot chowk rewari, Haryana, 123401
       => Pushpanjali Hosp, Sec 4, Rewari (Haryana)
+[leading-words] Government Medical College Purnea, Line Bazar, Purnea, Bihar-854301,GMCH,LINE BAZAR,PURNEA
+      => Govt Med Coll, Purnea (Bihar)
 [token] Distric Hopital Gwalior, Mall Road Morar Gwalior Madhya Pradesh , Madhya Pradesh-474006,Mall Road Morar Gwalior, Madhya Pradesh, 474006
       => District Hospital, Gwalior, MP (Madhya Pradesh)
 [token] Maitri Hospital, 2A, Talwandi, IL Choraha Rajasthan , Rajasthan-324005,2-A, Commerce College Rd, Sector - A, Talwandi, Kota, Rajasthan, 324005
@@ -1594,6 +1641,8 @@ all.csv institutes never matched: 631
       => Sadar Hospital, Sitamarhi,Bihar (Bihar)
 [normalised] PARIHAR HOSPITAL KAWARDHA, NEAR MINIMATA CHAUK BILASPUR ROAD KAWARDHA DIST KABIRDHAM CG , Chhattisgarh-491995,PARIHAR HOSPITAL KAWARDHA, NEAR MINIMATA CHAUK BILASPUR ROAD KAWARDHA DIST KABIRDHAM CG , Chhattisgarh-491995
       => Parihar Hospital,Kawardha (Chhattisgarh)
+[leading-words] Taluk General Hospital, Bhadravathi Channagiri Road, Old Town, Bhadravathi Karnataka , Karnataka-577301,Taluk General Hospital Bhadravathi cmobdvtatgmail.com, Karnataka, 577301
+      => Taluk Gen Hosp, Bhadravathi,KAR (Karnataka)
 [normalised] District Hospital Fazilka, Sullemani Border Road, Near Court Complex, Fazilka, Punjab-152123,District Hospital Fazilka, Sullemani Border Road, Near Court Complex, Fazilka, Punjab- 152123
       => District Hospital,Fazilka (Punjab)
 [normalised] Civil Hospital, Ferozepur, Punjab, Punjab-152002,
@@ -1632,6 +1681,8 @@ all.csv institutes never matched: 631
       => Visakha Steel General Hosp,Vizag (Andhra Pradesh)
 [token] NEW BHOSARI HOSPITAL, BHOSARI, PUNE, Maharashtra-411039,Gulve Vasti, Near Ankushrao Landage Auditorium, Bhosari- 411039, Maharashtra, 411039
       => NewBhosariHosp, GulveVasti,Pune (Maharashtra)
+[token] Autonomous State Medical College Society, Hardoi,Gaura Danda, Sitapur Road, Hardoi U.P. -241001
+      => Autonomous State MC, Hardoi (Uttar Pradesh)
 [token] Sankara Eye Hospital, Airport-White Field Road, Kundanahalli Gate, Bangalore, Karnataka-560037,Varthur Road, Kundalahalli gate, Bangalore 560037, Karnataka, 560037
       => Sankara Eye Hosp, Bangalore (Karnataka)
 [token] Associated Hospital Government Medical College, Nh1a , Kathua, Jammu and Kashmir , Jammu and Kashmir-184104,Government Medical College Chack Sajjan Kathua, Jammu And Kashmir, 184101
@@ -1646,6 +1697,8 @@ all.csv institutes never matched: 631
       => Al-Aafia CivilHosp,Nuh,Haryana (Haryana)
 [token] DISTRICT HOSPITAL, MAIN BAZAAR, MOGA, Punjab, Punjab-142001,District Hospital Main Bazaar Moga
       => District Hospital,Moga (Punjab)
+[leading-words] Taluk General Hospital Kadur Nh 206 Kadur , Chikmagalur District Karnataka Karnataka,Taluk General Hospital Kadur Nh 206 Kadur , Chikmagalur District Karnataka 577548, Karnataka, 577548
+      => Taluk General Hospital, Kadur (Karnataka)
 [token] District Civil Hospital, Circular Road, Rewari (Haryana) Haryana , Haryana-123401,Circular Road, Rewari (Haryana) Haryana , Haryana-123401
       => District Civil Hospital,Rewari (Haryana)
 [normalised] Civil Hospital Bahadurgarh, District Jhajjar Haryana-124507,Civil Hospital Bahardurgarh, Delhi-Rohtak Road, District- Jhajjar,
@@ -1670,12 +1723,16 @@ all.csv institutes never matched: 631
       => Kharagpur Sub-Divisional Hosp (West Bengal)
 [token] Civil Hospital, Jalandhar Road, Hoshiarpur Punjab , Punjab-146001,chhsp1234@gmail.com, Punjab, 146001
       => Civil Hospital, Hoshiarpur, Punjab (Punjab)
+[leading-words] General Hospital, Panipat Near Bus Stand G T Road Panipat Haryana , Haryana-132103,GT ROAD NEAR BUS STAND PANIPAT, Haryana, 132103
+      => General Hospital, Panipat (Haryana)
 [token] DISTRICT HOSPITAL AND EPIDEMIOLOGICAL DISEASES HOSPITAL, MYSURU, KRS ROAD, METAGALLI, MYSURU, Karnataka-570016,DISTRICT HOSPITAL AND EPIDEMIOLOGICAL DISEASES HOSPITAL, KRS ROAD, METAGALLI, MYSURU - 570016 Karnataka State.
       => District Epidemiological Hosp,Mysuru (Karnataka)
 [normalised] District Hospital , Pratapgarh Banswara Road Pratapgarh Rajasthan , Rajasthan-312605,Dist. Hospital Pratapgarh, Banswara Road, Pratapgarh, Rajasthan, 312605
       => District Hospital, Pratapgarh (Rajasthan)
+[leading-words] General Hospital , Jalore Hospital Chouraha Jalore Rajasthan , Rajasthan-343001,GENERAL HOSPITAL JALORE, HOSPITAL JALORE, OPP. NAGAR PARISHAD, JALORE, RAJASTHAN
+      => General Hospital, Jalore (Rajasthan)
 
-== AMBIGUOUS (excluded) ==
+== AMBIGUOUS (listed with blank details) ==
 Sahyadri Super Specialty Hospital, Plot No. 30C, Erandawane, Karve Road, Pune., Maharashtra-411004,Plot No.30C, Erandawane, Karve Road, Pune, Maharashtra, 411004
       several all.csv institutes fit equally well. Candidates: Sahyadri SS Hosp, Karve Road (Maharashtra) | SahyadriSuperSpecHosp, Pune, MH (Maharashtra)
 YATHARTH SUPER SPECIALTY HOSPITALS, GREATER NOIDA PLOT NO 32,OMEGA-1, GREATER NOIDA, Uttar Pradesh-200130,Sector omega 01-, Greater noida, Uttar Pradesh, 201308
@@ -1707,117 +1764,115 @@ Kauvery Hospital, 2/473, 200 feet Radial road, Ganapathy nagar, Kovilambakkam, C
 Narayana Multispeciality Hospital , (unit of MMRHL) Andul Road,Chunavati, Howrah West Bengal , West Bengal-711109,Andul road, Podrah Chunavati Howrah, West Bengal, 711109
       several all.csv institutes fit equally well. Candidates: NarayanaMultiSpecHosp,Howrah,WB (West Bengal) | Narayana SS Hospital, Howrah (West Bengal)
 
-== NO CONFIDENT MATCH (excluded) ==
+== NO CONFIDENT MATCH (listed with blank details) ==
 Atal Bihari Vajpayee Institute of Medical Sciences and Dr. RML Hospital, New Delhi,ABVIMS & DR. RML Hospital, Baba Kharak Singh Marg, New Delhi.
       no all.csv institute in the same state shares all its distinctive words
 Madras Medical College, Chennai,EVR PERIYAR SALAI, CHENNAI-03
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Vardhman Mahavir Medical College & Safdarjung Hospital, Delhi,Vardhman Mahavir Medical College, , New Delhi
       no all.csv institute in the same state shares all its distinctive words
 Medical College, Thiruvananthapuram,GOVT. MEDICAL COLLEGE, THIRUVANANTHAPURAM
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Tata Memorial centre, Mumbai,OFFICE OF THE DIRECTOR ACADEMICS, 13TH FLOOR, HOMI BHABHA BLOCK, TATA MEMORIAL HOSPITAL, PAREL, MUMB
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Maulana Azad Medical College, New Delhi,2-Bahadur Shah Zafar Marg, Delhi - 110002
       no all.csv institute in the same state shares all its distinctive words
 Nizams Institute of Medical Sciences, Hyderabad,NIZAMS INSTITUTE OF MEDICAL SCIENCES  PANJAGUTTA  HYDERABAD - 500082
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kasturba Medical College, Manipal,Madhav Nagar, Manipal, Karnataka State India
       no all.csv institute in the same state shares all its distinctive words
 Bangalore Medical College and Research Institute, Bangalore,Bangalore Medical College and Research Institute
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Kozhikode, Calicut,Government Medical College Kozhikode principalmcc@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 B J Medical College, Ahmedabad,B.J. Medical College, New Civil Hospital Asarwa,Ahmedabad-380016,Gujarat,India
       no all.csv institute in the same state shares all its distinctive words
 Institute of Medical Sciences, BHU, Varansi,INSTITUTE OF MEDICAL SCIENCES, BANARAS HINDU UNIVERSITY
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SCB Medical College, Cuttack,Srirama Chandra Bhanja Medical College, Kataka
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Maharishi Markandeshwar Institute Of Medical Sciences & Research, Mullana, Ambala,M.M. Institute of Medical Sciences and Research, Ambala
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Seth GS Medical College, Mumbai,Seth Gordhandas Sunderdas Medical College, Acharya Donde Marg Parel MUMBAI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Jawaharlal Nehru Medical College, Aligarh,JAWAHARLAL NEHRU MEDICAL COLLEGE, ALIGARH MUSLIM UNIVERSITY STATE UTTAR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 University College of Medical Sciences & GTB Hospital, New Delhi,University College of Medical Sciences
       no all.csv institute in the same state shares all its distinctive words
 Mahatma Gandhi Missions Medical College, Navi Mumbai,MGM Medical College, Sector1, Plot 1, Kamothe, Navi Mumbai- 410209
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Ramachandra Medical College & Research Institute, Chennai,Sri Ramachandra Medical College and Research Institute
-      no state found in the institute text
-Kasturba Medical College, Mangalore,Light house Hill Road, Hampankatta, Mangalore, India
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 R N T Medical College, Udaipur,principal.rntmc.udpr@rajasthan.gov.in
       no all.csv institute in the same state shares all its distinctive words
 Symbiosis Medical College for Women, Pune,Gram Lavale Tal Mulshi Pune
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Institute of Postgraduate Medical Education & Research, Kolkata,244, Acharya J. C. Bose Road, Kolkata-700020
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Gandhi Medical College, Secunderabad,GANDHI MEDICAL COLLEGE, SECUNDERABAD, HYDERABAD
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kalinga Institute of Medical Sciences, Bhubaneswar,KALINGA INSTITUTE OF MEDICAL SCIENCES , KIIT UNIVERSITY, BHUBANESWAR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 JSS Medical College, Mysore,JSS Medical Institutions Campus Sri Shivarathreeshwara Nagar Bannimantap Mysuru
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Institute Of Medical Sciences & SUM Hospital, Bhubaneswar,Institute of Medical Sciences and SUM Hospital K 8 Kalinga Nagar PO Mahalaxmi Vihar Bhubaneswar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SMS Medical College, Jaipur,Sawai Man Singh Medical College, JLN Marg, Jaipur- 302004
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Chandigarh,GOVT. MEDICAL COLLEGE AND HOSPITAL, CHANDIGARH
       no all.csv institute in the same state shares all its distinctive words
 K S Hegde Medical Academy, Mangalore,K S Hegde Medical Academy, Nithyanandanagar, Deralakatte, Mangaluru
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mahatma Gandhi Missions Medical College, Aurangabad,N-6, Cidco, Chhatrapati Sambhajinagar (Aurangabad)
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. D Y Patil Medical College, Hospital and Research Centre, Pimpri, Pune,Dr. D. Y. Patil Medical College, Hospital and Research Centre, Sant Tukaram Nagar, Pimpri, Pune (Mah
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Amrita School of Medicine,Mata Amritanandamayi Marg,  Sector 88, Faridabad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Lokmanya Tilak Municipal Medical College, Sion, Mumbai,LOKMANYA TILAK MEDICAL COLLEGE MUMBAI DR. B R AMBEDKAR MARG, SION MUMBAI E- 400022
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Stanley Medical College, Chennai,STANLEY MEDICAL COLLEGE NO.1, OLD JAIL ROAD, CHENNAI-600001
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Bharati Vidyapeeth Deemed University Medical College & Hospital, Sangli,Bharati Vidyapeeth (Deemed to be University) Medical College and Hospital, Sangli
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mallareddy Medical College for Women, Hyderabad,Suraram X Roads, Jeedimetla, Hyderabad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Amrita School of Medicine, Elamkara, Kochi,Amrita School of Medicine, Amrita Institute of Medical Sciences,AIMS Ponekkara P.O, Kochi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Santosh Medical College, Ghaziabad,Santosh Medical College and Hospital, Ghaziabad, Delhi NCR
       no all.csv institute in the same state shares all its distinctive words
 Sri Venkateswara Institute of Medical Sciences (SVIMS) , Tirupati,Sri Venkateswara Institute of Medical Sciences, SVIMS, Alipiri Road, Tirupati
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Grant Medical College, Mumbai,Grant Medical College, Maharashtra
       no all.csv institute in the same state shares all its distinctive words
 Padmashree Dr. D.Y.Patil Medical College, Navi Mumbai,DR D Y PATIL MEDICAL COLLEGE, NAVI MUMBAI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Nagpur,Government Medical College, Nagpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 T D Medical College, Alleppey (Allappuzha),Government T D Medical College, Vandanam , Alappuzha
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Srinivasan Medical College and Hospital, Samayapuram, Tiruchirappalli ,Tamil Nadu,NH- 45, TRICHY - CHENNAI TRUNK ROAD, NEAR TOLL PLAZA, SAMAYAPURAM, TIRUCHIRAPPALLI - 621 112
       no all.csv institute in the same state shares all its distinctive words
 Pandit Deendayal Upadhyay Medical College, Rajkot,Pandit Deendayal Upadhyay Medical College, RAJKOT
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Jawaharlal Nehru Medical College, Belgaum,Jawaharlal Nehru Medical College, Belagavi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 B. J. Govt. Medical College, Pune,B.J.Government Medical College, Pune
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Kottayam,GOVT MEDICAL COLLEGE, GANDHINAGAR P O, KOTTAYAM KERALA 686008
       no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Institute of Medical Sciences, Sheikhpura, Patna,Indira Gandhi Institute of Medical Sciences, Patna, Bihar, 800014
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Thrissur,GOVT MEDICAL COLLEGE,THRISSUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Bharati Vidyapeeth University Medical College, Pune,Pune-Satara Road, Dhanakawadi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sun Eye Hospital and Laser Centre Private Limited, 57 B Singar Nagar Alambagh Lucknow, Uttar Pradesh-226005,Sun Eye Hospital and Laser Centre Private Limited, 57 B Singar Nagar Alambagh Lucknow, Uttar Pradesh-226005
       no all.csv institute in the same state shares all its distinctive words
 Malla Reddy Institute of Medical Sciences, Hyderabad,Suraram X Roads, Jeedimetla, Hyderabad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sanjay Gandhi Postgraduate Institute of Medical Sciences, Lucknow,Sanjay Gandhi Postgarduate Institute of Medical Sciences
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Jawaharlal Nehru Medical College, Sawangi (Meghe), Wardha,Jawaharlal Nehru Medical College,  Sawangi Meghe Wardha - 442107, Maharashtra State
       no all.csv institute in the same state shares all its distinctive words
 Hamdard Institute of Medical Sciences & Research, New Delhi,HIMSR, Guru Ravidas Marg, Hamdard Nagar, New Delhi
@@ -1825,173 +1880,169 @@ Hamdard Institute of Medical Sciences & Research, New Delhi,HIMSR, Guru Ravidas 
 RG Kar Medical College, Kolkata,R G KAR MEDICAL COLLEGE,1 KHUDIRAM BOSE SARANI,KOLKATA, West Bengal
       no all.csv institute in the same state shares all its distinctive words
 Dr. D Y Patil Medical College, Kolhapur,869  E  D. Y. Patil Vidyanagar Kasaba Bawada Kolhapur 416 006
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Osmania Medical College, Hyderabad,5-1-876, Turrebaz Khan Rd, Troop Bazaar, Koti, Hyderabad, Telangana
       no all.csv institute in the same state shares all its distinctive words
 Topiwala National Medical College, Mumbai,TOPIWALA NATIONAL MEDICAL COLLEGE B Y L Nair Ch Hospital, Dr. A.L. Nair Rd, Mumbai Central, Mumbai
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mahatma Gandhi Medical College & Research Institute, Pondicherry,SBV Pondicherry Campus, Pillaiyarkuppam, Pondicherry
       no all.csv institute in the same state shares all its distinctive words
 Pt. B D Sharma Postgraduate Institute of Medical Sciences, Rohtak (Haryana),Pandit Bhagwat Dayal Sharma Post Graduate Institute of Medical Sciences, Rohtak
       no all.csv institute in the same state shares all its distinctive words
 S V Medical College, Tirupati,S.V. Medical College, Tirupathi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. Ram Manohar Lohia Institute of Medical Sciences,Lucknow,Dr Ram Manohar Lohia Institute of Medical Sciences, Lucknow
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Medical College, Baroda,Govt. Medical College, Baroda
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rural Medical College, Loni,Dr. Balasaheb Vikhe Patil Rural Medical College (Formerly Called As Rural Medical College, Loni)
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Chettinad Hospital & Research Institute, Kanchipuram,Rajiv Gandhi Salai, Kelambakkam, Chengalpattu District
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 King George Medical University, Lucknow,KING GEORGES MEDICAL UNIVERSITY, Shahmeena Road, Chowk, Lucknow-226003
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Krishna Institute of Medical Sciences, Karad,KRISHNA INSTITUTE OF MEDICAL SCIENCES, KARAD
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Datta Meghe Medical College, Nagpur,Datta Meghe Medical College, Wanadongri, Hingna Road, Nagpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kilpauk Medical College, Chennai,No. 822, Poonamalli High Road, Kilpauk, Chennai 10
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Madurai Medical College, Madurai,MADURAI MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mysore Medical College and Research Instt. (Prev.name Government Medical College), Mysore,MYSORE MEDICAL COLLEGE AND RESEARCH INSTITUTE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ESIC Medical College & Hospital, Basaidarapur, New Delhi,ESIC Medical College & Hospital, Basaidarapur, New Delhi
       no all.csv institute in the same state shares all its distinctive words
 SBKS Medical Instt. & Research Centre, Vadodra,SBKS Medical Institute and Research Centre, Sumandeep Vidyapeeth, Piparia, Waghodia Rd, Vadodara
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Devaraj URS Medical College, Kolar,Tamaka, Kolar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Andhra Medical College, Visakhapatnam,Andhra Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Govt. Medical College, Kolkata,MEDICAL COLLEGE, KOLKATA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 North Eastern Indira Gandhi Regional Instt. of Health and Medical Sciences, Shillong,North Eastern Indira Gandhi Regional Institute of Health & Medical Sciences, Shillong
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Meenakshi Medical College and Research Institute, Enathur,Meenakshi Medical College Hospital and Research Institute, Enathur, Karaipettai Post, Kanchipuram
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Jammu,Govt. Medical College, Bakshi Nagar, Jamu
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Medical College, Shimla,Indira Gandhi Medical College Shimla
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Sai Netralaya, 10 No. Boring, Taigore Town, Sonauli Road, Gorakhpur, Uttar Pradesh-273001,Sri Sai Netralaya, 10 No. Boring, Taigore Town, Sonauli Road, Gorakhpur, Uttar Pradesh-273001
       no all.csv institute in the same state shares all its distinctive words
 Sher-I-Kashmir Instt. Of Medical Sciences, Srinagar,SKIMS, SOURA, SRINAGAR- 190011
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Nilratan Sircar Medical College, Kolkata,NIL RATAN SIRCAR MEDICAL COLLEGE, 138 AJC BOSE ROAD, KOLKATA-700014.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 M G M Medical College, Indore,Mahatma Gandhi Memorial Medical College, Indore
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 INDIAN RAILWAY POST GRADUATE INSTITUTE OF MEDICAL SCIENCES AND RESEARCH NEW DELHI,Indian Railway Post Graduate Institute of Medical sciences and Research, New Delhi and associated No
       no all.csv institute in the same state shares all its distinctive words
 Karnataka Medical College and Research Institute, Hubballi, Karnataka,Karnataka Medical College and Research Institute, Vidyanagar,  Hubballi.
       no all.csv institute in the same state shares all its distinctive words
 Kurnool Medical College, Kurnool,KURNOOL MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Gauhati Medical College, Guwahati,Gauhati Medical College, Guwahati
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kokilaben Dhirubhai Ambani Hospital and Medical Research Institute, Achyutrao Patwardhan Marg, 4 Bunglows, Andheri (W), Mumbai, Maharashtra-400053,Achyutrao Patwardhan Marg Andheri West Mumbai Maharashtra, Maharashtra, 400053
       no all.csv institute in the same state shares all its distinctive words
 H.B.T. Medical College & Dr. R.N. Cooper Municipal General Hospital, Juhu, Mumbai,HBT Medical College and Dr R N Cooper Municipal General Hospital, Bhaktivedanta Swami Rd, JVPD Schem
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Calcutta National Medical College, Kolkata,CALCUTTA NATIONAL MEDICAL COLLEGE 32, Gorachand Road, Kolkata 700014
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Bhabha Atomic Research Centre,Mumbai,Tata Memorial Hospital Premises, Annexe Bldg, Jerbai Wadia Road, Parel, Mumbai-400012
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 G.B. Pant Institute of Postgraduate Medical Education and Research, New Delhi,G B Pant Institute of Post Graduate Medical Education and Research 1 JLN Marg, Delhi 110002
       no all.csv institute in the same state shares all its distinctive words
 P.D. Hinduja National Hospital and Medical Research Centre, Veer Savarkar Marg, Mahim, Mumbai, Maharashtra-400016,Veer Savarkar Marg, Mahim, Mumbai, Maharashtra, 400016
       no all.csv institute in the same state shares all its distinctive words
 Chittaranjan National Cancer Institute,1st Campus - 37, S P Mukherjee Road, Kolkata- 700026, 2nd Campus - Street No.299, Plot No. DJ – 01, P
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Govt. Medical College,Pariyaram, Kannur (Prev. Known as Academy of Medical Sciences),GOVERNMENT MEDICAL COLLEGE - KANNUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 HOMI BHABHA CANCER HOSPITAL AND RESEARCH CENTRE NEW CHANDIGARH,HOMI BHABHA CANCER HOSPITAL AND RESEARCH CENTRE PLOT NO 1 MEDICITY NEW CHANDIGARH DISTRICT SAS NAGAR
       no all.csv institute in the same state shares all its distinctive words
 Malabar Institute of Medical Sciences, Mini Bye Pass, Govindapuram, Calicut, Kerala-673016,Govindapuram P.O., Mini Bypass Road, Kozhikode, Kerala, 673016
       no all.csv institute in the same state shares all its distinctive words
 Thanjavur Medical College, Thanjavur,THANJAVUR MEDICAL COLLEGE, THANJAVUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Woodland Hospital, Dhanketi, Shillong, Meghalaya-793003,Dhankheti P.O. Laitumkhrah East Khasi Hills District Shillong, Meghalaya, 793003
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Parippally, Kollam,Government Medical College Kollam,Parippally
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Srinagar,Karan Nagar Srinagar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mandya Institute of Medical Sciences, Mandya,BENGALURU - MYSURU MAIN ROAD MANDYA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr SN Medical College, Jodhpur,Dr. Sampurnanand Medical College (SNMC), JODHPUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Second Sight Southend Eye Centre Pvt. Ltd., . Dhopagachi, Kundarali, Baruipur, South 24 Parganas, West Bengal, West Bengal-743610,Baruipur Amtola Road. Dhopagachi, Kundarali, PS.Baruipur, Westbengal, Pin - 743610, West Bengal, 743610
       no all.csv institute in the same state shares all its distinctive words
 MKCG Medical College, Berhampur,Maharaja Krushna Chandra Gajapati Medical College , Brahmapur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sardar Patel Medical College, Bikaner,Sardar Patel Medical College, Bikaner
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Vijaynagar Institute of Medical Sciences, Bellary,principalvimsbellary@gmail.com, principalbmcrcballari@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 North Bengal Medical College, Darjeeling,Sushrutanagar, Darjeeling
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Coporation Medical College, Sanath Nagar, Hyderabad,SANATHNAGAR HYDERABAD
-      no state found in the institute text
-MP Shah Medical College, Jamnagar,M. P. SHAH GOVERNMENT MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Tirunelveli Medical College, Tirunelveli,THE DEAN, TIRUNELVELI MEDICAL COLLEGE, HIGHGROUND,TIRUNELVELI-11
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Manipal Hospital, No. 98, Rustum Bagh, Old Airport Road, Bangalore, Karnataka-560017,#98, Rustom Bagh, HAL Airport Road, Bengaluru, Karnataka, 560017
       no all.csv institute in the same state shares all its distinctive words
 GSVM Medical College, Kanpur,GANESH SHANKAR VIDYARTHI MEMORIAL MEDICAL COLLEGE, SWAROOP NAGAR, KANPUR- 208002
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Coimbatore Medical College, Coimbatore,COIMBATORE MEDICAL COLLEGE, CIVIL AERODROME POST, AVINASHI ROAD, PEELAMEDU, COIMBATORE-14
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Moti Lal Nehru Medical College, Allahabad,Moti Lal Nehru Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Midnapore Medical College, Midnapore,Midnapore Medical College and Hospital
-      no state found in the institute text
-St. Stephen`s Hospital, Tees Hazari, New Delhi, Delhi-110054,Tis Hazari, Delhi (NCT), 110054
       no all.csv institute in the same state shares all its distinctive words
 Govt. Mohan Kumaramangalam Medical College, Salem,Government Mohan Kumaramangalam Medical College, Majeera Kollappatti, Steel Plant Road, Salem.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Corporation Medical College, Faridabad,NH3 NIT FARIDABAD
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Gajra Raja Medical College, Gwalior,GAJRA RAJA MEDICAL COLLEGE GWALIOR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Patiala,Government medical college patiala.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajendra Institute of Medical Sciences, Ranchi,Rajendra Institute of Medical Sciences, Ranchi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Surat,Government Medical College, Majuragate, Surat.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Corporation Medical College, Bangalore,3RD BLOCK RAJAJINAGAR BENGALURU 560 010
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Burdwan Medical College, Burdwan,Burdwan Medical College, West Bengal
       no all.csv institute in the same state shares all its distinctive words
 ESIC Medical College & PGIMSR, K.K Nagar, Chennai,ESIC Medical College and Hospital, KK Nagar, Chennai - 600 078
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Aurangabad,Government Medical College, Aurangabad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Maharani Laxmi Bai Medical College, Jhansi,MAHARANI LAXMI BAI MEDICAL COLLEGE JHANSI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Kota,Government Medical College Kota
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Patna Medical College, Patna,PATNA MEDICAL COLLEGE, PATNA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Fortis Memorial Research Institute, Sector-44, Opposite HUDA CITY centre Metro Station, Gurgaon, Haryana-122002,Fortis memorial research institute, Sector 44, Opposite Huda City Centre Metro station, Gurgaon, Haryana, 122002
       no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Medical College & Hospital, Nagpur,INDIRA GANDHI GOVT.MEDICAL COLLEGE NAGPUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Regional Institute of Medical Sciences, Imphal,Regional Institute of Medical Sciences, Imphal, Lamphelpat
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Goa Medical College, Panaji,Bambolim, Goa
       no all.csv institute in the same state shares all its distinctive words
 Dr. Rajendar Prasad Government Medical College, Tanda, H.P,Dr. Rajendra Prasad Government Medical College, Tanda
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kerala Institute of Medical Sciences, P B No.1, Anayara P O, Trivandrum, Kerala-695029,PB NO.1, ANAYARA PO, TRIVANDRUM, Kerala, 695024
       no all.csv institute in the same state shares all its distinctive words
 K A P Viswanathan Government Medical College, Trichy,PERIYAMILAGUPARAI, TIRUCHIRAPPALLI,
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kakatiya Medical College, Warangal,Kakatiya Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Corporation Medical College, Joka, Kolkata,ESI-PGIMSR & ESIC MEDICAL COLLEGE, JOKA, KOLKATA, WEST BENGAL
       no all.csv institute in the same state shares all its distinctive words
 Institute of Human Behaviour and Allied Sciences, Delhi,Institute of Human Behaviour and Allied Sciences,  Dilshad Garden, New Delhi, Delhi 110095, India
@@ -1999,43 +2050,43 @@ Institute of Human Behaviour and Allied Sciences, Delhi,Institute of Human Behav
 VP Chest Institute of Medical Sciences, Delhi,Vallabhbhai Patel Chest Institute, Delhi
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Ernakulam,GOVT MEDICAL COLLEGE, ERNAKULAM
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Guntur Medical College, Guntur,GUNTUR MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Chengalpattu Medical College, Chengalpattu,CHENGALPATTU MEDICAL COLLEGE, CHENGALPATTU
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Veer Surendra Sai Institute of Medical Sciences and Research, Burla,VSS INSTITUTE OF MEDICAL SCIENCES AND RESEARCH,BURLA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Gandhi Medical College, Bhopal,Gandhi Medical College, Bhopal
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Hassan Institute of Medical Sciences, Hassan,HASSAN INSTITUTE OF MEDICAL SCIENCES, HASSAN
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Batra Hospital and Medical Research Centre, 1, Tuglakabad Institutional Area, M.B. Road, Delhi-110062,1, Tughlakabad institutional Area, Mehrauli Badarpur Road, New Delhi
       no all.csv institute in the same state shares all its distinctive words
 Assam Medial College, Dibrugarh,Assam Medical College
       no all.csv institute in the same state shares all its distinctive words
 KanyaKumari Government Medical College, Asaripallam,KANYAKUMARI GOVERNMENT MEDICAL COLLEGE, ASARIPALLAM, KANYAKUMARI DISTRICT
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Guru Govind Singh Medical College, Faridkot,Guru Gobind Singh Medical College, Sadiq Road, Faridkot
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajiv Gandhi Medical College and Chhatrapati Shivaji Maharaj Hospital, Thane,RAJIV GANDHI MEDICAL COLLEGE,THANE BELAPUR ROAD, KALWA, THANE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Murshidabad Medical College & Hospitals, Murshidabad,Station Road, Berhampore, Murshidabad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 S N Medical College, Agra,Sarojini Naidu Medical College, AGRA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rangaraya Medical College, Kakinada,Rangaraya Medical College Beside SP Office , Pithapuram Road, Kakinada
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Amritsar,GOVT. MEDICAL COLLEGE,CIRCULAR ROAD, AMRITSAR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Akola,Govt. Medical College Akola
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Miraj,Government Medical College, Miraj
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 K.J. Somaiya Medical College, Eastern Highway, Sion, Mumbai, Maharashtra-400022,SOMAIYA AYURVIHAR , EASTERN EXPRESS HIGHWAY, SION, MUMBAI 400022, Maharashtra, 400022
       no all.csv institute in the same state shares all its distinctive words
 Belagavi Institute of Medical Sciences, Belagavi,BELAGAVI INSTITUTE OF MEDICAL SCIENCES, BELAGAVI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Nizam`s Institute of Medical Sciences, Punjagutta, Hyderabad, Telangana-500082,NIZAMS INSTITUTE OF MEDICAL SCIENCES PANJAGUTTA HYDERABAD
       no all.csv institute in the same state shares all its distinctive words
 Tezpur Medical College & Hospital, Tezpur,Tumuki, Bihaguri, Tezpur, Sonitpur, Assam
@@ -2043,103 +2094,101 @@ Tezpur Medical College & Hospital, Tezpur,Tumuki, Bihaguri, Tezpur, Sonitpur, As
 Apollo Multispecialty Hospitals Limited, 58, Canal Circular Road, Kolkata, West Bengal-700054,58 Canal Circular Road Kolkata 700054, West Bengal, 700054
       no all.csv institute in the same state shares all its distinctive words
 Shimoga Institute of Medical Sciences, Shimoga,SHIMOGA INSTITUTE OF MEDICAL SCIENCES
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Pt. J N M Medical College, Raipur,Pt. Jawahar Lal Nehru Memorial Medical College, RAIPUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Lisie Medical Institution, P.O. Box 3053, KOCHI-18 Kerala, Kerala-682018,Kochi, Kerala
       no all.csv institute in the same state shares all its distinctive words
 Jawaharlal Nehru Medical College, Ajmer,NEAR PATEL STADIUM, AJMER
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 LLRM Medical College, Meerut,Lala Lajpat Rai Memorial Medical College, MEERUT
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajiv Gandhi Institute of Medical Sciences, Srikakulam,Government Medical College Srikakulam Balaga Srikakulam Town Srikakulam District
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Pimpri Chinchwad Municipal Corporation PG Institute, Pimpri,Dean Office, 2nd Floor, Y.C.M.Hospital, Sant Tukaramnagar Pimpri, Pune
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Netaji Subhash Chandra Bose Medical College, Jabalpur,NETAJI SUBHASH CHANDRA BOSE MEDICAL COLLEGE, NAGPUR ROAD JABALPUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Medical Trust Hospital, M G Road, Kochi, Kerala-682016,M.G. Road Pallimukku Cochin, Kerala, 682016
       no all.csv institute in the same state shares all its distinctive words
 Government Siddhartha Medical College, Vijaywada,Siddhartha Medical College, Vijayawada
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 B.R. Singh Hospital and Centre for Medical Education and Research, Eastern Railway, Sealdah, KOLKATA, West Bengal-700014,Eastern Railway, Sealdah, Kolkata, West Bengal, 700014
       no all.csv institute in the same state shares all its distinctive words
 Government Erode Medical College & Hospital, Perundurai (Formerly IRT Perundurai Medical College),GOVERNMENT ERODE MEDICAL COLLEGE AND  HOSPITAL PERUNDURAI SANATORIUM POST ERODE  DISTRICT
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 G Kuppuswamy Naidu Memorial Hospital, Post Box No. 6327, Nethaji Road, Pappanaickenpalayam, Coimbatore, Tamil Nadu-641037,Post Box No.6327, Nethaji Road, Pappanaickenpalayam, Coimbatore, Tamil Nadu, 641037
       no all.csv institute in the same state shares all its distinctive words
 Thoothukudi Medical College, Thoothukudi,GOVERNMENT THOOTHUKUDI MEDICAL COLLEGE, 3rd Mile,Kamaraj Nagar,Thoothukudi.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Omandurar,GOVERNMENT MEDICAL COLLEGE, OMANDURAR GOVERNMENT ESTATE, WALAJAH ROAD, NEAR KALAIVANAR ARANGAM, CHEN
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Silchar Medical College, Silchar,Silchar Medical College, Silchar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Umaprem Netralay Eye Hospital, Unit of ASNA VARANASI PRIVATE LIMITED, N6/13 E-1-2, Indira Nagar EXTENSION-2, Chitaipur, BLW-CHITAIPUR ROAD, Varanasi, Uttar Pradesh-221005,Umaprem Netralay Eye Hospital, Unit of ASNA VARANASI PRIVATE LIMITED, N6/13 E-1-2, Indira Nagar EXTENSION-2, Chitaipur, BLW- CHITAIPUR ROAD, Varanasi, Uttar Pradesh-221005
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Bhavnagar,Near Life Science Department, sardar Vallabhbhai Patel Campus, M. K. Bhavnagar University, Bhavnagar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Netaji Subhas Chandra Bose Cancer Hospital, 3081, Nayabad, West Bengal-700094,3081, Nayabad, New Garia, West Bengal, 700094
       no all.csv institute in the same state shares all its distinctive words
 BRD Medical College, Gorakhpur,BABA RAGHAV DAS MEDICAL COLLEGE MAHARAJGANJ ROAD GORAKHPUR UP 273013
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr Vaishampayan Memorial Medical College, Solapur,In front of district court civil chowk Dr.V.M.Govt.Medical College,Solapur, Maharasthtra
-      no state found in the institute text
-Post Graduate Institute of Medical Education and Research & Capital Hospital, Bhubaneswar,Post Graduate Institute of Medical Education & Research and Capital Hospital, Bhubaneswar,Udyan Marg
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 College of Medicine and Sagore Dutta Hospital, Kolkata,College of Medicine & Sagore Dutta Hospital, 578 B.T. Road, Kamarhati, North-24 Parganas, Pin-700058
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Institute of Child Health, Bangalore,INDIRA GANDHI INSTITUTE OF CHILD HEALTH, SOUTH HOSPITAL COMPLEX, DHARMARAJ COLLEGE POST. BANGALORE -
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mahatma Gandhi Institute of Medical Sciences, Wardha,Mahatma Gandhi Institute of Medical Sciences, Sevagram, Wardha
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajashree Chatrapati Shahu Maharaj Government Medical College, Kolhapur,R.K. Nagar Road, Shenda Park, Kolhapur, Maharashtra
       no all.csv institute in the same state shares all its distinctive words
 Shyam Shah Medical College, Rewa,deanmcrewa@rediffmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Aakash Healthcare Super Specialty Hospital, Plot, Road No. 201 Sector 3 Dwarka, Delhi-110075,HOSPITAL PLOT, ROAD NO-201,SECTOR 3 DWARKA, NEW DELHI, Delhi (NCT), 110075
       no all.csv institute in the same state shares all its distinctive words
 Meitra Hospital, KARAPARAMBA-KUNDUPARAMBA MINI BYPASS ROAD, EDAKKAD POST, CALICUT, Kerala-673005,Meitra Hospital, KARAPARAMBA-KUNDUPARAMBA MINI BYPASS ROAD, EDAKKAD POST, CALICUT, Kerala-673005
       no all.csv institute in the same state shares all its distinctive words
 K.H. Patil Institute of Medical Sciences (previously Gadag Institute of Medical Sciences, Mallasamudra, Mulgund Road, Gadag),K H Patil Institute of Medical Sciences Mallasamudra Gadag-582103
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Latur,Government Medical College, Old Railway station Near Marwadi Rajasthani High-School, Latur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 MAHAJAN IMAGING AND LABS, (A UNIT OF MAHAJAN IMAGING PVT LTD) C 6/8 SAFDARJUNG DEVELOPMENT AREA, Delhi-110016,MAHAJAN IMAGING & LABS (A UNIT OF MAHAJAN IMAGING PVT LTD) C 6/8 SAFDARJUNG DEVELOPMENT AREA, NEW DE, Delhi (NCT), 110016
       no all.csv institute in the same state shares all its distinctive words
 Theni Government Medical College, Theni,Government Medical College,Theni
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Institute of Medical Sciences, GREATER NOIDA, GAUTAMBUDDHA NAGAR, Uttar Pradesh-201310,Government Institute of Medical Sciences, Greater Noida, Gautam Buddha Nagar 201310 Uttar Pradesh
       no all.csv institute in the same state shares all its distinctive words
 Government Vellore Medical College, Vellore,GOVERNMENT VELLORE MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Gulbarga Institute of Medical Sciences, Gulbarga,VEERESH NAGAR SEDAM ROAD KALABURAGI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Ananthapuri Hospital and Research Institute, Chacka, NH Bypass, Thiruvananthapuram, Kerala-695024,Chacka, NH Bypass, Thiruvananthapuram 695024, Kerala, 695024
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Ananthapuram,GOVT MEDICAL COLLEGE, ANANTAPURAMU
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Raichur Institute of Medical Sciences, Raichur,RAICHUR INSTITUTE OF MEDICAL SCIENCES
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Krishna Institute of Medical Sciences, 1-8-31/1, Minister Road, Secunderabad, Telangana-500003,academics@kimshospitals.com, Telangana, 500003
       no all.csv institute in the same state shares all its distinctive words
 Government Villupuram Medical College, Villupuram,GOVERNMENT VILLUPURAM MEDICAL COLLEGE VILLUPURAM  TRICHY TRUNK ROAD MUNDIYAMPAKKAM VILLUPURAM DISTR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Nalanda Medical College, Patna,NALANDA MEDICAL COLLEGE,PATNA, OLD BYPASS ROAD,BHOOTNATH, KANKARBAGH
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ACSR Government Medical College,Opp. AC Subbareddy Stadium Dargamitta Nellore, SPSR Nellore district, Andhra Pradesh.
       no all.csv institute in the same state shares all its distinctive words
 Chacha Nehru Bal Chikitsalaya,Geeta Colony, Delhi (NCT), 110031
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College & Hospital Cuddalore, Since- 09-05-2025 (erstwhile Rajah Muthiah Medical College, cuddalore, T.N),Govt. Medical College and Hospital, Cuddalore District Erstwhile Rajah Muthiah Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 MALABAR INSTITUTE OF MEDICAL SCIENCES Ltd , CHALA EAST, KANNUR , Kerala-670621,Chala East, Chala, Kannur, Kerala, 670621
       no all.csv institute in the same state shares all its distinctive words
 Government Thiruvannamalai Medical College, Thiruvannamalai,DISTRICT COLLECTORATE  MASTER PLAN COMPLEX, VENGIKKAL THIRUVANNAMALAI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SETH V. C. GANDHI and M. A. VORA MUNICIPAL GENERAL HOSPITAL (RAJAWADI HOSPITAL), NEAR POST OFFICE, GHATKOPAR EAST MUMBAI, Maharashtra-400077,hospital.rajawadi@gmail.com, Maharashtra, 400077
       no all.csv institute in the same state shares all its distinctive words
 Dr. Shankarrao Chavan Govt. Medical College, Nanded,DR. SHANKARRAO CHAVAN GOVERNMENT MEDICAL COLLEGE, VISHNUPURI, NANDED.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indo-American Cancer Institute and Research Centre, Road No.14, Banjara Hills, Hyderabad, Telangana-500034,Road No.14, Banjara Hills, Hyderabad, Telangana, 500034
       no all.csv institute in the same state shares all its distinctive words
 Poona Hospital and Research Centre, 27 Sadashivpeth, Pune, Maharashtra-411030,27,Sadashiv Peth, Pune -411030, Maharashtra, 411030
@@ -2157,39 +2206,39 @@ Santokbha Durlabhji Memorial Hospital Cum Medical Research Institute, Bhawani Si
 Bhagat Phool Singh Govt. Medical College for Women, Khanpur Kalan (Sonepat), Haryana-131305,BHAGAT PHOOL SINGH GOVT. MEDICAL COLLEGE FOR WOMEN KHANPUR KALAN SONEPAT
       no all.csv institute in the same state shares all its distinctive words
 Kidwai Memorial Institute of Oncology, Bangalore,Kidwai Memorial Institute of Oncolgy
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 K.E.M. Hospital, 489, Rasta Peth, Sardar Moodliar Road, Pune, Maharashtra-411011,489, SARDAR MOODLIAR ROAD, RASTA PETH, PUNE 411011, Maharashtra, 411011
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Ongole (previously Rajiv Gandhi Institute of Medical Sciences, Ongole),BHAGYA NAGAR, 5TH LINE, PRAKASAM DISTRICT, ONGOLE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Yashoda Hospital, Behind Hari Hara Kala Bhawan, S.P. Road, Secunderabad, Telangana-500003,ALEXANDER ROAD, BESIDE HARIHARA KALABHAVAN, NEAR CLOCK TOWER, SECUNDERBAD, Telangana, 500003
       no all.csv institute in the same state shares all its distinctive words
 Shri Balaji Action Medical Institute, FC-34, A-4, Paschim Vihar, New Delhi, Delhi-110063,FC34 A4 PASCHIM VIHAR NEW DELHI, Delhi (NCT), 110063
       no all.csv institute in the same state shares all its distinctive words
 Post Graduate Institute of Medical Sciences, Navi Mumbai,Park Avenue Road Kamladevi Birjdar Marg Plot no 11 6 and 11 7 Nerul East Navi Mumbai
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 RUHS College of Medical Sciences, Jaipur,RUHS COLLEGE OF MEDICAL SCIENCES, SECTOR-11, KUMBHA MARG, PRATAP NAGAR, TONK ROAD, JAIPUR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Bhabha Atomic Research Centre and Hospital, Anushakti Nagar, MUMBAI, Maharashtra-400094,Anushaktinagar, Mumbai, Maharashtra, 400094
       no all.csv institute in the same state shares all its distinctive words
 Shaikh-UL-Hind Maulana Mahmood Hasan Medical College, Saharanpur,Pilkhani Ambala Road
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Darbhanga Medical College, Lehriasarai,Sheetal Prasad Marg, Laheriasarai, Darbhanga, Bihar
       no all.csv institute in the same state shares all its distinctive words
 Koppal Institute of Medical Sciences, Koppal,Gangavati Road Kiddidal Gate koppal
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 International Hospital Limited (Formerly known as Fortis Hospital) Mulund Goregaon Link Road, Mumbai-400078 Maharashtra,Mulund - Goregaon Link Rd, Nahur West, Industrial Area, Bhandup West, Mumbai, Maharashtra 400078
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Nizamabad,Government Medical College, Nizamabad, Telangana State
       no all.csv institute in the same state shares all its distinctive words
 Bankura Sammilani Medical College, Bankura,Bankura Sammilani Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Barpeta Medical College & Hospital, Barpeta, Assam,Jotigaon, Jania Road, Barpeta Assam- 781301
       no all.csv institute in the same state shares all its distinctive words
 Max Super Speciality Hospital A unit of Crosslay Remedies Limited (Formerly known as Jaypee Hospital) Sec-128, Noid District Gautam Buddh Nagar-201304 Uttar Pradesh,Max Super Speciality Hospital, Sector 128, Noida, Uttar Pradesh, 201304
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Kadapa ( previously Rajiv Gandhi Institute of Medical Sciences, Kadapa),GOVERNMENT MEDICAL COLLEGE KADAPA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 IQRAA International Hospital and Research Centre, Malaparamba, Calicut, Kerala-673009,IQRAA INTERNATIONAL HOSPITAL AND RESEARCH CENTRE MALAPARAMBA CALICUT
       no all.csv institute in the same state shares all its distinctive words
 The Calcutta Medical Research Institute, 7/2, Diamond Harbour Road, KOLKATA , West Bengal-700027,The Calcutta Medical Research Institute 7 by 2 Diamond Harbour Road Kolkata 700027, West Bengal, 700027
@@ -2209,9 +2258,9 @@ Utkal Institute of Medical Sciences & hospital, C-3, Niladri Vihar, Chandrashekh
 SOHAM HOSPITAL, VILLAGE- LABHRA KHURD, SHRI SHANTI SEWA SAMITI , BAGBAHARA ROAD, MAHASAMUND, Chhattisgarh-493445,SOHAM HOSPITAL, VILLAGE- LABHRA KHURD, SHRI SHANTI SEWA SAMITI , BAGBAHARA ROAD, MAHASAMUND, Chhattisgarh-493445
       no all.csv institute in the same state shares all its distinctive words
 Government Sivagangai Medical College, Sivaganga,GOVT.SIVAGANGAI MEDICAL COLLEGE, MELAVANIYANKUDY, MANAMADURAI ROAD, SIVAGANGAI.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Jalgaon,Jilha Peth, Government Hospital Campus, Jalgaon
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. R N Cooper Municipal General Hospital, (Associated with H B T (Hinduhridayasamrat Balasaheb Thackeray) medical College) North South Road No.1, Juhu Scheme, Vile Parle (West), Mumbai, Maharashtra-400056,HBTMC AND DR.R.N.COOPER HOSPITAL U 15 BHAKTI VEDANTA ROAD JVPD SCHEME VILE PARLE WEST MUMBAI, Maharashtra, 400056
       no all.csv institute in the same state shares all its distinctive words
 Eternal Heart Care Centre and Research Institute, 3-A, jagatpura Road, Near Jawahar Circle, Jaipur, Rajasthan-302017,3A, Jagatpura Road, Near Jawahar Circle, Malviya Nagar, Jaipur, Rajasthan, 302017
@@ -2219,29 +2268,29 @@ Eternal Heart Care Centre and Research Institute, 3-A, jagatpura Road, Near Jawa
 Peerless Hospital and B K Roy Research Centre, 360, Panchasayar, KOLKATA, West Bengal-700094,360, Panchasayar, Kolkata - 700 -094, West Bengal, 700094
       no all.csv institute in the same state shares all its distinctive words
 Anugrah Narayan Magadh Medical College, Gaya,ANUGRAH NARAYAN MAGADH MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Multi Specialty Hospital, Sector-16, Chandigarh-160016,Director Health and Family Welfare Govt. Multi Speciality Hospital Sector 16 Chandigarh, Chandigarh, 160016
       no all.csv institute in the same state shares all its distinctive words
 Institute of Child Health, Kolkata,Institute of Child Health, Kolkata
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Thiruvarur Govt. Medical College, Thiruvarur,Thiruvarur Govt.Medical College, Master Plan Complex, Vilamal, Thiruvarur -610004
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indian Railway Post Graduate Institute of Medical Sciences & Research and Associated Northern Railway Central Hospital (Formerly known as Northern Railway Central Hospital) Basant Lane, Delhi-110055,Basant Lane New Delhi, Delhi (NCT), 110055
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Makeshift Campus Bye pass Road. Handwara Distt.: Kupwara, Jammu and Kashmir-193221,Makeshift Campus, Bypass Road, Handwara, Kupwara, J&K
       no all.csv institute in the same state shares all its distinctive words
 Agartala Government Medical College,Agartala,Agartala Government Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Maharashtra Post Graudate Institute of Medical Education & Research,Maharashtra Post Graduation Institute of Medical Education and Research Civil Hospital campus Tramba
       no all.csv institute in the same state shares all its distinctive words
 Jorhat Medical College & Hospital , Jorhat,Jorhat Medical College & Hospital
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Pandit Raghunath Murmu Medical College and Hospital , At-Rangamatia,Po-Laxmiposi,Baripada,Mayurbhanj , Orissa-757107,AT-RANGAMATIA, PO-SHAMAKHUNTA, PS-BARIPADA SADAR, BARIPADA, MAYURBHANJ
       no all.csv institute in the same state shares all its distinctive words
 Vedanta Medical Research Foundation (Balco Medical Centre) (Formerly known as Vedanta Medical Research Centre) Sector 36, Atal Nagar (New Raipur) PO : Uparwara, Raipur (CG) S-493661 Chhattisgarh,Sector 36, PO Uparwara, Naya Raipur, Chhattisgarh, 493661
       no all.csv institute in the same state shares all its distinctive words
 Shri Atal Bihari Vajpayee Medical College & Research Institute,Opposite to  Shivajinagar Bus stop, Shivajinagar, Bengaluru.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajiv Gandhi Institute of Medical Sciences, adilabad,RAJIV GANDHI INSTITUTE OF MEDICAL SCIENCES ADILABAD -504001 TELANGANA STATE
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Bharatpur, Rajasthan,SJP MEDICAL COLLEGE BHARATPUR VILLAGE RAMPURA NH 21
@@ -2249,35 +2298,35 @@ Government Medical College, Bharatpur, Rajasthan,SJP MEDICAL COLLEGE BHARATPUR V
 Asian Institute of Medical Sciences, Sector 21-A, Badhkal Flyover Road, Faridabad, Haryana-121001,Asian Institute of Medical Sciences, Badhkal Flyover Road,Sector-21A, Faridabad, Haryana-121001, Haryana, 121001
       no all.csv institute in the same state shares all its distinctive words
 Bundelkhand Medical College, Sagar,Govt. Bundelkhand Medical College Sagar M.P.
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SHRI BHAUSAHEB HIRE GOVT. MEDICAL COLLEGE, DHULE, CHAKKARDBARDI CAMPUS, SURAT BYPASS, MUMBAI -AGRA HIGHWAY, DHULE, Maharashtra-424311,SHRI BHAUSAHEB HIRE GOVT.MEDICAL COLLEGE,DHULE
       no all.csv institute in the same state shares all its distinctive words
 Chhattisgarh Institute of Medical Sciences, Bilaspur,CHHATTISGARH INSTITUTE OF MEDICAL SCIENCES
       no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Corporation Medical College, Gulbarga,ESIC MEDICAL COLLEGE SEDAM ROAD GULBARGA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Central Institute of Psychiatry, Ranchi,Central Institute of Psychiatry, Ranchi
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Rajiv Gandhi Medical College and Chhatrapati Shivaji Maharaj Hospital, Thane Belapur Road, Kalwa, Thane , Maharashtra-400605,RAJIV GANDHI MEDICAL COLLEGE,THANE BELAPUR ROAD, KALWA, THANE, Maharashtra, 400605
       no all.csv institute in the same state shares all its distinctive words
 Kailash Hospital and Heart Institute, H-33 Sector 27, Noida, Uttar Pradesh-201301,H-33 SECTOR  27 NOIDA, Uttar Pradesh, 201301
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Siddipet,SURVEY NO 54  GOVERNMENT MEDICAL COLLEGE  ENSANPALLY  SIDDIPET   502114
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Purvanchal Netralya and Retina Care Centre, S-5 10-A-1-K, KHAJURI, POLICE LINE ROAD, VARANASI, Uttar Pradesh-221002,Purvanchal Netralya and Retina Care Centre, S-5 10-A-1-K, KHAJURI, POLICE LINE ROAD, VARANASI, Uttar Pradesh-221002
       no all.csv institute in the same state shares all its distinctive words
 SRTR Medical College, Ambajogai,SWAMI RAMANAND TEERTH RURAL GOVERNMENT MEDICAL COLLEGE AMBAJOGAI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 O P Jindal Institute Of Cancer and Cardiac Research, Model Town, Hisar, Haryana, Haryana-125005,Model Town, Hisar, Haryana
       no all.csv institute in the same state shares all its distinctive words
 Chikkamagaluru Institute of Medical Sciences, Chikkamagaluru,Director, Chikkamagaluru Institute of Medical Sciences, Teguru, Chikkamagaluru, Karnataka - 577133.
       no all.csv institute in the same state shares all its distinctive words
 Shri Vasant Rao Naik Govt. Medical College, Yavatmal,Civil Lines, Yavatmal
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 PGIMER, Dr. Ram Manohar Lohia Hospital, Baba Kharak Singh Marg, Cannaught Place, Delhi-110001,Baba Kharak Singh Marg, Near Gurudwara Bangla Sahib, Connaught Place, New Delhi, Delhi 110001, Delhi (NCT), 110001
       no all.csv institute in the same state shares all its distinctive words
 Karwar Institute of Medical Sciences, Karwar,MG Road
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Polakulath Narayanan Renai Medicity Multi Super Specialty Hospital, PB No. 2259, Palarivattom (PO), Cochin, Kerala-682025,RENAIMEDICITY PALARIVATTOM KOCHI KERALA, Kerala, 682025
       no all.csv institute in the same state shares all its distinctive words
 Mahavir Jaipuriya Rajasthan Hospital, Opposite Govt. Jaipuriya Hospital, JLN Marg, Jaipur Rajasthan , Rajasthan-302018,Opposite Jaipuriya Hospital, Hospital Road, Milap Nagar, JLN Marg, Jaipur, Rajasthan, 302018
@@ -2291,25 +2340,25 @@ International Hospital Limited (Formerly known as Fortis Hospital) B-22, Sector-
 Jawaharlal Nehru Medical College and Hospital Bhagalpur, Mayaganj Bhagalpur, Bihar-812001,MAYAGANJ, BHAGALPUR
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Faizabad,GANJA DABHSEMAR AYODHYA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Medica Superspecialty Hospital, ,127 Mukundapur, E.M. Byapss, Kolkata, West Bengal, 700099
       no all.csv institute in the same state shares all its distinctive words
 BharatRatna Dr. Babasaheb Ambedkar Municipal General Hospital, S V Road, Parkeh Nagar, Opposite Kandivali Police Station, Kandivali (West), Mumbai, Maharashtra-400067,Parekh Nagar, SV Road, Opp. Kandivali Police station, Kandivali West, Mumbai, Maharashtra, 400067
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Chandrapur,TB Hospital Campus, Ram Nagar, Chandrapur - 442401
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 MNJ Institute of Oncology and Cancer Regional Center, Red Hills, Lakdi Ka Oil Hyderabad, Telangana-500004,MNJ Institute of Oncology and Regional Cancer Center, Red Hills, Hyderabad, Telangana, Telangana, 500004
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College (Prev.Uttarakhand Forest Hospital Trust Med.Col.), Haldwani,Government Medical College, Haldwani
       no all.csv institute in the same state shares all its distinctive words
 Post Graduate Institute of Child Health, Noida (Formely known as Super Speciality Paediatric Hospital & Post Graduate Teaching Institute),Post Graduate Institute of Child Health,SECTOR-30, NOIDA, GAUTAM Buddha Nagar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kamalnayan Bajaj Hospital (Marathwada Medical and Research Institutes), Gut No. 43, Beed Bypass Road, Satara Parisar, Aurangabad, Maharashtra-431005,Kamalnayan Bajaj Hospital, Gut no.  43, Satara Parisar, Beed bypass road, Auranagabad., Maharashtra, 431010
       no all.csv institute in the same state shares all its distinctive words
 International Hospital Limited (Formerly known as Fortis Escorts Hospital) Neelam Bata Road, Faridabad-121001 Haryana,Fortis Escorts Hospital, Neelam bata road, Faridabad, Haryana, 121001
       no all.csv institute in the same state shares all its distinctive words
 M G M Medical College, Jamshedpur,Mahatma Gandhi Memorial Medical College, Jamshedpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Asian Institute of Medical Sciences, Plot No P -72, Milap Nagar, MIDC, Dombivli (E), Maharashtra-421203,p -72,Milapnagar,MIDC,Dombivli E, Maharashtra, 421203
       no all.csv institute in the same state shares all its distinctive words
 Karnataka Cancer Therapy and Res. Institute, HUBLI, Karnataka-580025,Karnataka Cancer Therapy and Res. Institute, HUBLI, Karnataka- 580025
@@ -2319,7 +2368,7 @@ Government Medical College, Machilipatnam,KARAGRAHARAM, NEAR RADAR STATION, MACH
 Gleneagles Hospitals - Super Specialty and Transplant Centre, (Formerly Global Hospital -  Super Specialty and Transplant Centre) 35, Dr. E Borges Road, Hospital Avenue, Opp Shirodkar High School, Parel, Mumbai, Maharashtra-400012,Gleneagles Hospitals - Super Specialty and Transplant Centre, (Formerly Global Hospital -  Super Specialty and Transplant Centre) 35, Dr. E Borges Road, Hospital Avenue, Opp Shirodkar High School, Parel, Mumbai, Maharashtra- 400012
       no all.csv institute in the same state shares all its distinctive words
 NAMO Medical Education and Research Institute, Silvassa (Formerly known as Shri Vinoba Bhave Institute of Medical Sciences, (Govt. Medical College) Silvassa, U.T),Sayli Road, Silvassa, DNH
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 BARPETA CANCER CENTRE, FAAMCH CAMPUS, JANIA ROAD, JOYTI GAON, BARPETA, Assam-781301,BARPETA CANCER CENTRE, FAAMCH CAMPUS, JANIA ROAD, JOYTI GAON, BARPETA, Assam-781301
       no all.csv institute in the same state shares all its distinctive words
 Fortis Hospital, 154/9, Opp. IIMB Bannerghatta Road, Bangalore, Karnataka-560076,Poonam Palaspagar - Academic Coordinator Fortis Hospital, Bannerghatta Road, Bangalore, Karnataka 5
@@ -2343,19 +2392,19 @@ Valluvanad Hospital Complex Limited, Kanniyampuram(PO) Ottapalam , Kerala-679104
 Max Super Speciality Hospital (A unit of Starlit Medical Centre Pvt. Ltd.) (Fomerly Sahara India Medical Institute Limited) Gomti Nagar, Lucknow, Uttar Pradesh-226010,1 Viraj Khand Gomti Nagar, Uttar Pradesh, 226010
       no all.csv institute in the same state shares all its distinctive words
 Bidar Institute of Medical Sciences, Bidar,BIDAR INSTITUTE OF MEDICAL SCIENCES, BIDAR
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Kasturba Hospital, New Delhi,Kasturba Hospital, Daryaganj,Delhi
       no all.csv institute in the same state shares all its distinctive words
 Chamrajanagar Institute of Medical Sciences, Karnataka,CHAMARAJANAGAR INSTITUTE OF MEDICAL SCIENCES, SY. NO 124, YEDAPURA VILLAGE KASABA HOBLI, CHAMARAJANA
       no all.csv institute in the same state shares all its distinctive words
 Kodagu Institute of Medical Sciences, Kodagu,Kodagu Institute of Medical Sciences Madikeri Kodagu
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College and Hospital, sadar bazar camp, Satara, Maharashtra-415001,Chhatrapati Sambhaji Maharaj Government Medical College and Hospital, Satara 467, Sadar bazar, Cam
       no all.csv institute in the same state shares all its distinctive words
 Care Hospital, Road No. 1, Banjara Hills, Hyderabad, Telangana-500034,Care Hospitals Road No1 Banjara Hills Hyderabad Telangana, Telangana, 500034
       no all.csv institute in the same state shares all its distinctive words
 Jawaharlal Nehru Institute of Medical Sciences, Porompet, Imphal,POROMPAT, IMPHAL EAST
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Vivekananda Polyclinic and Institute of Medical Sciences, Vivekananda puram, Lucknow , Uttar Pradesh-226007,Vivekananda Polyclinic and Institute of Medical Sciences, Vivekananda Puram, Lucknow, Uttar Pradesh, 226007
       no all.csv institute in the same state shares all its distinctive words
 Max Super Specialty Hospital (A unit of Alexis Multispecialty Hospital Pvt. Ltd) (Formerly Alexis Multispecilaty Hospital) Nagpur Survey Number-232, Mankapur, Koradi Road, Nagpur Maharashtra-440030,232, Mankapur Square, Koradi road, NAGPUR, Maharashtra, 440030
@@ -2373,15 +2422,15 @@ MVR Cancer Centre and Research Institute, CP7/504 VELLALASSERI REC (NIT) VIA CAL
 Kalpana Chawla Govt Medical College, Model Town Karnal, Haryana-132001,Model Town, Karnal
       no all.csv institute in the same state shares all its distinctive words
 AARTHI SCANS AND LABS (A UNIT OF AARTHI SCANS PRIVATE LIMITED) No .C1/2, Lal Sain Mandir Marg, Opposite Mata Chanan Devi Hospital, Block C1, Janakpuri-110058,AARTHI SCANS AND LABS (A UNIT OF AARTHI SCANS PRIVATE LIMITED) No .C1/2, Lal Sain Mandir Marg, Opposite Mata Chanan Devi Hospital, Block C1, Janakpuri-110058
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sparsh Hospital, No.8, Ideal Homes HBCS Layout, Rajarajeshwari Nagar, Bengaluru , Karnataka-560098,Ideal Homes HBCS Layout, 8, 4th Cross Rd, Javarandoddi, Rajarajeshwari Nagar, Bengaluru, Karnataka, 560098
       no all.csv institute in the same state shares all its distinctive words
 St. Gregorios Medical Mission Hospital, Parumala P.o, Pathanamthitta, Kerala-689626,St. Gregorios Medical Mission Hospital, Parumala, Pathanamthitta Kerala, Kerala, 689626
       no all.csv institute in the same state shares all its distinctive words
 Late Shri Lakhi Ram Agrawal Memorial Govt. Medical College, Raigarh,LATE SHRI LAKHI RAM AGRAWAL MEMORIAL GOVT.MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Nandyal,principalgmcnandyala@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Shri Lal Bahadur Shastri Government Medical College and Hospital , Vpo - Bhangrottu, Tehsil-Balh, District-Mandi, Himachal Pradesh-175009,VPO- Bhangrotu, MC- Ner Chowk, District- Mandi
       no all.csv institute in the same state shares all its distinctive words
 S L Raheja Hospital (A Fortis Associate), Mumbai, Maharashtra-400016,Diabetic Association Of India, S L Raheja Hospital - A Fortis Associate, Raheja Rugnalaya Marg, Mahi, Maharashtra, 400016
@@ -2393,7 +2442,7 @@ Government Medical College and Associated Hospital, Kheora, Rajouri, Jammu and K
 College of Medicine and JNM Hospital, P. O.: Kalyani District, Nadia, West Bengal-741235,Kalyani, Silpanchal, West Bengal, 741235
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Korba,gmckorba@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Govt. General Hospital and PG Institute, No. 1, Rue Victor Simonal Street, PONDICHERRY, Pondicherry-605001,No.1, Victor Simonel street, Puducherry -1., Puducherry, 605001
       no all.csv institute in the same state shares all its distinctive words
 KIMS SunShine Hospital (Formerly known as SunShine Hospital) Begumpet, Metro Pillar No.C1327, Hyderabad-500016 Telangana,KIMS SUNSHINE HOSPITALS Begumpet, Metro Pillar No.C1327 Hyderabad, Telangana 500016, Telangana, 500016
@@ -2403,7 +2452,7 @@ K.G. Hospital and PG Medical Institute , No.5, Arts College Rd, COIMBATORE, Tami
 The Gujarat Research and Medical Institute (Rajasthan Hospitals), Camp Road, Shahibag, Ahmedabad, Gujarat-380004,Camp Road, Shahibaug, Ahmedabad, Gujarat, 380004
       no all.csv institute in the same state shares all its distinctive words
 Soban Singh jeena Government institute of Medical science & Research, Almora,NEAR VIKAS BHAWAN, PANDEYKHOLA, ALMORA- 263601
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sagar Hospital, No. 44/54, 30th Cross, Tilak Nagar, Jayanagar Extn., Bangalore, Karnataka-560041,academics@sagarhospitals.in
       no all.csv institute in the same state shares all its distinctive words
 ASTER HOSPITAL, Plot 2,3,4,Sadaramangala Industrial area, opposite ITPL ,Whitefield main road. Bengaluru, Karnataka-560066,Plot 2,3,4, Sadaramangala Industrial area , opposite ITPL, Whitefield main road. Bengaluru  Karnataka
@@ -2413,7 +2462,7 @@ Dr. Radhakrishnan Govt. Medical College , Hamirpur , Himachal Pradesh-177001,Dr.
 Shaheed Hasan Khan Mewati Government Medical College , Nalhar, Nuh, Haryana-122107,Shaheed Hasan Khan Mewati Government Medical College Nalhar Nuh, Haryana, 122107
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Vidisha, MP,NH 86 INFRONT OF KHEL PARISAR SANCHI ROAD VIDISHA MP
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Shankara Cancer Hospital and Research centre, Shankara Math Premises, 1st cross, Shankarapuram, Basavanagudi, Bangalore, Karnataka-560004,1st Cross, Shankarapuram, Basavanagudi, Bengaluru, Karnataka, 560004
       no all.csv institute in the same state shares all its distinctive words
 Southern Railway Head Quarter Hospital, Aynavaram, Perumbur, CHENNAI, Tamil Nadu-600023,Ayanavaram, Tamil Nadu, 600023
@@ -2423,7 +2472,7 @@ National Institute of Tuberculosis and Respiratory Diseases, (Formerly Known as 
 Swami Ramanand Teerth Rural Government And Medical College , Chanai Road SRTRGMC Ambajogai Dist Beed, Maharashtra-431517,SRTR, Govt. Medical college, Dr. B R Ambedkar Road, Ambejogai, Dist. Beed.
       no all.csv institute in the same state shares all its distinctive words
 Dr. B C Roy Post Graduate Institute of Paediatric Sciences,Kolkata,111 Narkeldanga Main Road Kolkata
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Govt. District Civil Hospital, Suratgarh Road Sri Ganganagar Rajasthan Rajasthan , Rajasthan-335001,DIS GOVT HOSPITAL, SRI GANGANAGAR
       no all.csv institute in the same state shares all its distinctive words
 Care Hospital, Plot No.-324(P) Prachi Enclave, Chandrasekharpur, Bhubaneswar, Orissa-751016,Plot No.- 324 p Prachi Enclave, Chandrasekharpur, Bhubaneswar, Odisha, 751016
@@ -2443,9 +2492,7 @@ Maharaja Agrasen Medical College, Nh 9, Sirsa Road, Vpo - Agroha, Distt. Hisar, 
 Sher-I-Kashmir Institute of Medical Sciences, Bemina, Srinagar, Jammu and Kashmir-190018,Principal SKIMS Medical College Hospital Bemina Srinagar, Jammu And Kashmir, 190018
       no all.csv institute in the same state shares all its distinctive words
 KIMS HOSPITALS, GACHIBOWLI (formerly known as Sunshine Hospital) Survey No - 40,45,46, Dargah Road, Chitrapuri Colony, Raidurg, Gachibowli-500032,KIMS HOSPITALS, GACHIBOWLI (formerly known as Sunshine Hospital) Survey No - 40,45,46, Dargah Road, Chitrapuri Colony, Raidurg, Gachibowli-500032
-      no state found in the institute text
-Chittaranjan Seva Sadan Hospital, Kolkata,37, S.P. Mukherjee Road, P.S. Bhawanipore, Kolkata
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Yashvedh Healthcare Services, 69-18-2-1/2 , Beside Lalitha Nagar park , Gaigolupadu Junction Kakinada - 05 East Godavari District Andhra Pradesh-533005,Gaigolupadu Junction Kakinada, Andhra Pradesh, 533005
       no all.csv institute in the same state shares all its distinctive words
 Institute of Nuclear Medicine & Allied Sciences, New Delhi,Institute of Nuclear Medicine & Allied Sciences INMAS Brig S.K. Mazumdar Marg Timarpur
@@ -2465,14 +2512,12 @@ Government Medical College, Baramulla,Kanth Bagh, Baramulla Jammu & Kashmir 1931
 Christian Fellowship Hospital, Palani Main Road, Oddanchatram DINDIGUL DIST, Tamil Nadu-624619,Oddanchatram Dindigul District, Tamil Nadu, 624619
       no all.csv institute in the same state shares all its distinctive words
 Bhagwan Mahavir Institute of Medical Sciences, Pawapuri (formerly Vardhman Institute of Medical Sciences, Pawapuri, Nalanda),BMIMS CAMPUS, PAWAPURI, NALANDA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Eluru,Survey No 60, Behind Old Bus Stand, Eluru, Andhra Pradesh, 534002
       no all.csv institute in the same state shares all its distinctive words
 Pandit Madan Mohan Malaviya Shatabdi Hospital, Waman Tukaram Patil Marg, Govandi, Mumbai, Maharashtra-400088,Pandit  Madan Mohan Malaviya  Shatabdi Hospital Waman Tukaram Patil Marg Govandi Mumbai 400088, Maharashtra, 400088
       no all.csv institute in the same state shares all its distinctive words
 Lalitha PVS Institute of Medical Sciences Pvt. Ltd. (Formerly known as Lalitha Super Specialty Hospital) NH-16, Lalitha Nagar, Near Takellapadu Flyover, Guntur, Andhra Pradesh – 522003,KOTHAPET GUNTUR, Andhra Pradesh, 522001
-      no all.csv institute in the same state shares all its distinctive words
-Government Hospital, Gandhi Nagar Jammu, Jammu and Kashmir-180004,Government Hospital Gandhi Nagar Jammu, Jammu And Kashmir, 180004
       no all.csv institute in the same state shares all its distinctive words
 Dr. B.R. Ambedkar State Institute of Medical Sciences, Phase-6, Sector 56, SAS Nagar (Mohali) , Punjab-160055,Phase-6, Sector 56, SAS Nagar (Mohali) , Punjab-160055
       no all.csv institute in the same state shares all its distinctive words
@@ -2504,8 +2549,6 @@ Doon Medical College, Dehradun, Uttarakhand,Govt. Doon Medical College Dehrakhas
       no all.csv institute in the same state shares all its distinctive words
 Anandaloke multi speciality hospital pvt ltd, 2nd mile, sevoke road, siliguri, West Bengal-734001,Anandaloke multi speciality hospital pvt ltd, 2nd mile, sevoke road, siliguri, West Bengal-734001
       no all.csv institute in the same state shares all its distinctive words
-Shri Krishna Medical College, Muzzafarpur,Sri Krishna Medical College and Hospital, Umanagar, Muzaffarpur Pin-842004
-      no state found in the institute text
 Government Medical College, Civil Hospital Campus, Sindhudurg Nagari, Oros, Tal.- Kudal, Dist. Sindhudurg, Maharashtra-416812,Near civil hospital, Oros, taluka kudal, sindhudurg , Maharashtra, Maharashtra, 416812
       no all.csv institute in the same state shares all its distinctive words
 Government General Hospital, Ernakulam Road, Cochin, Kerala-682011,Hospital Rd, Marine Drive, Ernakulam, Kerala 682011, Kerala, 682011
@@ -2515,20 +2558,18 @@ PALIWAL EYE HOSPITAL, K 130, MAIN PAL ROAD, Near Krishna Filing Station, JODHPUR
 Sushrut Hospital And Research Centre, 365 Swastik Park, Maharashtra-400071,365,Swastik Park, Chembur East, 400071, Maharashtra, 400071
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Firozabad,Autonomous State Medical College Society and S.N.M District Hospital,DAULATTAPUR JALESAR ROAD NARKHI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ISIC Multispecialty Hospital (Formerly known as Indian Spinal Injuries Centre) Sector C, Vasant Kunj, -110070 Delhi,SECTOR-C, VASANT KUNJ, NEW DELHI-110070, Delhi (NCT), 110070
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Kathua,Village Chack Sajjan Kathua 184101
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Saheed Laxman Nayak Medical College and Hospital, Koraput At-Janiguda, PO/PS/Dist-Koraput, Odisha, Orissa , Orissa-764020,SAHEED LAXMAN NAYAK MEDICAL COLLEGE AND HOSPITAL KORAPUT, JANIGUDA ODISHA KORAPUT 764020, Odisha, 764020
       no all.csv institute in the same state shares all its distinctive words
 Employees State Insurance Corporation Medical College,Alwar,MIA DESULA ALWAR 301030
-      no state found in the institute text
-Sanjay Gandhi Institute of Trauma and Orthopaedics, Bangalore,Sanjay Gandhi Institute of Trauma and Orthopaedics
-      no state found in the institute text
-SDS Tuberculosis Research Centre and Rajiv Gandhi Institute of Chest Diseases, Bangalore,SDS Tuberculosis Research Centre and Rajiv Gandhi Institute of Chest Diseases, Karnataka, 560029
       no all.csv institute in the same state shares all its distinctive words
-GOVERNMENT MEDICAL COLLEGE, GONDIA GMC,GONDIA, KTS HOSPITAL COMPOUND, NEHRU SQUARE, GONDIA, Maharashtra-441601,Nehru Chowk, KTS General Hospital Campus, Govt. Medical College, Gondia. 4441601 Maharashtra, Maharashtra, 441601
+Sanjay Gandhi Institute of Trauma and Orthopaedics, Bangalore,Sanjay Gandhi Institute of Trauma and Orthopaedics
+      no all.csv institute in the same state shares all its distinctive words
+SDS Tuberculosis Research Centre and Rajiv Gandhi Institute of Chest Diseases, Bangalore,SDS Tuberculosis Research Centre and Rajiv Gandhi Institute of Chest Diseases, Karnataka, 560029
       no all.csv institute in the same state shares all its distinctive words
 GMERS Medical College (Formerly know as General Hospital) Civil Lines,Vadodara Highway, Godhra, Gujarat-389001,GMERS Medical College, Panchmahal, Godhra Cuba Masjid Road, Shahwali Wad, Godhra, Panchmahal Gujarat 389120
       no all.csv institute in the same state shares all its distinctive words
@@ -2539,17 +2580,17 @@ GMERS Medical College and General Hospital, Gotri road, Vadodara, Gujarat-390021
 VIKASH MULTI SPECIALITY HOSPITAL, AH - 46, BARAHAGUDA CANAL CHOWK, DIST - , BARGARH , STATE - ODISHA Orissa , Orissa-768040,AH-46 BARAHAGUDA CANAL CHOWK DIST BARGARH, Odisha, 768040
       no all.csv institute in the same state shares all its distinctive words
 Government medical college, vizianagaram,principalgmcvzm@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 K C General Hospital, #89 5th Cross Malleshwaram, Bengaluru, Karnataka-560003,No. 89, 5th Cross, Malleshwaram, Bangalore, Karnataka, 560003
       no all.csv institute in the same state shares all its distinctive words
 Narayana Hrudayalaya Hospital (Formerly Sparsh Hospital), 29/P2, The Narayana Health City, Bommasandra, Hosur Road, Kittignahalli Village, Attibele, Hobli, Bangalore, Karnataka-560099,Narayana Health City Bommasandra Bangalore 560099, Karnataka, 560099
       no all.csv institute in the same state shares all its distinctive words
 Shaheed Nirmal Mahto Medical College & Hospital, Dhanbad (formely known as Patliputra Medical College, Dhanbad),Po BCCL Township Koyalanagar Dhanbad 826005
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Uttar Pradesh University of Medical Sciences, (Prev. UP Rural Inst.of Med.Sc&R) Etawah,Uttar Pradesh University of Medical Sciences, Saifai, Etawah
       no all.csv institute in the same state shares all its distinctive words
 Late Shri Baliram Kashyap Memorial NDMC Govt. Medical College, Jagdalpur,Late Baliram Kashyap Memorial Govt Medical Dimrapal
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Mahabubnagar,Government Medical College, Yedira, Mahabubnagar, Telangana state
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College and Associated Hospital, Janglat Mandi, Anantnag, Jammu and Kashmir-192101,JANGLAT MANDI ANANTNAG, JAMMU AND KASHMIR 192101, Jammu And Kashmir, 192101
@@ -2583,7 +2624,7 @@ Rani Durgavati Medical College (Formerly known as Government Allopathic Medical 
 Safdarjung Hospital and Vardhman Mahavir Medical College, Ansari Nagar West, Aurobindo Marg, Ring Road, Delhi-110029,Opposite Ansari Nagar, Ring Road, New Delhi, Delhi (NCT), 110029
       no all.csv institute in the same state shares all its distinctive words
 Star Hospitals Survey No.74, Financial District, Nanakramguda, Hyderabad-500008,Star Hospitals Survey No.74, Financial District, Nanakramguda, Hyderabad-500008
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Accord Superspeciality Hospital Khasra No. 22, Kila. 19, 20, 21, 22, Sector 86, Village-Tehsil-District: Faridabad Haryana – 121002,Accord Superspeciality Hospital Khasra No. 22, Kila. 19, 20, 21, 22, Sector 86
       no all.csv institute in the same state shares all its distinctive words
 CRITICARE ASIA MULTISPECIALITY HOSPITAL AND RESEARCH CENTRE, Kirol Road, Off LBS Road, Kurla (West), Maharashtra-400070,Kirol Road, Kohinoor City, Off LBS Marg, Kurla West, Mumbai 400070
@@ -2597,11 +2638,11 @@ Bombay Hospital and Institute of Medical Sciences, 12, New Marine Lines, Mumbai,
 S.K.Hospital, Sikar Silver Jublee Road, Sikar Rajasthan , Rajasthan-332001,PRINCIPAL.MC.SIKAR@RAJASTHAN.GOV.IN
       no all.csv institute in the same state shares all its distinctive words
 School of Tropical Medicine, Kolkata,Calcutta School of Tropical Medicine 108, C.R.Avenue , Kolkata-700073
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 EMS Memorial Co-operative Hospital and Research Centre, Panambi, Perinthalmanna, Malappuram District, Kerala-679322,Panambi, Perintalmanna, Malappuram District, Kerala, 679322
       no all.csv institute in the same state shares all its distinctive words
 GREENLAND HOSPITAL AND RESEARCH CENTRE PVT LTD SALEMPUR URF MUGLAHA, MEDICAL COLLEGE ROAD, GORAKHPUR-273013,GREENLAND HOSPITAL AND RESEARCH CENTRE PVT LTD SALEMPUR URF MUGLAHA, MEDICAL COLLEGE ROAD, GORAKHPUR-273013
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Yashwant Rao Chavan Memorial Hospital, Pimpri, PUNE, Maharashtra-18,Yashwant Rao Chavan Memorial Hospital, Pimpri, PUNE, Maharashtra- 18
       no all.csv institute in the same state shares all its distinctive words
 General Hospital, Near TB Circle, Chikkaballapura Main Road, Doddaballapura Taluk, Bengaluru Rural District, Karnataka-561203,General Hospital Doddaballapur, Near TB Circle, Chikkaballapur Main Road, Doddaballapur Taluk, Benga, Karnataka, 561203
@@ -2617,17 +2658,15 @@ Nirmala Multi Speciality Hospital, # 1004/963, Next to Doctors Layout Ring Road 
 S. G. L. Super Specialty Charitable Hospital, Garha Road, Jalandhar, Punjab, Punjab-144022,GARHA ROAD, JALANDHAR, Punjab, 144022
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Suryapet,Amaravadi Nagar Thallagadda Suryapet
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. Raos ENT Super Speciality Hospitals, Plot No - 29, KPHB Road No - 4 , KPHB, Kukatpally, Hyderabad , Telangana-500082,PLOT NO -29,KPHB COLONY BEHIND TEMPLE BUS STOP ,HYDERABAD,TELANGANA, Telangana, 500072
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Nalgonda,Office of the Principal, Government Medical College, Gandhamvarigugem, SLBC, Sagar Road, Nalgonda, T
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 APOLLOSAGE HOSPITAL, E-8, BAWADIA LALAN, BHOPAL, Madhya Pradesh-462026,E-8 Extension Bawadiya Kalan, Salaiya, Bhopal, Madhya Pradesh 462039
       no all.csv institute in the same state shares all its distinctive words
-Bokaro General Hospital, Bokaro Steel City, Sec. 4, BOKARO, Jharkhand-827004,SECTOR - 4 BOKARO STEEL CITY DIST - BOKARO
-      no all.csv institute in the same state shares all its distinctive words
 Institute of Mental Health and Hospital, Agra,INSTITUTE OF MENTAL HEALTH AND HOSPITAL, AGRA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. Bhimrao Ramji Ambedkar Government Medical College, Kannauj ,Uttar Pradesh,Kannaujmedicalcollege@gmail.com
       no all.csv institute in the same state shares all its distinctive words
 NUVISION EYE CARE LLP, 14/7A, Near Korambayil Hospital, Pandikkad Road, Manjeri, Kerala 676122 Kerala , Kerala-676122,NUVISION EYE CARE LLP, 14/7A, Near Korambayil Hospital, Pandikkad Road, Manjeri, Kerala 676122 Kerala , Kerala-676122
@@ -2659,24 +2698,22 @@ K B Bhabha Municipal General Hospital, Bandra (West), Mumbai, Maharashtra-50,R K
 Autonomous State Medical College and Allied Pandit Ram Prasad Bismil Memorial Hospital, Shahjahanpur, Uttar Pradesh-242001,ASMC, JIGNERA, kanth road, shahjahanpur
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Shahjahanpur, UP,Dharnipur, Jignera, Jalalabad road, Shahjahanpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 District Hospital, Kanker In Front Of Main Post Office , Main Road , Kanker Chhattisgarh , Chhattisgarh-494334,DISTRICT HOSPITAL KANKER, NEAR POST OFFICE, KANKER, Chhattisgarh, 494334
       no all.csv institute in the same state shares all its distinctive words
 SK HOSPITAL, EDAPPAZHANJI, THIRUVANANTHAPURAM , Kerala-695006,skmhquality@gmail.com, Kerala, 695006
       no all.csv institute in the same state shares all its distinctive words
 Lokopriya Gopinath Bordoloi Regional Institute of Mental Health, Tezpur,LGBRIMH, Tezpur, District Sonitpur,
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 R P HOSPITAL AND RESEARCH INSTITUTE, GUT NO. 539, 544, 545 PART, PEDGAON, PARBHANI-MANWAT ROAD, TQ. AND DIST. PARBHANI, Maharashtra-431537,Pedgaon, Parbhani- manwat road, Parbhani, Maharashtra, 431537
       no all.csv institute in the same state shares all its distinctive words
 FIMS HOSPITAL(FRANK INSTITUTE OF MEDICAL SCIENCES), SONIPAT-BAHALGARH ROAD, SONIPAT NCR, Haryana-131001,Sonipat-Bahalgarh Road, Sonipat-NCR, Sonipat, Haryana, 131001
       no all.csv institute in the same state shares all its distinctive words
 Malda Medical College & Hospital, Malda,MALDA MEDICAL COLLEGE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Bhaktivedanta Hospital and Research Institute, Srishti Complex, Bhaktivedanta Swami Marg, Mira Road (East), Thane, Maharashtra-401107,Bhaktivedanta Hospital and Research Institute,Srishti Complex, Bhaktivedanta Swami Marg, Mira Road E
       no all.csv institute in the same state shares all its distinctive words
 General Hospital, 4th T Block,(Beside Rajiv Gandhi University of Health Sciences) Jayanagar, Bangaluru , Karnataka-560041,4th T Block, Beside Rajiv Gandhi University of Health Sciences Jayanagar,, Karnataka, 560041
-      no all.csv institute in the same state shares all its distinctive words
-General Hospital, Karauli Old Sabji Mandi Hinduan Gate Rajasthan , Rajasthan-322241,OLD SABJI MANDI, HINDUAN GATE, KARAULI
       no all.csv institute in the same state shares all its distinctive words
 Medicare Multispeciality Hospital, Pusad Behind Ramdev Baba Petrol Pump Nagpur Road Pusad Dist-Yavatmal Maharashtra , Maharashtra-445204,medicarepusad@gmail.com, Maharashtra, 445204
       no all.csv institute in the same state shares all its distinctive words
@@ -2689,7 +2726,7 @@ CC Shroff Memorial Hospital (a unit of Nandini Ramesh Gandhi Public Charitable T
 Kalra Hospital and Shri Ram Cardiothoracic and Neuro-Sciences Centre, A-5 and 6, Kirti Nagar, Delhi-110015,A-4,5 & 6, Kirti Nagar, New Delhi -110015, Delhi (NCT), 110015
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College & Hospital, Baramati,Plot No P-107 Opposite Women Hospital Baramati MIDC Area Baramati Tehsil Baramati Dist Pune
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College Alibag Raigad District Hospital, Raigad Alibag Government Medical College Alibag Raigad, District Hospital Raigad Alibag, Limayewadi, Alibag Beach road, District- Raigad, Maharashtra-402201,Raigad Alibag Government Medical College Alibag Raigad, District Hospital Raigad Alibag, Limayewadi, Alibag Beach road, District- Raigad, Maharashtra- 402201
       no all.csv institute in the same state shares all its distinctive words
 Mahalaxmi Hrudayalay, Sh. Sai Cardiac Centre, 2021/B, E Ward, Rajarampuri 6th Line, Kolhapur, Maharashtra-416008,Mahalaxmi Hrudayalay, Sh. Sai Cardiac Centre, 2021/B, E Ward, Rajarampuri 6th Line, Kolhapur, Maharashtra-416008
@@ -2705,7 +2742,7 @@ SANKARA NETRA CHIKITSALAYA, 59-14-1/2,BHARATHI SQUARE BUILDING,GAYATHRI NAGAR,NI
 Government Medical College & ESIC Hospital, Coimbatore, TamilNadu,KAMARAJAR ROAD, VARATHARAJAPURAM, SINGANALLUR, COIMBATORE
       no all.csv institute in the same state shares all its distinctive words
 Jayadev Memorial Rashtrotthana Hospital and Research Centre Halagevaderahalli, Rajarajeshwari Nagar, BEML 5th Stage, Bengaluru-560098,Jayadev Memorial Rashtrotthana Hospital and Research Centre Halagevaderahalli, Rajarajeshwari Nagar, BEML 5th Stage, Bengaluru-560098
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Pushpanjali Hospital and Research Centre, Pushpanjali Palace, Delhi Gate, Agra, Uttar Pradesh-282002,Pushpanjali Hospital and Research Centre Pvt Ltd Pushpanjali Palace, Delhi Gate, Agra, Uttar Pradesh, 282002
       no all.csv institute in the same state shares all its distinctive words
 Gleneagles Health City (Formerly known as Global Hospital and Health City) (A unit of Gleneagles Healthcare India Pvt Ltd) No-439, Cheran Nagar, Perumbakkam, Chennai-600100 Tamil Nadu,439, Cheran Nagar, Sholinganallur - Medavakkam  Road, Perumbakkam, Chennai, Tamil Nadu, 600100
@@ -2721,7 +2758,7 @@ T.S.R.T.C. HOSPITAL, Tarnaka Flyover, Abhilekhagaram, Amberpet, Secunderabad , T
 CMC Hospital, Near Dabra Chowk,Delhi Road,Hisar. Haryana , Haryana-125001,DABRA CHOWK DELHI ROAD HISAR-125001, HARYANA
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Khandwa, MP,LUV KUSH NAGAR,MUNDI NAGAR, KHANDWA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SSB HEART AND MULTISPECIALITY HOSPITAL, SECTOR 20A, FARIDABAD, Haryana-121001,SSB Heart and Multispeciality Hospital, Plot, No. 69, Mathura Road, Near Neelam Flyover, Sector 20A
       no all.csv institute in the same state shares all its distinctive words
 Parkar Hospital and Research Institute Private Limited, 838, Shivaji Nagar, Ratnagiri, Maharashtra-415639,PARKAR HOSPITAL,828, SHIVAJI NAGAR, RATNAGIRI
@@ -2746,8 +2783,6 @@ GURU HOSPITAL, 4/120F PANDIKOVIL RING ROAD MADURAI, Tamil Nadu-625107,GURU HOSPI
       no all.csv institute in the same state shares all its distinctive words
 Dr. Babasaheb Ambedkar Central Railway Hospital, Opp- Jijamata Udyan, Byculla (East), Mumbai, Maharashtra-400027,Bharatratna Dr. Babasaheb Ambedkar Memorial Hospital, Central Railway, Dr. Babasaheb Ambedkar Road,, Maharashtra, 400027
       no all.csv institute in the same state shares all its distinctive words
-Government Medical College, Bettiah,Government Medical College Bettiah West Champaran Bihar
-      no all.csv institute in the same state shares all its distinctive words
 C.S.I. Kalyani General Hospital, 15,Dr.Radhakrishnan Salai Mylapore, Chennai, Tamil Nadu-600004,15, DR RADHAKRISHNAN SALAI, MYLAPORE, CHENNAI
       no all.csv institute in the same state shares all its distinctive words
 DR K M CHERIAN INSTITUTE OF MEDICAL SCIENCES, UMAYATTUKARA ROAD, KALLISSERY P O, CHENGANNUR, Kerala-689124,DR K M CHERIAN INSTITUTE OF MEDICAL SCIENCES PVT LTD
@@ -2769,7 +2804,7 @@ ESIC Medical College & Hospital (Formerly known as ESIC Model Hospital) A3, Sect
 RAJA PRATAP BAHADUR HOSPITAL ALLIED WITH DR SONELAL PATEL AUTONOMOUS STATE MEDICAL COLLEGE, GAI GHAT,PURE KESHAV RAI PRATAPGARH (U.P) , Uttar Pradesh-230001,PURE KESHAV RAI GAIGHAT ROAD, PRATAPGARH, Uttar Pradesh, 230001
       no all.csv institute in the same state shares all its distinctive words
 Veer Chandra Singh Garhwali Govt. Medical Sc. & Research Instt, Srinagar, Pauri Garhwal,Veer Chandra Singh Garhwali Govt. Institute of Medical Science and Research, Srinagar Garhwal
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Maharishi Vashistha Autonomous State Medical College and Opec Hospital, Rampur , Basti, Uttar Pradesh-272002,Rampur Tahsil Sadar Basti Basti, Uttar Pradesh, 272124
       no all.csv institute in the same state shares all its distinctive words
 Associated Hospital Govt. Medical College Ghat, Doda, District Doda, Jammu and Kashmir -182202,Main Campus Ghat, Ghat, District Doda, UT of Jammu and Kashmir, India, Jammu And Kashmir, 182202
@@ -2802,10 +2837,6 @@ Chaithanya Eye Hospital and Research Institute, Thiruvalla , Kerala-689105,Manja
       no all.csv institute in the same state shares all its distinctive words
 Midland Healthcare and Research Centre, B-55 and C-42, Mandir Marg, Mahanagar Extention, Mahanagar, Lucknow, Uttar Pradesh , Uttar Pradesh-226006,B-55 Mandir Marg, Mahanagar,Lucknow., Uttar Pradesh, 226006
       no all.csv institute in the same state shares all its distinctive words
-Jabalpur Hospital and Research Centre, Russel Crossing, Jabalpur, Madhya Pradesh-482002,Russel Chowk Napier Town Jabalpur, Madhya Pradesh, 482002
-      no all.csv institute in the same state shares all its distinctive words
-Government Medical College, Gondia,Nehru Chowk, KTS General Hospital Campus, Govt. Medical College, Gondia. 441601. Maharashtra.
-      no all.csv institute in the same state shares all its distinctive words
 Qamar Ali Akhoon Memorial Hospital (Formerly known as District Hospital Kargil) kurbathang Kargil U.T Ladakh-194103 Ladakh,Medical Superintendent District Hospital Kurbathang Kargil Ladakh, Ladakh, 194103
       no all.csv institute in the same state shares all its distinctive words
 WELCARE HOSPITAL, SA ROAD VYTTILA - KOCHI, Kerala-682019,WELCARE HOSPITAL, SA ROAD VYTTILA - KOCHI, Kerala-682019
@@ -2825,15 +2856,15 @@ CITY HOSPITAL, Moglaha, Medical College Road, Gorakhpur, Uttar Pradesh-273013,Ci
 Pushpagiri Institute of Medical Sciences and Research Centre, Pushpagiri Medical College Hospital, Tiruvalla, Kerala-689101,Pushpagiri Institute of Medical Sciences and Research centre, Pushp Marg, Tiruvalla, Kerala, 689101
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Chhindwara, MP,Mandhata Colony, Khajri Road Chhindwara
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Netaji Subhas National Instt. Of Sports Medicine, Patiala,NETAJI SUBHAS NATIONAL INSTITUTE OF SPORTS, OLD MOTIBAGH, PATIALA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ZOI HOSPITALS, ATTAPUR H.No.4-8-149/4/2/1, NEAR PILLAR No. 145, ATTAPUR, HYDERABAD Telangana , Telangana-500048,Pillar No:145, zoi Hospitals, attapur, Telangana, 500045
       no all.csv institute in the same state shares all its distinctive words
 Rainbow Hospital For Women and Children, Survey No. 141, Door No: 1-2-20, Opp. Chermas, Hydernagar, Hyderabad, Telangana-500072,Survey No. 141, Door No: 1-2-20, Opp. Chermas, Hydernagar, Hyderabad, Telangana-500072
       no all.csv institute in the same state shares all its distinctive words
 ZENITH SUPER SPECIALIST HOSPITAL 9/3, Feeder Road, Belghoria, Rathtala, Kolkata-700056,ZENITH SUPER SPECIALIST HOSPITAL 9/3, Feeder Road, Belghoria, Rathtala,  Kolkata-700056
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mahatma Gandhi Cancer Hospital and Research Institute, Plot No. 1, Sector - 7, MVP Colony, Visakhapatnam, Andhra Pradesh-530017,Plot No.1\7, MVP COLONY, VISAKHAPATNAM, Andhra Pradesh, 530017
       no all.csv institute in the same state shares all its distinctive words
 ESIC Hospital, Peenya Sy. No 11-55-1, Plot 1, 5th main road (FTI campus),Yeshwantpur industrial suburb, Bengaluru , Karnataka-560022,11-55-1, Plot, FTI Campus, Site No, No.1, 5th Main Rd, Yeshwanthpur Industrial Suburb, Bengaluru, Karnataka - 560022
@@ -2865,11 +2896,11 @@ SHRIMANT MADHAVRAO SCHINDHIYA DISTRICT HOSPITAL , VIDISHA SANCHI ROAD VIDISHA , 
 Shriram Care Hospital, Nehrunagar Ameri Road, Near CSEB Office Nehrunagar Bilaspur Chattishgarh Chhattisgarh , Chhattisgarh-495001,AMERI ROAD, NEHRU NAGAR, BILASPUR, CHHATTISGARH
       no all.csv institute in the same state shares all its distinctive words
 GMERS Medical College and Hospital, Navsari (Formerly Known as M G G General Hospital) Opposite Jahangir Talkies, Station Road Navsari,-396445,GMERS Medical College and Hospital, Navsari, At- Khambhlav, Po- Sultanpur, Via- Abrama, Ta- Jalalpor
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 KASTURI DAS MEMORIAL SUPER SPECIALITY HOSPITAL (A UNIT OF DISHARI HEALTH POINT PVT. LTD.) B-1 38/1 NEW ROAD BYE LANE, SOUTH 24 PARGANAS West Bengal-700142,B1-38/1 New Santoshpur, P.O, Block B, Santoshpur, Maheshtala, West Bengal 700142
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Nandurbar,District Hospital Campus Sakri Road Nandurbar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 RANA BENI MADHAV SINGH (RBMS) DISTRICT HOSPITAL, NIRALANAGAR, KACHAHARI ROAD, NEAR HATHI PARK, RAEBARELI, Uttar Pradesh-229001,RBMS Raebareli, Niarala Nagar,Kacheri road, Near hathipark, UP, Uttar Pradesh, 229001
       no all.csv institute in the same state shares all its distinctive words
 SHRI JAGANNATH MEDICAL COLLEGE AND HOSPITAL, PURI, AT/PO- BALIGUALI, PURI, Odisha-752002,AT/PO- BALIGUALI, PURI
@@ -2893,7 +2924,7 @@ Sundaram Hospital, No 17, EVR Road, Puthur, Tiruchirappalli, Tamil Nadu-620017,N
 Synergy Institute of Medical Sciences, Ballupur Canal Road, Ballupur, Dehradun, Uttarakhand Uttaranchal , Uttaranchal-248001,Ballupur Canal Road, Ballupur Chowk, Dehradun, Uttarakhand, 248001
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Ramagundam,SY NO 92 95  96 MALKAPUR VILLAGE RAMAGUNDAM PEDDAPALLY DIST
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Vijaya Hospital, Pulamon(P.O),Kottarakkara,Kollam, Kerala-691531,PULAMON P.O, KOTTARAKKAR
       no all.csv institute in the same state shares all its distinctive words
 Employee State Insurance Corporation Model Hospital, Bharat Nagar, Ludhiana, Punjab-141001,Bharat Nagar, Ludhiana
@@ -2915,12 +2946,10 @@ Jalpaiguri Government Medical College and Hospital (Formerly Jalpaiguri District
 Apollo Hospital International, Plot No. 1A, GIDC Estate Bhat, District - Gandhi Nagar , Gujarat-382428,Plot 1A, GIDC Estate, Bhat Gandhinagar, Gujarat, 382428
       no all.csv institute in the same state shares all its distinctive words
 ESIC MEDICAL COLLEGE AND HOSPITAL CENTRAL ROAD, CHAKALA INDUSTRIAL AREA ( MIDC) ANDHERI EAST, MUMBAI-400093,ESIC MEDICAL COLLEGE AND HOSPITAL CENTRAL ROAD, CHAKALA INDUSTRIAL AREA ( MIDC) ANDHERI EAST, MUMBAI- 400093
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Nirmal Hospital, Ring Road, Surat, Gujarat-395002,NEAR KADIWALA SCHOOL, RING ROAD, SURAT, Gujarat, 395002
       no all.csv institute in the same state shares all its distinctive words
 Swami Vivekanand National Institute of Rehabilitation Training and Research, Olatpur, PO Bairoi, District- Cuttack, Orissa-754010,Olatpur, PO Bairoi, Cuttack, Odisha, 754010
-      no all.csv institute in the same state shares all its distinctive words
-Government Medical College and Hospital, Nandurbar Civil hospital campus, Sakri Road, Nandurbar, Maharashtra-425412,Nandurbar Civil hospital campus, Sakri Road, Nandurbar-425412 Maharashtra
       no all.csv institute in the same state shares all its distinctive words
 HCG Panda Cancer Hospital, N H - 16, Telengapitha, District - Cuttack, Orissa-754001,HCG Panda Cancer Hospital, Telengapentha, N.H.-16, Cuttack, Odisha - 754001, Odisha, 754001
       no all.csv institute in the same state shares all its distinctive words
@@ -2930,8 +2959,6 @@ NEOCLINIC CHILDREN HOSPITAL , (UNIT OF SATYA HEALTHCARE PVT LTD) 3-4, T.N MISHRA
       no all.csv institute in the same state shares all its distinctive words
 BRAR EYE HOSPITAL PRIVATE LIMITED, FARIDKOT ROAD, KOTKAPURA, DISTT FARIDKOT, Punjab-151204,BRAR EYE HOSPITAL PRIVATE LIMITED, FARIDKOT ROAD, KOTKAPURA, DISTT FARIDKOT, Punjab-151204
       no all.csv institute in the same state shares all its distinctive words
-General Hospital, Tiptur Karnataka , Karnataka-572201,General Hospital Tiptur, Tumkur District, Karnataka Pin 572201, Karnataka, 572201
-      no all.csv institute in the same state shares all its distinctive words
 Bhattar Hospital (Balgopal Children Hospital and Research Institute), Byron Bazaar, Opposite Aashirwad Bhavan, Raipur Chhattisgarh, Chhattisgarh-492001,BYRON BAZAR, OPP ASHIRWAD BHAVAN, RAIPUR, Chhattisgarh, 492001
       no all.csv institute in the same state shares all its distinctive words
 Government Head Quarters Hospital, EVN Road, Erode, Tamil Nadu-638009,THANTHAI PERIYAR GOVERNMENT DISTRICT HEADQUARTERS HOSPITAL AND DNB POST GRADUATE TEACHING INSTITUTE,
@@ -2939,11 +2966,11 @@ Government Head Quarters Hospital, EVN Road, Erode, Tamil Nadu-638009,THANTHAI P
 AMRITDHARA MY HOSPITAL, NEAR ITI CHOWK, GAHOON VIHAR, KARNAL, Haryana-132001,AMRITDHARA MY HOSPITAL, NEAR ITI CHOWK, GAHOON VIHAR, KARNAL, Haryana-132001
       no all.csv institute in the same state shares all its distinctive words
 Homi Bhabha Cancer Hospital and Research Centre, Visakhapatnam,AGANAMPUDI VILLAGE GAJUWAKA MANDAL VISAKHAPATNAM
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Ankura Hospital for Women and Children Opp Metro Pillar No - 788 NH-65, Sumitra Nagar Colony Kukatpally, Hyderabad-500072 Telangana,Plot no 55-56, KPHB 7th Phase, JNTU-Hi Tech City road, Hyderabad, Telangana 500085, Telangana, 500085
       no all.csv institute in the same state shares all its distinctive words
 Government Allopathic Medical College, Banda, UP,Rani Durgavati Medical College Naraini Road Banda
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Christian Institute of Health Sciences and Research 4th Mile Central Jail Road, Chumoukedima -797115 Nagaland,4th Mile, Central Jail Road, Dimapur, Nagaland, 797115
       no all.csv institute in the same state shares all its distinctive words
 Shri Dharmasthala Manjunatheshwara (SDM) Hospital, SDM Hospital Ujire, Sy. No. 227-1A/4B, 228-1B1/1B2/1B3/1C/228-2, Opposite Post Office,Charmady Post Belthangady, Dakshina Kannada District Karn, Karnataka-574240,Shri Dharmasthala Manjunatheshwara (SDM) Hospital, SDM Hospital Ujire, Sy. No. 227-1A/4B, 228-1B1/1B2/1B3/1C/228-2, Opposite Post Office,Charmady Post Belthangady, Dakshina Kannada District Karn, Karnataka-574240
@@ -2966,8 +2993,6 @@ Maharshi Vishwamitra Autonomous State Medical College, RTI Maidan, Ghazipur , Ut
       no all.csv institute in the same state shares all its distinctive words
 S.N.M. Hospital , Leh Ladakh, Jammu and Kashmir-194101,MEDICAL SUPERINTENDENT SNM HOSPITAL LEH UT LADAKH., Ladakh, 194101
       no all.csv institute in the same state shares all its distinctive words
-Government Medical College, Bettiah, West Champaran, Bihar-845438,GOVERNMENT MEDICAL COLLEGE, BETTIAH, WEST CHAMPARAN, BIHAR 845438
-      no all.csv institute in the same state shares all its distinctive words
 Pandit Deen Dayal Upadhyay Government Hospital, Pandeypur, Varanasi, Uttar Pradesh-221002,Opposite Mental Hospital, Pandeypur, Varanasi, Uttar Pradesh, 221002
       no all.csv institute in the same state shares all its distinctive words
 Shija Hospitals and Research Institute, Langol, P.O.- Lamphelpat Imphal West, Manipur, Manipur-795004,SHIJA HOSPITALS AND RESEARCH INSTITUTE, LANGOL, LAMPHELPAT, IMPHAL WEST, MANIPUR 795004, Manipur, 795004
@@ -2985,7 +3010,7 @@ Ankura Hospital for Women and Children (Unit of Ankura hospitals, Gachibowli), L
 RAMALINGAMS HOSPITAL, 167,ITTERI ROAD, MEYYANUR, SALEM Tamil Nadu , Tamil Nadu-636004,Ramalingam's Hospital, 167, Itteri Road, Meyyanur, Salem
       no all.csv institute in the same state shares all its distinctive words
 Rajkiya Allopathic Medical College, Bahraich, UP,principal.medical.college.brh@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 MGM HOSPITAL AND RESEARCH CENTRE, PLOT NO. 1, SECTOR 1A, CBD BELAPUR DIST- THANE,NAVI MUMBAI,MAHARASHTRA , Maharashtra-400614,MGM HOSPITAL AND RESEARCH CENTRE, PLOT NO. 1, SECTOR 1A, CBD BELAPUR DIST- THANE,NAVI MUMBAI,MAHARASHTRA , Maharashtra-400614
       no all.csv institute in the same state shares all its distinctive words
 General Hospital, Salaya Char Rasta, Reliance circle, Jamkhambhaliya, Gujarat-361305,Salaya Char Rasta, Near Reliance Circle, HarsadPur,Ta-Jamkhambhaliya, Dist-DevbhumiDwarka-361305, Gujarat, 361305
@@ -2997,7 +3022,7 @@ Barasat Government Medical College and Hospital (Formerly North 24 Parganas Dist
 Sreenethra Eye Care, Nandavanam road, Bakery junction, Near reserve Bank of India, Thiruvananthapuram. Kerala , Kerala-695034,sreenethra01@gmail.com, Kerala, 695034
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College (Bharat Ratna Shri Atal Bihari Vajpyee Memorial Med. Col.), Rajnandgaon,BHARAT RATNA LATE SHRI ATAL BIHARI VAJPAYEE MEMORIAL MEDICAL COLLEGE, PENDRI, RAJNANDGAON, CHHATTIS
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 The Hans Foundation Eye Care, NH - 58, Delhi - Haridwar Highway, Bahadrabad, Haridwar, Uttarakhand-249402,The Hans Foundation Eye Care, NH - 58, Delhi - Haridwar Highway, Bahadrabad, Haridwar, Uttarakhand-249402
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College (Formerly District Hospital), Sallian Talab Dhar Road Udhampur , Jammu and Kashmir-182101,Sallian Talab Dhar Road Udhampur, Jammu And Kashmir, 182101
@@ -3009,13 +3034,13 @@ Dada Virendrapuri Ji Eye Institute, Jotpur Near Tilwara Bridge Jabalpur Madhya P
 Krishna Maternity Home and Pediatric Centre, Plot No.4, North High Ground Road, Palayamkottai, Tamil Nadu-627002,North highground road, Palayamkottai, Tirunelveli 627002, Tamil Nadu, 627002
       no all.csv institute in the same state shares all its distinctive words
 Sri siddhartha Institute of Medical Sciences & Research Centre, Bangalore,T Begur, Nelamangala, Bangalore rural
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Head Quarters Hospital, Nellikuppam Main Road, Cuddalore , Tamil Nadu-607001,District Government Head Quarters Hospital and DNB Post Graduate Teaching Institute, Nellikuppam Mai
       no all.csv institute in the same state shares all its distinctive words
 Pt. Jawahar Lal Nehru Government Medical College, Chamba,Akhand Chandi Palace, Near Luxminarayan Temple, Chamba
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Uma Nath Singh Autonomous State Medical College Society Jaunpur,UNS AUTONOMOUS STATE MEDICAL COLLEGE SIDDIQUEPUR SHAHGANJ ROAD JAUNPUR UP
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Indira Gandhi Eye Hospital and Research Centre, 1 BN Road, Qaiserbagh Lucknow, Uttar Pradesh-226001,Indira Gandhi Eye Hospital and Research Centre, 1 BN Road, Qaiserbagh Lucknow, Uttar Pradesh-226001
       no all.csv institute in the same state shares all its distinctive words
 DR RAMANARAJUS VISIONTREE SUPERSPECIALITY EYE CARE CENTER, D.NO.10-171-1/1 VISALAKSHINAGAR OPP SRI KODANDARAMALAYAM VISAKHAPATNAM, Andhra Pradesh-530043,Door No. 10-171-1/1, Visalakshinagar, Opposite Sri Kodanda Ramalayam, Visakhapatnam., Andhra Pradesh, 530043
@@ -3049,15 +3074,15 @@ Bharat Ratna Late Shri Atal Bihari Vajpayee Memorial Medical College, Village:Pe
 Cachar Cancer Hospital and Research Centre, Meherpur,Silchar, Cachar, Assam-788015,Cachar Cancer hospital and research Centre, Meherpur, Silchar, Assam, Assam, 788015
       no all.csv institute in the same state shares all its distinctive words
 Nandi Medical College and Research Institute Chikkaballapura (Chikkaballapura Institute of Medical Sciences Chikkaballapura ),Arooru Village, Peresandra Post, Chikkaballapura-562104
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ESIC Model and Superspeciality Hospital, Asramam, Kollam, Kerala-69100,ASRAMAM, KOLLAM
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College & Super facility Hospital, Azamgarh,Chakrapanpur, Azamgarh (U.P.)
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 AMRI Hospitals, Mukundapur, 230, Barakhola Lane, Behind Metro Cash and Carry on E.M.Bypass, Kolkata, West Bengal-700099,AMRI Hospitals Mukundapur 230 Barakhola Lane Behind Metro Cash and Carry on EM Bypass Kolkata, West Bengal, 700099
       no all.csv institute in the same state shares all its distinctive words
 Dr. B. Borooah Cancer Institute (Regional Cancer Centre), Guwahati,Gopinath Nagar, A K Azad Road, Guwahati, Kamrup (Metro)
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. Tony`s Super Speciality Eye Institute, Near Govt. Higher Secondary School, High Road, Aluva, Ernakulam, Kerala-683101,High Road, Aluva, Ernakulam, Kerala, 683101
       no all.csv institute in the same state shares all its distinctive words
 ANKURA HOSPITAL FOR WOMEN AND CHILDREN(A UNIT OF ANKURA TIRUPATI HOSPITALS PVT LTD), D.NO.19-3-14/N,RS NO 5-2A/4 AND 5-2A/5 WARD NO 19, BLOCK NO 3 RENIGUNTA ROAD , P AND T COLONY, TIRUPATI CHITTOOR , Andhra Pradesh-517501,ANKURA HOSPITAL FOR WOMEN AND CHILDREN RENIGUNTA ROAD TIRUPATHI, Andhra Pradesh, 517501
@@ -3101,7 +3126,7 @@ Dr. Virendra Laser, Phaco Surgery Center - Eye Hospital , Vision Tower, Drishti 
 M. N. Eye Hospital, 781, TH Road, Opp. Thondiarpet Police Station, CHENNAI, Tamil Nadu-600021,781 TH Road, Tondiarpet,Chennai, Tamil Nadu, 600021
       no all.csv institute in the same state shares all its distinctive words
 Bhopal Memorial Hospital & Research Centre, Bhopal,RAISEN BY PASS ROAD, BHOPAL
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Shri Vasant Rao Naik Govt. Medical College, Yavatmal, Maharashtra-445001,Civil Lines, yavatmal, Maharashtra, 445001
       no all.csv institute in the same state shares all its distinctive words
 Malabar Cancer Centre Post Graduate Institute of Oncology Sciences and Research, Modakkallur,Moozhikkara (PO), Thalassery, Kannur, Kerala- 670103
@@ -3121,7 +3146,7 @@ ESIC HOSPITAL, UDYOGMANDAL UDYOGMANDAL (P.O) ERNAKULAM(DIST), Kerala-683501,ESIC
 Kasturba Medical College Hospital (KMC Hospital), Dr. B R Ambedkar Circle, Jyothi Balmatta Road, Mangalore, Karnataka-575001,KMC Hospital, Dr B R Ambedkar Circle, Mangalore, Karnataka, 575001
       no all.csv institute in the same state shares all its distinctive words
 Regional Instt. of Opthalmology Previously Known asNehru Instt.of Opthalmo, Sitapur,RIO Prev Known as Nehru Institute of Ophthalmology and Research Centre Civil Lines Sitapur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sarakshi Netralaya, Plot No 19 Rajiv Nagar Wardha Road Nagpur, Maharashtra-440025,PLOT  NO 19 RAJIV NAGAR WARDHA ROAD NAGPUR
       no all.csv institute in the same state shares all its distinctive words
 BIRLA EYE HOSPITAL, 180 B,OPP ZILA PARISHAD,TRAMBAK ROAD,NASHIK, Maharashtra-422001,BIRLA EYE HOSPITAL, 180 B,OPP ZILA PARISHAD,TRAMBAK ROAD,NASHIK, Maharashtra-422001
@@ -3129,8 +3154,6 @@ BIRLA EYE HOSPITAL, 180 B,OPP ZILA PARISHAD,TRAMBAK ROAD,NASHIK, Maharashtra-422
 SAMFORD HOSPITAL PVT. LTD, KOKAR CHOWK, H B ROAD, RANCHI, Jharkhand-834001,SAMFORD HOSPITAL PVT. LTD, KOKAR CHOWK, H B ROAD, RANCHI, Jharkhand-834001
       no all.csv institute in the same state shares all its distinctive words
 DVC HOSPITAL AND RESEARCH CENTRE, D. No. 12-290, Vadlamudi (village), Chebrolu (Md), Guntur, Andhra Pradesh-522213,DVC HOSPITAL AND RESEARCH CENTRE, D. No. 12-290, Vadlamudi (village), Chebrolu (Md), Guntur, Andhra Pradesh-522213
-      no all.csv institute in the same state shares all its distinctive words
-Darbhanga Medical College Hospital, Laheriasarai P.O. -DMC, Laheriasarai, Darbhanga, Bihar-846003,Sheetal Prasad Marg, Laheriasarai, Darbhanga, Bihar
       no all.csv institute in the same state shares all its distinctive words
 AJMERA HOSPITAL, NEAR UIT,AJMER ROAD, SUBHASH NAGAR,BHILWARA, Rajasthan-311001,NA
       no all.csv institute in the same state shares all its distinctive words
@@ -3147,7 +3170,7 @@ Parmanand Special Surgery Hospital, (A Unit of Sant Parmanand Hospital) Plot NO 
 Unique Hospital Multispeciality and Research Institute, Run by Surat Life Care Pvt Ltd Near Kiran Motors, Opp Unique BRTS Junction, Civil Hospital Char Rasta Sosyo Circle Lane, Off Ring Road, Surat, Gujarat-395017,Unique Hospital Multispeciality and research Institute Run by Surat Life care pvt ltd, Near Kiran, Gujarat, 395017
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College (Institute of Integrated Medical Sciences), Yakkara, Palakkad,NH-544 EAST YAKKARA, KUNNATHURMEDU POST, PALAKKAD - 678013
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 O P JINDAL HOSITAL AND RESEARCH CENTER, KHARSIA ROAD, PATRAPALI, RAIGARH, Chhattisgarh-496001,OP Jindal Hospital & Research center, Kharsia road, Patrapali
       no all.csv institute in the same state shares all its distinctive words
 Sree Gokulam Medical College Research Foundation, Venjaramoodu P.O., Thiruvananthapuram, Kerala-695607,Venjaramoodu. P.O Thiruvananthapuram, Kerala, 695607
@@ -3177,7 +3200,7 @@ Chandan hospital, (A Unit of Chandan Super Speciality Hospital Limited) Plot No 
 Govt. Mahatma Gandhi District Hospital, Collector-Ate Choraha , Near Mohan Colony Banswara Rajasthan, Rajasthan-327001,COLLETOR ATE CHORAHA NEAR MOHAN COLONY BANSWARA, Rajasthan, 327001
       no all.csv institute in the same state shares all its distinctive words
 All India Institute of Physical Med. and Rehabilitation, Mumbai,All India Institute of Physical Medicine and Rehabilitation Near Haji Ali K Khadye Marg Mahalaxmi Mu
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Loknayak Jaiprakash Narayan Hospital, Rajbanshinagar, Patna, Bihar-800023,Rajbanshi Nagar Patna, Bihar, 800023
       no all.csv institute in the same state shares all its distinctive words
 SRI KRISHNA CHILDRENS HOSPITAL, 2-7-730, OPP: SUBEDARI POLICE STATION, HANAMKONDA, Telangana-506001,H no, 2-7-730, Excise Colony Main Rd, opp. subedari Police Station, KLN Reddy Colony, Subedari, Han, Telangana, 506001
@@ -3195,7 +3218,7 @@ Almadeena Institute of Medical Science, Changuvetty, kottakkal, Malappuram(distr
 HLG Memorial Hospital Pvt Ltd, Sen Raleigh Road, Kalyanpur Housing, Asansol , West Bengal-713305,Sen Raleigh Road, Kalyanpur Housing
       no all.csv institute in the same state shares all its distinctive words
 Shri B M Patil Medical College, Hospital & Research Centre, Vijayapura (Bijapur,SHRI. B. M. PATIL MEDICAL COLLEGE HOSPITAL AND RESEARCH CENTRE, SOLAPUR ROAD, VIJAYAPURA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 VCSG Govt Institute of Medical Science and Research and HNB Base Teaching Hospital , Srikot Ganganali Badrinath Marg Srikot Srinagar Pauri Garhwal Uttarakhand, Uttaranchal-246178,Srikot Ganganali Srinagar Garhwal Uttarakhand, Uttarakhand, 246174
       no all.csv institute in the same state shares all its distinctive words
 Ankura Hospital for Women and Children, 170 171 170/A BAPUJI NAGAR JANPATH ROAD BHUBANESWAR, Odisha-751009,Ankura Hospital for Women and Children, 170 171 170/A BAPUJI NAGAR JANPATH ROAD BHUBANESWAR, Odisha-751009
@@ -3211,7 +3234,7 @@ MARENGO ASIA HOSPITALS GURUGRAM, Golf Course Ext Rd, Sushant Lok II, Sector 56, 
 BHAGWAN MAHAVIR INSTITUTE OF MEDICAL SCIENCES, PAWAPURI, NALANDA, Bihar-803115,BMIMS CAMPUS, PAWAPURI, NALANDA
       no all.csv institute in the same state shares all its distinctive words
 ESIC Medical College and Hospital Pir Ajan Fakir Road, Beltola, Guwahati-781022,ESIC Medical College and Hospital Pir Ajan Fakir Road, Beltola, Guwahati-781022
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 P K DAS Institute of Medical Sciences, Vaniamkulam Post, Ottapalam, Palakkad District , Kerala-679522,Vaniamkulam Ottapalam Kerala 679522, Kerala, 679522
       no all.csv institute in the same state shares all its distinctive words
 Lokmanya Medical Foundation andLokmanya Orthopaedic Hospital, Sector-24, Tilak Road, Pradhikaran, Nigdi, Pune, Maharashtra-411044,Lokmanya Hospital, Sector 24, Tilak Road, Pradhikaran, Nigdi
@@ -3221,14 +3244,12 @@ Balaji Institute of Surgery, Research and Rehabilitation for the Disabled Hospit
 Bangalore West Lions Superspecialty Eye Hospital, No. 5, Lions Eye Hospital Road, Off J C Road, Bangalore, Karnataka-560002,J C road Bangalore -560002, Karnataka, 560002
       no all.csv institute in the same state shares all its distinctive words
 Dharwad Institute of Mental Health and Neuro Sciences, Dharwad,Dharwad Institute of Mental Health and Neurosciences, Belagavi Road, Dharwad
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ANURADHA SUPERSPECIALITY EYE HOSPITAL LLP, PLOT NO 9652,53,71, GANDHI COLONY, GANESH MANDIR BYLANE, VISHRAMBAG, SANGLI, Maharashtra-416415,9652-53-71, 100 FT Road, Gandhi Colony, Ganesh Mandir Bylane, Vishrambhag, Sangli
       no all.csv institute in the same state shares all its distinctive words
 Government Headquarters Hospital padmanabhapuram, Nagercoil trivandrum Highway Thuckalay , Tamil Nadu-629175,Government Head Quarters Hospital, Padmanabhapuram, Thuckalay, Kanyakumari District
       no all.csv institute in the same state shares all its distinctive words
 Government Head Quarters Hospital huraiyur Main Road, Perambalur Tamil Nadu-621212,GOVT HEAD QUARTERS HOSPITAL, THURAIYUR MAIN ROAD, PERAMBALUR, TAMILNADU.
-      no all.csv institute in the same state shares all its distinctive words
-General Hospital, Chintamani MG Road. Chintamani. Chikkaballapur District Karnataka 563125, Karnataka-0,General Hospital Chintamani M G Road. CHINTAMANI Chikkaballapur district, Karnataka, 563125
       no all.csv institute in the same state shares all its distinctive words
 National Heart Institute, 49 Community Centre, East of Kailash, New Delhi, Delhi-110065,49-50, Community Centre, East of Kailash, Delhi (NCT), 110065
       no all.csv institute in the same state shares all its distinctive words
@@ -3237,7 +3258,7 @@ MEDANTA SUPER SPECIALITY HOSPITAL (UNIT OF GLOBAL HEALTH LIMITED), PLOT NO 8, PU
 Nandadeep Eye Hospital, Opposite to Patidar Bhavan, Madhav Nagar Road, Sangli , Maharashtra-416416,OPPOSITE TO PATIDAR BHAVAN, MADHAV NAGAR ROAD, SANGLI, Maharashtra, 416416
       no all.csv institute in the same state shares all its distinctive words
 All India Institute of Hygiene & Public Health, Kolkata,All India Institute of Hygiene and Public Health, 110 Chittaranjan Avenue, Kolkata -700073
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Mohan Eye Institute, 11/B Ganga Ram Hospital Marg, Delhi-60,11 B, GANGA RAM HOSPITAL MARG, NEW DELHI, Delhi (NCT), 110060
       no all.csv institute in the same state shares all its distinctive words
 Center for Cancer Pathology (Indian Council of Medical Research) (Formerly Known as National Institute of Pathology), Safdarjung Hospital Campus Post Box No-4909-110029 Delhi,Safdarjung Hospital Campus Post Box No-4909-110029 Delhi
@@ -3245,7 +3266,7 @@ Center for Cancer Pathology (Indian Council of Medical Research) (Formerly Known
 Shalby Hospital, S.G. Highway, Ahmedabad, Gujarat-380015,DNB Program, Basement 2, Shalby  hopsital , Opp. karnwati club, S. G. Highway  Ahmedabad - 380015, Gujarat, 380015
       no all.csv institute in the same state shares all its distinctive words
 SRM Medical College Hospital & Research Centre, Kancheepuram,SRM MEDICAL COLLEGE HOSPITAL AND RESEARCH CENTRE, POTHERI, KATTANKULATHUR 603203, CHENGALPATTU DIST
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Manjeri, Malapuram Dist.,Government Medical College, Manjeri, Malappuram, Kerala
       no all.csv institute in the same state shares all its distinctive words
 Dr. B C Roy Post Graduate Institute of Paediatric Sciences, 111, Narkeldanga Main Road, Kolkata, West Bengal-700054,111 Narkeldanga Main Road Kolkata, West Bengal, 700054
@@ -3271,7 +3292,7 @@ MENTAL HOSPITAL BAREILLY, ANAND ASHRAM ROAD, SHYAMGANJ, BAREILLY, Uttar Pradesh-
 Homi Bhabha Cancer Hospital, Sangrur, Punjab,Civil Hospital Campus Sangrur City
       no all.csv institute in the same state shares all its distinctive words
 Regional Cancer Centre, Thiruvanthapuram,REGIONAL CANCER CENTRE
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Venkateswara Aravind Eye Hospital, No 588A, Alipiri to Zoo Park Road,beside NCC campus, Tirupati, Andhra Pradesh-517505,No 588 A, Alipiri to zoo park road, beside NCC campus, tirupati, Andhra Pradesh, 517505
       no all.csv institute in the same state shares all its distinctive words
 Vivekanandha Medical Care Hospital , Sf. No. 20/1,Elayampalayam Village, Tiruchengode Taluk, Namakkal District, Tamil Nadu-637205,Sf. No. 20-1 Elayampalayam village, Tiruchengode taluk Namakkal, Tamil Nadu, 637205
@@ -3297,7 +3318,7 @@ FORTIS HOSPITAL NAGARBHAVI, 23, 80 Feed road, Gurukrupa Layout, 2nd Stage, Nagar
 Aster RV Hospital, CA, 37, 24th Main Rd, ITI Layout, 1st Phase, J. P. Nagar, Bengaluru , Karnataka-560078,CA 37, 24th Main Rd, ITI Layout, 1st Phase, J. P. Nagar, Bengaluru, Karnataka 560078, Karnataka, 560078
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Satna,Near Kendriya Vidyalaya No 2, Satna (MP)
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Sri Jayachamarajendra General Hospital, B.H.Road, Arsikere, Hassan.Dist. Karnataka , Karnataka-573103,Sri Jayachamarajendra General Hospital, ARSIKERE,Hassan.Dist. Karnataka, Karnataka, 573103
       no all.csv institute in the same state shares all its distinctive words
 Centre for Sight, Plot No. 9, Sec. 9, Dwarka Delhi , Delhi-110075,Centre For Sight, Plot No. 9, Sector 9, Dwarka, Delhi, 110075, Delhi (NCT), 110075
@@ -3344,8 +3365,6 @@ Manipal Hospital Goa, Dr E Borges Road, Dona Paula, Panaji Goa, Goa-403004,Manip
       no all.csv institute in the same state shares all its distinctive words
 Mahavir Hospital Manish IVF Center, Mahavir Hospital and Sai Sonography Center Opp. District Library Lati plot Gujarat , Gujarat-363001,Dr Manish R Pandya Lati plot , Opp. District Library, Near C J hospital Surendranagar, Gujarat, 363001
       no all.csv institute in the same state shares all its distinctive words
-General Hospital KGF, General Hospital Robertsonpet KGF Karnataka , Karnataka-563122,GENERAL HOSPITAL, ROBERTSONPET, KGF TALUK, KOLAR DISTRICT., Karnataka, 563122
-      no all.csv institute in the same state shares all its distinctive words
 Suchirayu Mulitispeciality Hospital, Off Gokul Road, Hubballi , Karnataka-580030,SUCHIRAYU HEALTH CARE SOLUTIONS LIMITED, SURVEY NO. 29, JAVALI GARDEN, GOKUL ROAD, HUBBALLI
       no all.csv institute in the same state shares all its distinctive words
 Government General Hospital, (Formerly Government District General Hospital), Noonepalle, Nandyal, Kurnool District, Andhra Pradesh-518502,Government General Hospital, Noonepalle, Nandyal - 518502, Andhra Pradesh, 518502
@@ -3371,13 +3390,13 @@ SN Krishna Hospital, 85, Teen Batti Square, Freeganj, Ujjain, Madhya Pradesh-456
 Dr. Anji Reddy Multi Speciality Hospitals Private Limited, D.NO.7-319, MAIN ROAD,PIDURAGALLA-522 413. PIDURAGALLA-522 413. PIDURAGALLA-522 413., Andhra Pradesh-522413,Dr Anjireddy Multi Speciality Hospital Private Limited D No 7 319 Main Road Piduguralla  522413 AP, Andhra Pradesh, 522413
       no all.csv institute in the same state shares all its distinctive words
 Saveetha Medical College and Hospital, Kanchipuram,Saveetha Medical College and Hospital
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 GUPTA HOSPITAL AND RESEARCH CENTRE MANKE TALAB ROAD, NATIONAL HIGHWAY, KALIBARI, KATHUA Jammu & Kashmir,Manke Talab Road, Kalibari, Durga Nagar, Kathua, Jammu and Kashmir 184101
       no all.csv institute in the same state shares all its distinctive words
 Santhi Hospital, Omassery, Calicut, Kerala-673572,Santhi Hospital, Omassery, Calicut, Kerala-673572
       no all.csv institute in the same state shares all its distinctive words
 Yenepoya Medical College, Mangalore,Yenepoya Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 General Hospital - Sub District Hospital, Opp-Nagarpalika Office Bagicha Road Deesa Banaskantha, Gujarat-385535,Opp Nagar Palika Deesa banaskantha, Gujarat, 385535
       no all.csv institute in the same state shares all its distinctive words
 Guru Govind Singh Sadar Hospital, Patna Bauli More, Patna City, Patna Bihar , Bihar-800008,Guru Govind Singh Sadar Hospital, Patna Bauli More, Patna City, Patna Bihar , Bihar-800008
@@ -3391,7 +3410,7 @@ B.M. Birla Heart Research Centre, 1/1 National Library Avenue, KOLKATA, West Ben
 S. S. Hospital Petlad (ANAND), Near Bus Stand. Opp. Railway Station, Gujarat-388450,NA
       no all.csv institute in the same state shares all its distinctive words
 BPS Government Medical College for Women, Sonepat,BPS GOVT. MEDICAL COLLEGE FOR WOMEN, KHANPUR KALAN SONEPAT
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 ORCHID MEDICAL CENTRE PVT. LTD., HAZARIBAGH ROAD, THARPAKHNA, RANCHI, Jharkhand-834001,NA
       no all.csv institute in the same state shares all its distinctive words
 Divine Heart and Multispecialty Hospital, (An Unit of Divine Heart Hospital and Research Centre (P) Ltd.) Viraj Khand Institutional Area-5, Gomti Nagar, Lucknow, Uttar Pradesh-226010,Viraj Khand 5 Institutional Area Gomti Nagar Lucknow, Uttar Pradesh, 226010
@@ -3423,7 +3442,7 @@ District Headquarters Hospital Angul, Bikrampur, Odisha-759122,District Headquar
 Government Medical College, Rajouri, J&K,Government Medical College, Rajouri Mehra Campus Pincode: 185132
       no all.csv institute in the same state shares all its distinctive words
 Raja Rajeswari Medical College & Hospital, Bangalore,No. 202, Kambipura, Mysore Road, Bengaluru
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 BBC TRUST MULTISPECIALITY HOSPITAL, Behind SBI Bank Reliance Smart,R G ROAD,GANGAVATHI-583227 KOPPAL District , Karnataka-583227,behind sbi bank R G ROAD GANAGAVATHI KOPPAL KARNATAKA STAte, Karnataka, 583227
       no all.csv institute in the same state shares all its distinctive words
 Vijay Super Speciality Hospital, Lachhirampur-Azamgarh, Uttar Pradesh-276001,Lachhirampur-Azamgarh, Uttar Pradesh-276001
@@ -3433,7 +3452,7 @@ Parvathy Ortho Hospital Private Limited, No.241,G.S.T.Road,Chrompet,Chennai. Tam
 Parijat Hospital, Parijat Hospital Radha nagar lane no.2, near pragati school, Amravati. Maharashtra , Maharashtra-444603,Parijat Hospital, Parijat Hospital Radha nagar lane no.2, near pragati school, Amravati. Maharashtra , Maharashtra-444603
       no all.csv institute in the same state shares all its distinctive words
 ACS Medical College and Hospital, Chennai,A.C.S. Medical College and Hospital
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Shroff Eye Centre, A-9, Kailash Colony, Delhi-110048,A-9, Kailash Colony, New Delhi, Delhi (NCT), 110048
       no all.csv institute in the same state shares all its distinctive words
 MANAYAWAR KANSHI RAM DISTRCIT COMBINED HOSPITAL AND TRAUMA CENTRE, 100/21A GANDHIGRAM GT ROAD RAMADEVI KANPUR NAGAR, Uttar Pradesh-208007,Manyawar kanshiram district combined hospital &trauma center Ramadevi kanpur Nagar
@@ -3468,10 +3487,8 @@ Govt. Medical College, NH21, Village Rampura , Bharatpur Rajasthan , Rajasthan-3
       no all.csv institute in the same state shares all its distinctive words
 Aarupadai Veedu Medical College, Pondicherry,PONDY - CUDDALORE MAIN ROAD, KIRUMAMPAKKAM, BAHOUR COMMUNE PANCHAYAT, PUDUCHERRY
       no all.csv institute in the same state shares all its distinctive words
-General Hospital Shikaripura, General Hospital Shikaripura Near Ib Circle Doddapete Main Road Karnataka , Karnataka-577427,mohshikaripur, Karnataka, 577427
-      no all.csv institute in the same state shares all its distinctive words
 Shaheed Hasan Khan Mewati Government Medical College, Nalhar,Shaheed Hasan Khan Mewati Government Medical College
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Navjeevan Childrens Hospital, Near sargam cinema, college road, Pandharpur, Maharashtra-413304,NEAR SARGAM CINEMA, COLLEGE ROAD, PANDHARPUR
       no all.csv institute in the same state shares all its distinctive words
 Vinayaka Missions Medical College, Karaikal, Pondicherry,KEEZHAKASAKUDIMEDU, KOTTUCHERRY (POST), KARAIKAL, UT of PUDUCHERRY
@@ -3490,10 +3507,8 @@ DURGAPUR SUB DIVISIONAL HOSPITAL , DR.ZAKIR HUSSIEN AVENUE, BIDHANNAGAR, DURGAPU
       no all.csv institute in the same state shares all its distinctive words
 Chittaranjan National Cancer Institute, 37- S.P. Mukherjee Road, KOLKATA, West Bengal-700026,37, S. P. Mukherjee Road, Kolkata, West Bengal, 700026
       no all.csv institute in the same state shares all its distinctive words
-General Hospital, Pavagada Tumakuru District Karnataka , Karnataka-561202,General Hospital Pavagada Tumakuru District Karnataka 561202, Karnataka, 561202
-      no all.csv institute in the same state shares all its distinctive words
 Vinayaka Missions Kirupananda Variyar Medical College, Salem,Sankari Main Road (NH-47), Seeragapadi, Salem
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Lakshmi Madhavan Hospital, No:4A, South Bye Pass Road, Near BSNL, Vannarpettai, Tirunelveli, Tamil Nadu-627003,4A, South Byepass Road, Near BSNL, Vannarpettai, Tamil Nadu, 627003
       no all.csv institute in the same state shares all its distinctive words
 Government General Hospital and 60 Bed Mother and Child Hospital, Hosapete, Vijayanagra District Karnataka, Karnataka-583201,NA
@@ -3510,12 +3525,10 @@ Aravind Eye Hospital and Postgraduate Institute of Ophthalmology, No. 371, periy
       no all.csv institute in the same state shares all its distinctive words
 Prafulla Chandra Sen Government Medical College and Hospital (Formerly Arambagh Sub Divisional/ Super Speciality Hospital), Arambagh Hooghly West Bengal-712601,Arambagh, Hooghly , Pin - 712601, West Bengal, 712601
       no all.csv institute in the same state shares all its distinctive words
-GOVERNMENT MEDICAL COLLEGE OSMANABAD OSMANABAD-413501 Maharashtra,Government Medical College and Hospital, Marwad Galli, Civil Campus, Dharashiv Osmanabad 413 501
-      no all.csv institute in the same state shares all its distinctive words
 District Head Quarters Hospital, Jagatsinghpur, At/ PO- Jagatsinghpur, Near Municipality Office, Jagatsinghpur Town, Odisha-754103,District Head Quarters Hospital, Jagatsinghpur, At/ PO- Jagatsinghpur, Near Municipality Office, Jag
       no all.csv institute in the same state shares all its distinctive words
 Rampurhat Government Medical College & Hospital, Rampurhat,NA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Nirmala Hospital, Marikunnu P.O Vellimadukunnu Calicut-12, Kerala-673012,Nirmala Hospital, Marikunnu P.O Vellimadukunnu Calicut-12, Kerala- 673012
       no all.csv institute in the same state shares all its distinctive words
 Advanced Centre for Treatment, Research and Education in Cancer, Sector 22, Kharghar, Navi Mumbai, Maharashtra-410210,Advanced Centre for Treatment, Research and Education in Cancer, Sector 22, Kharghar, Navi Mumbai, Maharashtra-410210
@@ -3526,15 +3539,11 @@ Maharshi Devraha Baba Autonomous State Medical College, Saket Nagar, Deoria , Ut
       no all.csv institute in the same state shares all its distinctive words
 BHAGIRATHI NEOTIA WOMAN AND CHILD CARE CENTRE, 2, RAWDON STREET, KOLKATA West Bengal , West Bengal-700017,BHAGIRATHI NEOTIA WOMAN AND CHILD CARE CENTRE, RAWDON STREET                                        , West Bengal, 700017
       no all.csv institute in the same state shares all its distinctive words
-Government Medical College Purnea, Line Bazar, Purnea, Bihar-854301,GMCH,LINE BAZAR,PURNEA
-      no all.csv institute in the same state shares all its distinctive words
 I CARE CHILDRENS HOSPITAL, # 202 / L / 1A2 , 29th Ward, APMC Backside, M J Nagar, Hospete, Vijayanagara District, Karnataka-583201, # 202 / L / 1A2 , 29th Ward, APMC Backside, M J Nagar, Hospete, Vijayanagara District, Karnataka-583201
       no all.csv institute in the same state shares all its distinctive words
 General Hospital Kanakapura Near Melekote Ksrtc Garage Kanakapura Taluq Ramanagara District Karnataka Karnataka,General Hospital Kanakapura near KSRTC garage Melekote Kanakpura taluk Ramanagara district, Karnataka, 562117
       no all.csv institute in the same state shares all its distinctive words
 Laxmi Charitable Trust Eye Hospital, Uran Road, Panvel, Maharashtra-410206,Vasant Krupa Building, Hamid Mulla Road, Panvel, Maharashtra, 410206
-      no all.csv institute in the same state shares all its distinctive words
-Taluk General Hospital, Bhadravathi Channagiri Road, Old Town, Bhadravathi Karnataka , Karnataka-577301,Taluk General Hospital Bhadravathi cmobdvtatgmail.com, Karnataka, 577301
       no all.csv institute in the same state shares all its distinctive words
 Acharya Harihar Regional Cancer Centre, Cuttack,Kataka Odisha
       no all.csv institute in the same state shares all its distinctive words
@@ -3549,7 +3558,7 @@ District Headquarter Hospital,, Baripada, Mayurbhanj, Odisha-756001,District Hea
 Autonomous State Medical College Society Ghazipur,Maharshi Vishwamitra Autonomous State Medical College, R.T.I. Ground, Ghazipur,  Uttar Pradesh
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Churu,Civil Line, Shekhawat Colony, Churu-331001
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 DISTRICT HEADQUARTERS HOSPITAL, BALANGIR, OFFICE OF THE DMO(MS)-CUM-SUPERINTENDENT, DISTRICT HEADQUARTERS HOSPITAL, SUDPADA, BALANGIR, Odisha-767001,DHH, Balangir, At: Radharanipara, Post: Balangir
       no all.csv institute in the same state shares all its distinctive words
 MUSKAN HOSPITAL AND RESEARCH CENTRE, RAMNAGAR COLONY,CHAS,BOKARO, Jharkhand-827013,MUSKAN HOSPITAL AND RESEARCH CENTRE, RAMNAGAR COLONY,CHAS,BOKARO, Jharkhand-827013
@@ -3561,7 +3570,7 @@ Sun Medical and Research Centre, Sakthan Thampuran Nagar, Kannamkulangara, Thris
 Lalbagh Sub Division Hospital, Golapbagh, Lalbagh, PO and PS- Murshidabad District- Murshidabad West Bengal, West Bengal-742149,Golapbagh, PO-Murshidabad, PS- Murshidabad, Dist.- Murshidabad, West Bengal, 742149
       no all.csv institute in the same state shares all its distinctive words
 Shri Sathya Sai Medical College and Research Institute, Kancheepuram,SBV Chennai Campus, Shri Sathya Sai Nagar,  Ammapettai, Chennai
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SADAR HOSPITAL KATIHAR, NEAR RAJENDRA STADIUM KALI BARI ROAD KATIHAR, Bihar-854105,SADAR HOSPITAL KATIHAR, NEAR RAJENDRA STADIUM KALI BARI ROAD KATIHAR, Bihar-854105
       no all.csv institute in the same state shares all its distinctive words
 R.L. Jalappa Hospital and Research Centre, Sri Devaraj Urs Academy of Higher Education and Research, Tamaka, Kolar , Karnataka-563103,R L Jalappa Hospital & Research Centre, Sri Devaraj Urs Academy of Higher Education & Research, Tamaka
@@ -3578,8 +3587,6 @@ Autonomous State Society Medical College Mirzapur,Vill- Visundarpur, Pipradar, M
       no all.csv institute in the same state shares all its distinctive words
 Main Hospital , The Singareni Colleries Company Limited Kothagudem, Bhadradri Kothagudem Dist, Telangana-507101,MAIN HOSPITAL, THE SINGARENI COLLERIES COMPANY LIMITED, KOTHAGUDEM, BHADRADRI KOTHAGUDEM DISTRICT, T, Telangana, 507101
       no all.csv institute in the same state shares all its distinctive words
-Autonomous State Medical College Society, Hardoi,Gaura Danda, Sitapur Road, Hardoi U.P. -241001
-      no state found in the institute text
 General Hospital Opp. S T Deopt. Raj Mahel Road, Mehsana Gujarat,General Hospital Mehsana, Opp S T Bus Station, Raj Mahel Road, Gujarat, 384001
       no all.csv institute in the same state shares all its distinctive words
 Dr. Ram Manohar Lohia Institute of Medical Sciences, Vibhuti khand, Gomti Nagar, Lucknow, Uttar Pradesh-226010,Dr Ram Manohar Lohia Institute of Medical Sciences, Lucknow, Vibhuti Khand, Gomti Nagar, Lucknow
@@ -3587,33 +3594,31 @@ Dr. Ram Manohar Lohia Institute of Medical Sciences, Vibhuti khand, Gomti Nagar,
 Government Medical College, Karan- Nagar, Srinagar, Jammu and Kashmir-190010,Karan Nagar, Srinagar
       no all.csv institute in the same state shares all its distinctive words
 Sri Siddhartha Medical College, Tumkur,B H ROAD AGALAKOTE TUMKUR - 572107
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 GMERS Medical College and General Hospital (Formerly know as General Hospital), Rajvant Palace Road, Near Rajendra High School, Rajpipla Dist: Narmada, Gujarat-393145,GMERS Medical College Rajpipla, Near Jakatnaka, Vadia Place Road,Rajpipla
       no all.csv institute in the same state shares all its distinctive words
 Autonomous State Medical College Pratapgarh,Pure Keshav Rai, Gaighat Road Pratapgarh
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 U.P. Rural Instiute of Medical Sciences and Research, Etawah , Uttar Pradesh-206130,Uttar Pradesh University of Medical Sciences Saifai Etawah, India- 206130, Uttar Pradesh, 206130
       no all.csv institute in the same state shares all its distinctive words
 Sree Balaji Medical College and Hospital, Chennai,NO,7 WORKS ROAD,CHROMEPET,CHENNAI
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Rampur, Basti,gmcbasti2019@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr B R Ambedkar State Institute of Medical Sciences, SAS Nagar , Mohali,Dr. B.R Ambedkar State Institute of Medical Sciences, Phase 6 Sec 56 S.A.S Nagar Punjab 160055
       no all.csv institute in the same state shares all its distinctive words
 Karpaga Vinayaga Institute of Medical Sciences and Research Centre ,NA
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Faculty of Medicine , Sri Lalithambigai Medical College and Hospital,Adayalampattu, Maduravoyal, Chennai, Tamil Nadu – 600 095
       no all.csv institute in the same state shares all its distinctive words
 VELS Medical College & Hospital,12-123, Velan Nagar, Manjankaranai Village, Periyapalayam Road, Uthukottai Taluk, Tiruvallur Distric
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 SARDAR VALLABH BHAI PATEL DISTRICT HOSPITAL , SATNA NEAR SBI CITY BRANCH SATNA, Madhya Pradesh-485001,HOSPITAL CHOWK, DISTRICT HOSPITAL SATNA
       no all.csv institute in the same state shares all its distinctive words
 Sri Lakshmi Narayana Institute of Medical Sciences, Pondicherry,Sri Lakshmi narayana institute of medical sciences,puducherry
       no all.csv institute in the same state shares all its distinctive words
-Taluk General Hospital Kadur Nh 206 Kadur , Chikmagalur District Karnataka Karnataka,Taluk General Hospital Kadur Nh 206 Kadur , Chikmagalur District Karnataka 577548, Karnataka, 577548
-      no all.csv institute in the same state shares all its distinctive words
 ST Peters Medical College, Hospital & Research Institute,Dr MGR Nagar, Near AERI Campus, Opp SIPCOT –II, Hosur, Krishnagiri District
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dhanalakshmi Srinivasan Institute of Medical Sciences and Hospital - Thuraiyur Road, Perambalur,274C, Thuraiyur Road, Perambalur 621 212, Tamil Nadu dsimshpblr@gmail.com
       no all.csv institute in the same state shares all its distinctive words
 Post Graduate Institute of Child Health, Sector - 30 Noida, Uttar Pradesh-201303,Post Graduate  Institute of Child Health sec-30 Noida, Gautam Buddh Nagar
@@ -3623,7 +3628,7 @@ General Hospital, Arakalagud Road, Dr. B. R Ambedkar Circle, Holenarasipura Talu
 DISTRICT HEAD QUARTER HOSPITAL, AT- PHULBADA, PO- UMURI, PS- JEYPORE SADAR DISTRICT- KORAPUT, Odisha-764002,DISTRICT HEAD QUARTER HOSPITAL, AT- PHULBADA, PO- UMURI, PS- JEYPORE SADAR DISTRICT- KORAPUT, Odisha-764002
       no all.csv institute in the same state shares all its distinctive words
 Bhaarat Medical College & Hospital,173, AGARAM MAIN ROAD , SELAIYUR, TAMBARAM CHENNAI - 600073
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Katwa Sub Divisional Hospital, Kachari Road, Katwa, Purba Bardhaman, West Bengal , West Bengal-713130,Kachari Road, Katwa, Purba Bardhaman, West Bengal, 713130
       no all.csv institute in the same state shares all its distinctive words
 District Headquarter Hospital, Main Road, Rama Krishna Nagar, Rayagda, Odisha-765001,District Headquarter Hospital, Rayagada, Main Road, Rama Krishna Nagar, Rayagda, Odisha-765001
@@ -3633,30 +3638,26 @@ District Headquarters Hospital, Dhenkanal, Odisha-759001,District Headquarters H
 Amar Shaheed Jodha Singh Ataiya Thakur Dariyao Singh Medical College, Fatehpur, Uttar Pradesh,GT road (grand trunk road), Chitaura, Fatehpur Uttar Pradesh 212601
       no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Dungarpur,Government Medical College and Associated Group of Hospital, Village Thana, Dungarpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Lakhimpur Medical College,Saboti, Chowkham Post Office - Chaboti Police Station - North Lakhimpur District - Lakhimpur
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Badaun, U.P.,gmcbadaun@gmail.com
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 M.P. Shah Government Medical College, Opp.Dandiya Hanuman Temple, Jamnagar , Gujarat-361008,Pandit Nehru Marg, Opp. Dandiya Hanuman Temple, Jamnagar
       no all.csv institute in the same state shares all its distinctive words
 Autonomous State Medical College, Siddharthnagar,71 Ashok Marg, Mudila Naugarh Siddharthnagar
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Medical College, Shahdol, MP,GRAM CHAMPA KUDRI ROAD NEAR NEW BUS STAND SHAHDOL MP
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Dr. Rajendra Prasad Govt. Medical College, Dist. Kangra At Tanda, Himachal Pradesh-176002,Dr.Rajendra Prasad Govt.Medical College Kangra at Tanda., Himachal Pradesh, 176002
       no all.csv institute in the same state shares all its distinctive words
 DISTRICT HEADQUATERS HOSPITAL, KHORDHA, KHORDHA, Odisha-752055,District Headquarter Hospital, Near Model police station, khordha
       no all.csv institute in the same state shares all its distinctive words
 Maharshi Devraha Baba Autonomous State Medical College, Deoria,Hospital Road, Saket Nagar, Deoria-274001
-      no state found in the institute text
+      no all.csv institute in the same state shares all its distinctive words
 Government Head Quarters Hospital, No. 5, Railway Road, Kancheepuram , Tamil Nadu-631501,GOVERNMENT DISTRECT HEAD QUARTERS HOSPITAL, DNB POST GRADUATE TEACHING INSTITUTE NO5 RAILWAY ROAD, K
       no all.csv institute in the same state shares all its distinctive words
-General Hospital, Panipat Near Bus Stand G T Road Panipat Haryana , Haryana-132103,GT ROAD NEAR BUS STAND PANIPAT, Haryana, 132103
-      no all.csv institute in the same state shares all its distinctive words
 DISTRICT HEAD QUARTER HOSPITAL, Telecom Colony, Phulbani, Kandhamal, Odisha-762001,DISTRICT HEAD QUARTER HOSPITAL, Telecom Colony, Phulbani, Kandhamal, Odisha-762001
-      no all.csv institute in the same state shares all its distinctive words
-General Hospital , Jalore Hospital Chouraha Jalore Rajasthan , Rajasthan-343001,GENERAL HOSPITAL JALORE, HOSPITAL JALORE, OPP. NAGAR PARISHAD, JALORE, RAJASTHAN
       no all.csv institute in the same state shares all its distinctive words
 SADAR HOSPITAL, BHABUA KACHAHARI ROAD, Bihar-821101,SADAR HOSPITAL, BHABUA KACHAHARI ROAD, Bihar-821101
       no all.csv institute in the same state shares all its distinctive words
@@ -3697,11 +3698,9 @@ GMERS,Sola,Ahmedabad (Gujarat)
 ShethVadilalGenHosp,Ahmedabad (Gujarat)
 BPS Med Coll, Sonepat (Haryana)
 General Hospital, Panchkula (Haryana)
-General Hospital, Panipat (Haryana)
 Kalpana Chawla GMC Hosp,Karnal (Haryana)
 SHKM Gov Med Coll, Nuh (Haryana)
 District Hospital,Udhampur, J&K (Jammu and Kashmir)
-Govt Hosp, Gandhi Nagar, JK (Jammu and Kashmir)
 Govt Med Coll Hosp, Anantnag (Jammu and Kashmir)
 Govt Med Coll Hosp, Rajouri (Jammu and Kashmir)
 Govt Med Coll,Kupwara (Jammu and Kashmir)
@@ -3714,22 +3713,15 @@ District Hospital, Ramanagara (Karnataka)
 General Hosp, Doddaballapura (Karnataka)
 General Hospital, Hassan (Karnataka)
 General Hosp, Kanakapura Taluk (Karnataka)
-General Hosp, Shikaripura (Karnataka)
-General Hospital, Tiptur, Kar (Karnataka)
 K C Gen Hospital, Bangalore (Karnataka)
 Sir CVRaman Gen Hos, Bangalore (Karnataka)
 Sub Division Hospital,Kollegal (Karnataka)
-Taluk Gen Hosp, Bhadravathi,KAR (Karnataka)
-Taluk General Hospital, Kadur (Karnataka)
 General Hospital, Jayanagar (Karnataka)
 Taluk General Hospital,Byadagi (Karnataka)
-General Hosp, Chintamani, KAR (Karnataka)
 General Hospital, Gokak,Belgaum (Karnataka)
 Taluka Gen Hosp, Ramdurg (Karnataka)
 District Hosp, Chikkaballapur (Karnataka)
 Taluka General Hosp, Saundatti (Karnataka)
-General Hospital, KGF (Karnataka)
-General Hosp, Pavagada (Karnataka)
 SriJayachamarjndraGenHos,Hassan (Karnataka)
 ESIC Superspecialty Hosp, Kollam (Kerala)
 Government Gen Hosp, Kozhikode (Kerala)
@@ -3774,8 +3766,6 @@ ESI Hosp, Ludhiana (Punjab)
 GGS Med Coll Hosp, Faridkot (Punjab)
 District Hospital, Baran (Rajasthan)
 ESIC Model Hospital, Jaipur (Rajasthan)
-General Hospital, Jalore (Rajasthan)
-General Hospital, Karauli (Rajasthan)
 Govt Dist Hosp, Sri Ganganagar (Rajasthan)
 Govt General Hosp, Madhopur (Rajasthan)
 Govt Hosp, Barmer (Rajasthan)
@@ -3824,7 +3814,6 @@ Barjora SS Hosp, Bankura (West Bengal)
 Baruipur SD Hosp, Baruipur (West Bengal)
 Bishnupur Dist Hosp,West Bengal (West Bengal)
 Chandannagar SD Hosp, Hooghly (West Bengal)
-Chittaranjan SevaSadan,Kolkata (West Bengal)
 Contai SD Hosp,Purba Medinipur (West Bengal)
 Coochbehar Govt Med Coll, WB (West Bengal)
 DebenMahato(Sadar)Hosp,Purulia (West Bengal)
@@ -3855,10 +3844,7 @@ VidyasagarStateGenHosp,Kolkata (West Bengal)
 Walsh SDH, Serampore,Hooghly,WB (West Bengal)
 BSACentralRailway,Mumbai(Joint) (Maharashtra)
 DrBSAmbedkar MunGenHosp, Mumbai (Maharashtra)
-Government Med College, Gondia (Maharashtra)
-Govt Med Coll & Hosp,Nandurbar (Maharashtra)
 Govt Med Coll Hosp, Akola (Maharashtra)
-Govt Medical College, Osmanabad (Maharashtra)
 Rajiv Gandhi MedColl,Thane,MUM (Maharashtra)
 ShriVasantRaoGovtMedCol,Yavtmal (Maharashtra)
 Shri Jagannath,Puri (Odisha)
@@ -3917,7 +3903,6 @@ VYIMS, Raipur (Chhattisgarh)
 BM Gupta Hospital, Delhi (Delhi)
 Moolchand Khairatiram, Delhi (Delhi)
 NationalHeartIns,EastofKailash (Delhi)
-St Stephen's Hospital, Delhi (Delhi)
 Venkateshwar Hospital, Delhi (Delhi)
 Mahavir Hospital, Surendranagar, Gujarat (Gujarat)
 Bhagwan Das Hosp,Sonipat (Haryana)
@@ -3955,7 +3940,6 @@ Smita Memo Hosp & RC,Thodupuzha (Kerala)
 Valluvanad Hosp, Ottapalam (Kerala)
 All is Well MultSpec,Burhanpur (Madhya Pradesh)
 Arihant Hospital, Indore (Madhya Pradesh)
-Jabalpur Hosp & Res Center, MP (Madhya Pradesh)
 Noble Multispec Hosp,Bhopal (Madhya Pradesh)
 Anand Hospital, Vaijapur, MH (Maharashtra)
 Asian IMS, Dombivli (E) (Maharashtra)
@@ -4159,9 +4143,6 @@ MainHospSingareniColleries, TEL (Telangana)
 Andaman&Nicobar IMS,PortBlair (Andaman and Nicobar Islands)
 Anugrah Narayan Magdh,Gaya (Bihar)
 BiharStateInstMentHealt,Koilwar (Bihar)
-Darbhanga Med Coll Hosp (Bihar)
-Govt Med Coll, Bettiah (Bihar)
-Govt Med Coll, Purnea (Bihar)
 IGIMS, Sheikhpura, Patna (Bihar)
 JaiprakashNrynHos,Rajbanshinagr (Bihar)
 Jannyak Karpoori Thakur,Madhepura (Bihar)
@@ -4179,7 +4160,6 @@ GMERS Med Coll Hosp,Panchmahal (Gujarat)
 GMERS Med Coll Hosp,Rajpipla (Gujarat)
 GMERS Med Hospital, Navasari (Gujarat)
 Gujarat IMH Hosp, Ahmedabad (Gujarat)
-MP Shah Govt MC,Jamnagar (Gujarat)
 State Hospital, Dharampur (Gujarat)
 Dr Radhakrishnan GMC, Hamirpur (Himachal Pradesh)
 Lal Bah Shastri Govt Med,Mandi (Himachal Pradesh)
@@ -4266,7 +4246,6 @@ Dr TMA Pai Hosp, Udupi (Karnataka)
 Fortis Hosp,BannerghattaRd,BLR (Karnataka)
 HOSMAT Hospital, Bangalore (Karnataka)
 Indiana Hosp&Heart, Mangalore (Karnataka)
-Kasturba MedCollHosp,Mangalore (Karnataka)
 Manipal Hosp, Rustum Bagh, BLR (Karnataka)
 Manipal Hospital,Ambalipura,BLR (Karnataka)
 Metrounited Health, Shivamogga (Karnataka)
@@ -4292,4 +4271,3 @@ St GregoriosHosp,Pathanamthitta (Kerala)
 Apollo Rajshree Hosp, Indore (Madhya Pradesh)
 Apollo SAGE Hosp,Bhopal (Madhya Pradesh)
 JLN Main Hosp & RC, Bhilai (Chhattisgarh)
-Bokaro General Hosp, Bokaro (Jharkhand)

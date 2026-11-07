@@ -4,7 +4,7 @@
 
   Reads   1.csv   (counselling records: institute names + ranks)
           all.csv (institute details: stipend, bond, penalty, beds)
-  Matches institute names between the two files (strictly: when unsure, the institute is LEFT OUT),
+  Matches institute names between the two files (strictly: when unsure, no details are attached - the institute stays listed with blank details),
   writes the matched details to choice-data.json and a human-readable match report.
 
   Usage (the GitHub workflow runs this for you):
@@ -122,7 +122,7 @@ const CANON = {
   univ: 'university', res: 'research', mem: 'memorial', sci: 'sciences', science: 'sciences', coll: 'college', clg: 'college', mc: 'college',
   specialty: 'speciality', multispeciality: 'speciality', multispecialty: 'speciality', superspeciality: 'speciality',
   superspecialty: 'speciality', super: 'speciality', multi: 'speciality', spec: 'speciality', specialities: 'speciality',
-  homes: 'home', ss: 'speciality', sshosp: 'speciality',
+  homes: 'home', gen: 'general', ss: 'speciality', sshosp: 'speciality',
   // common alternative spellings of the same city (both files are mapped to the first-listed modern spelling)
   shimoga: 'shivamogga', bengaluru: 'bangalore', mysuru: 'mysore', thiruvananthapuram: 'trivandrum', kozhikode: 'calicut',
   kochi: 'cochin', vadodara: 'baroda', calcutta: 'kolkata', kolkatta: 'kolkata', madras: 'chennai', gurgaon: 'gurugram',
@@ -206,7 +206,7 @@ for (const r of allT.rows) {
   let rec = catalog.get(key);
   if (!rec) {
     const cw = canonWords(inst), stw = new Set([...words(state), ...(STATE_ABBR[state] || [])]);
-    rec = { key, name: inst, state, stateRaw: stRaw, tokens: [...new Set(distinctive(cw).filter(w => !stw.has(w)))], allTokens: cw, headGeneric: distinctive(canonWords(inst.split(',')[0])).filter(w => !stw.has(w)).length === 0, v: { m: null, d: null }, rows: { m: null, d: null }, sector: new Set(), conflicts: [] };
+    rec = { key, name: inst, state, stateRaw: stRaw, tokens: [...new Set(distinctive(cw).filter(w => !stw.has(w)))], allTokens: cw, core: cw.filter(w => !stw.has(w)), headGeneric: distinctive(canonWords(inst.split(',')[0])).filter(w => !stw.has(w)).length === 0, v: { m: null, d: null }, rows: { m: null, d: null }, sector: new Set(), conflicts: [] };
     catalog.set(key, rec);
   }
   const src = r[allT.idx.course] || '';
@@ -257,18 +257,26 @@ for (const name of names.keys()) {
   const states = detectStates(name);
   const res = { name, status: 'none', reason: '', cands: [] };
   results.push(res);
-  if (!states.size) { res.reason = 'no state found in the institute text'; continue; }
   const pool = [];
-  for (const st of states) for (const r of (byState.get(st) || [])) pool.push(r);
+  if (!states.size) { for (const r of records) pool.push(r); res.noState = true; }   // no state written: compare against every state (stricter rules below)
+  else for (const st of states) for (const r of (byState.get(st) || [])) pool.push(r);
   if (!pool.length) { res.reason = 'no all.csv institute in this state: ' + [...states].join(', '); continue; }
   const normFull = words(name).join(' ');
   // "headline" = distinctive words of the first comma-separated part (of the second part if the first is all generic)
   const headAll = canonWords(segs[0]);
   let head = distinctive(headAll), headFellBack = false;
   if (!head.length && segs[1]) { head = distinctive(canonWords(segs[1])); headFellBack = true; }
+  const lead = canonWords(segs.slice(0, 2).join(' '));
   const cands = [];
   for (const r of pool) {
-    if (r.tokens.length < 2) continue;                               // all.csv name too short/generic to identify an institute safely
+    if (r.tokens.length < 2) {
+      // all.csv name with a single identifying word, e.g. "General Hospital, Panipat". Matched only when the counselling name BEGINS with
+      // exactly those words (state words/abbreviations ignored) and the state is written in the counselling text - nothing looser.
+      if (r.tokens.length !== 1 || !states.size || r.core.length < 3) continue;
+      if (!r.core.every((w, i) => lead[i] === w)) continue;
+      cands.push({ rec: r, tier: 'leading-words', score: 50 });
+      continue;
+    }
     const rn = words(r.name).join(' ');
     let tier = null;
     if (r.name.toLowerCase().replace(/\s+/g, ' ') === name.toLowerCase().replace(/\s+/g, ' ')) tier = 'exact';
@@ -337,16 +345,17 @@ L.push('CHOICE PAGE - INSTITUTE MATCH REPORT', '');
 L.push('Counselling files read: ' + usedFiles.join(', '));
 L.push('Institutes in counselling files: ' + names.size);
 L.push('all.csv rows: ' + allRows + '  (distinct institutes: ' + records.length + ')');
-L.push('Matched (shown on the Choice page): ' + matched.length);
-L.push('   exact: ' + tierCount('exact') + '   normalised: ' + tierCount('normalised') + '   word-by-word (controlled fuzzy): ' + tierCount('token'));
-L.push('Ambiguous (excluded): ' + amb.length);
-L.push('No confident match (excluded): ' + none.length);
+L.push('Matched (shown with all.csv details): ' + matched.length);
+L.push('   exact: ' + tierCount('exact') + '   normalised: ' + tierCount('normalised') + '   word-by-word (controlled fuzzy): ' + tierCount('token') + '   leading-words (short all.csv names): ' + tierCount('leading-words'));
+L.push('Ambiguous (still listed on the Choice page, details left blank): ' + amb.length);
+L.push('No confident match (still listed, details left blank): ' + none.length);
+L.push('Institutes listed on the Choice page in total: ' + (matched.length + amb.length + none.length));
 L.push('all.csv institutes never matched: ' + records.filter(r => !usedKeys.has(r.key)).length, '');
 L.push('== MATCHED ==');
 for (const r of matched) L.push(`[${r.tier}] ${r.name}\n      => ${r.rec.name} (${r.rec.stateRaw})${r.tiedIdentical ? '  [tied records had identical data]' : ''}${r.rec.conflicts.length ? '  [conflicting numbers in all.csv: ' + r.rec.conflicts.join('; ') + ']' : ''}`);
-L.push('', '== AMBIGUOUS (excluded) ==');
+L.push('', '== AMBIGUOUS (listed with blank details) ==');
 for (const r of amb) L.push(`${r.name}\n      ${r.reason}${r.cands.length ? '. Candidates: ' + r.cands.slice(0, 4).map(c => c.rec.name + ' (' + c.rec.stateRaw + ')').join(' | ') : ''}`);
-L.push('', '== NO CONFIDENT MATCH (excluded) ==');
+L.push('', '== NO CONFIDENT MATCH (listed with blank details) ==');
 for (const r of none) L.push(`${r.name}\n      ${r.reason}`);
 L.push('', '== all.csv INSTITUTES NEVER MATCHED (for your review) ==');
 for (const r of records) if (!usedKeys.has(r.key)) L.push(`${r.name} (${r.stateRaw})`);

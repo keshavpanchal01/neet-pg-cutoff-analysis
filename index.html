@@ -968,6 +968,7 @@ $('ch-clear').onclick=()=>{const w=W();if(!w.items.length)return;if(confirm('Rem
    DATA: Map(institute name as in the counselling data -> {m:[...],d:[...],s:state,k:sector}); m = DNB figures, d = Diploma figures,
    each [stipend year 1, bond years, bond penalty, beds, stipend year 2, stipend year 3]; null = not available. */
 let DATA=null,DSTATE='loading',dataP=null;
+const NOINFO={m:[null,null,null,null,null,null],d:null,s:'',k:''};   // shown for institutes with no confident all.csv match: every detail stays blank
 const F={sort:null,bond:null,pen:null};          // sort: 'stipend' | 'beds' | null ; bond / pen: selected value or null (= all)
 const num=v=>(typeof v==='number'&&Number.isFinite(v)&&v>=0)?v:null;
 const rupee=v=>v===null?'—':'₹'+v.toLocaleString('en-IN');
@@ -1022,7 +1023,7 @@ function renderAvail(){
   const hasM=sel.some(x=>x.c.t==='M'),hasD=sel.some(x=>x.c.t==='D');
   const pick=e=>(hasD&&!hasM)?e.d:(hasM&&!hasD)?e.m:(e.m||e.d);   // Diploma-only selection shows Diploma figures, DNB-only shows DNB figures (never the other sheet's); mixed selection shows DNB, else Diploma
   let rows=[];
-  for(const [i,rk] of ids){const n=ds.insts[i];if(n===NOSPEC)continue;const e=DATA.get(n);if(!e)continue;const pv=pick(e);if(!pv)continue;rows.push({n,e,v:pv,rk});}   // institutes without a match are left out
+  for(const [i,rk] of ids){const n=ds.insts[i];if(n===NOSPEC)continue;const e=DATA.get(n)||NOINFO;rows.push({n,e,v:pick(e)||NOINFO.m,rk});}   // institutes without a confident all.csv match stay listed with blank (—) details
   const total=rows.length;
   if(F.bond!==null)rows=rows.filter(r=>r.v[1]===F.bond);
   if(F.pen!==null)rows=rows.filter(r=>r.v[2]===F.pen);
