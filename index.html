@@ -13,7 +13,7 @@
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEET PG 2026 · Cutoff</title>
+<title>Seatwise</title>
 <style>
 :root{
   --bg:#0a0a0a; --bg2:#141414; --card:#181818; --card2:#1f1f1f; --line:#2c2c2c; --line2:#3a3a3a;
@@ -153,8 +153,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <div class="cwrap">
     <button type="button" class="mini contactbtn" id="contactbtn" aria-expanded="false" aria-controls="cpop">Contact</button>
     <div class="cpop" id="cpop" hidden>
-      <a href="mailto:keshavpanchal9920@gmail.com"><span>Email</span>keshavpanchal9920@gmail.com</a>
-      <a href="https://www.linkedin.com/in/keshav-p-277971238" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span>keshav-p-277971238</a>
+      <a href="mailto:seatwise01@gmail.com"><span>Email</span>seatwise01@gmail.com</a>
     </div>
   </div>
 </div></div>
@@ -504,7 +503,7 @@ function renderScatter(){
   $('c-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
   const pts=[],none=[];
   for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt}):none.push(c.n);}
-  $('c-note').textContent=none.length?'No allotments for these filters: '+none.join(', '):'';
+  $('c-note').textContent='';
   if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
   if(S.sort==='asc')pts.sort((a,b)=>a.max-b.max||a.name.localeCompare(b.name));
   else if(S.sort==='desc')pts.sort((a,b)=>b.max-a.max||a.name.localeCompare(b.name));
@@ -595,7 +594,7 @@ function renderDemand(){
   $('dc-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
   const pts=[],none=[];
   for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt,dem:r.cnt/r.max*100}):none.push(c.n);}
-  $('dc-note').textContent=(none.length?'No allotments for these filters: '+none.join(', ')+'.  ':'')+'Demand = total allotments ÷ cutoff rank.';
+  $('dc-note').textContent='';
   if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
   if(D.sort==='desc')pts.sort((a,b)=>b.dem-a.dem||a.name.localeCompare(b.name));
   else pts.sort((a,b)=>a.dem-b.dem||a.name.localeCompare(b.name));
@@ -687,7 +686,32 @@ function show(v){
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
   if(DS){v==='cutoff'?renderCutoff():v==='demand'?renderDemand():renderScatter();}
 }
-$('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b)show(b.dataset.v);};
+/* subtle metal card-click sound, synthesized (no audio file); played only when the page actually changes */
+let AC=null;
+function metalClick(){
+  try{
+    const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
+    if(!AC)AC=new Ctx();
+    if(AC.state==='suspended')AC.resume();
+    const t=AC.currentTime,out=AC.createGain();
+    out.gain.value=0.5;out.connect(AC.destination);
+    // short noise transient (the "tick")
+    const len=Math.floor(AC.sampleRate*0.03),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+    const ns=AC.createBufferSource();ns.buffer=buf;
+    const hp=AC.createBiquadFilter();hp.type='highpass';hp.frequency.value=3500;
+    const ng=AC.createGain();ng.gain.setValueAtTime(0.28,t);ng.gain.exponentialRampToValueAtTime(0.001,t+0.03);
+    ns.connect(hp);hp.connect(ng);ng.connect(out);ns.start(t);
+    // metallic ring: inharmonic partials with fast decay
+    [[2350,0.10,0.07],[3720,0.07,0.05],[5410,0.04,0.035]].forEach(([f,v,dur])=>{
+      const o=AC.createOscillator(),g=AC.createGain();
+      o.type='sine';o.frequency.value=f;
+      g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(v,t+0.002);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+0.02);
+    });
+  }catch(e){}
+}
+$('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b){if(b.dataset.v!==view)metalClick();show(b.dataset.v);}};
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{renderScatter();renderDemand();},120);});
 
 /* ================= counselling rounds (each round = its own CSV file, loaded when the page opens) ================= */
@@ -717,8 +741,6 @@ async function selectRound(r){
   try{ds=await loadRound(r);}catch(err){say('err',r.label+' could not be loaded — '+err.message);return false;}
   DS=ds;current=r;
   $('msg').hidden=true;
-  const skipped=ds.skippedRank+ds.skippedField;
-  if(skipped)say('err',`${r.label}: ${fmt(skipped)} row(s) in the source data could not be used (invalid Rank or missing Quota/Category/Course).`);
   $('h-round').textContent=r.label;
   document.querySelectorAll('.rbtn').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.n)===r.n));
   // keep earlier selections that still exist in this round
