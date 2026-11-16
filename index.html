@@ -272,8 +272,13 @@ const RAWMAP={"(NBEMS) ANAESTHESIOLOGY":["M","ANAESTHESIOLOGY"],"(NBEMS) ANATOMY
 const KEY=s=>s.toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim();
 // Fallback for a course name that is not in RAWMAP (e.g. appears only in a future round): a whole-word DIPLOMA
 // in the name makes it a Diploma course; everything else is MD/MS/DNB. It is never merged into another speciality.
+/* Stray 2025 (2.csv) prints course names wrapped over several lines / in other spellings. These lookups only decide which speciality
+   group a course belongs to (the course text itself is never altered). Exact RAWMAP matches (Round 1) are always tried first. */
+const CANON=s=>s.replace(/[\s\u0002]+/g,' ').trim().toLowerCase();
+const RAWCANON=new Map(Object.entries(RAWMAP).map(([k,v])=>[CANON(k),v]));
+const EXTRAMAP={"m.d. (derm.,vene. and leprosy)/ (dermatology)/(skin and venereal diseases)/(venereol ogy)":["M","DERMATOLOGY"],"m.d. (radio diagnosis)":["M","RADIO DIAGNOSIS"],"m.d. (general medicine)":["M","GENERAL MEDICINE"],"m.s. (general surgery)":["M","GENERAL SURGERY"],"m.d. (paediatrics)":["M","PAEDIATRICS"],"(nbems) dermatology and venereology and leprosy":["M","DERMATOLOGY"],"m.d. (obst. and gynae)/ms (obstetrics and gynaecology)":["M","OBSTETRICS & GYNAECOLOGY"],"m.d. (radiotherapy/ radiation oncology)":["M","RADIATION ONCOLOGY"],"m.d. (aerospace medicine)":["M","AEROSPACE MEDICINE"],"(nbems-diploma)radio-diagnosis":["D","RADIO DIAGNOSIS"],"m.s. (orthopaedics)":["M","ORTHOPAEDICS"],"m.s. (e.n.t.)":["M","ENT (OTORHINOLARYNGOLOGY)"],"m.d. (tuberculosis and respiratory diseases)/pulmonary medicine /m.d. (respiratory medicine)":["M","RESPIRATORY MEDICINE"],"m.d. (psychiatry)":["M","PSYCHIATRY"],"m.d. (anaesthesiology)":["M","ANAESTHESIOLOGY"],"m.d. (emergency and critical care)/m.d. (emergency medicine)":["M","EMERGENCY MEDICINE"],"m.s. (ophthalmology)":["M","OPHTHALMOLOGY"],"(nbems-diploma) radio-diagnosis":["D","RADIO DIAGNOSIS"],"m.d. (pathology)":["M","PATHOLOGY"],"diploma in orthopaedics":["D","ORTHOPAEDICS"],"(nbems) otorhinolaryngology (e.n.t.)":["M","ENT (OTORHINOLARYNGOLOGY)"],"diploma in child health/ paediatrics":["D","PAEDIATRICS"],"m.d. (family medicine)":["M","FAMILY MEDICINE"],"(nbems-diploma) tuberculosis and chest diseases":["D","TB & CHEST DISEASES"],"m.d. (physical med. and rehabilitation)":["M","PHYSICAL MEDICINE & REHABILITATION"],"m.d. (pharmacology)":["M","PHARMACOLOGY"],"m.d. (microbiology)":["M","MICROBIOLOGY"],"(nbems-diploma) otorhinolaryngology (e.n.t.)":["D","ENT (OTORHINOLARYNGOLOGY)"],"dip.in medical radio diagnosis":["D","RADIO DIAGNOSIS"],"dip. in sports medicine":["D","SPORTS MEDICINE"],"m.d. (hospital administration)":["M","HOSPITAL ADMINISTRATION"],"diploma in oto rhino-laryngology":["D","ENT (OTORHINOLARYNGOLOGY)"],"m.d. (preventive and social medicine)/ community medicine":["M","COMMUNITY MEDICINE"],"diploma-emergency medicine":["D","EMERGENCY MEDICINE"],"diploma in ophthalmology/dom s":["D","OPHTHALMOLOGY"],"m.d. in transfusion medicine/ immuno haematology and blood transfusion":["M","IMMUNOHAEMATOLOGY & BLOOD TRANSFUSION"],"m.d. (biochemistry)":["M","BIOCHEMISTRY"],"m.d. (forensic medicine)":["M","FORENSIC MEDICINE"],"md/ms (anatomy)":["M","ANATOMY"],"dip. in phy. medicine and rehab.":["D","PHYSICAL MEDICINE & REHABILITATION"],"diploma in anaesthesiology":["D","ANAESTHESIOLOGY"],"(nbems) immuno haematology and blood transfusion":["M","IMMUNOHAEMATOLOGY & BLOOD TRANSFUSION"],"m.d. (physiology)":["M","PHYSIOLOGY"],"diploma in health administration":["D","HEALTH ADMINISTRATION"],"dip.in gynae. and obst.":["D","OBSTETRICS & GYNAECOLOGY"],"diploma in clinical pathology":["D","CLINICAL PATHOLOGY"],"m.d. (palliative medicine)":["M","PALLIATIVE MEDICINE"],"m.d. (community health and admn.)":["M","COMMUNITY HEALTH ADMINISTRATION"],"m.p.h. (epidemiology)":["M","MPH EPIDEMIOLOGY"],"diploma in public health":["D","PUBLIC HEALTH"],"diploma in bacteriology":["D","BACTERIOLOGY"],"dip. in forensic medicine":["D","FORENSIC MEDICINE"],"m.d.laboratory medicine course":["M","LABORATORY MEDICINE"]};
 function normCourse(raw){
-  const hit=RAWMAP[raw.trim()];
+  const hit=RAWMAP[raw.trim()]||RAWCANON.get(CANON(raw))||EXTRAMAP[CANON(raw)];
   if(hit)return {t:hit[0],n:hit[1],known:true};
   const k=KEY(raw);
   const dip=/\bDIPLOMA\b/.test(k);
@@ -715,7 +720,7 @@ $('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b){if(b.dataset.v!==vi
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{renderScatter();renderDemand();},120);});
 
 /* ================= counselling rounds (each round = its own CSV file, loaded when the page opens) ================= */
-const ROUNDS=[{n:1,label:'Round 1',url:'1.csv'}];
+const ROUNDS=[{n:2,label:'Stray 2025',url:'2.csv'},{n:1,label:'Round 1',url:'1.csv'}];
 const CACHE=new Map();            // round number -> its own parsed dataset (never merged)
 let current=null;
 function say(kind,main){const m=$('msg');m.hidden=false;m.className='msg '+kind;m.textContent=main;}
@@ -763,7 +768,7 @@ async function selectRound(r){
     b.setAttribute('aria-pressed','false');b.onclick=()=>{if(current!==r)selectRound(r);};
     bar.appendChild(b);
   });
-  selectRound(ROUNDS[0]);
+  selectRound(ROUNDS.find(r=>r.n===1));   // Round 1 stays the page's default round
 })();
 
 })();
