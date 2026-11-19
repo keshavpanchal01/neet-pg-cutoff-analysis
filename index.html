@@ -151,6 +151,19 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   .u-table{min-width:0}
   .seg.wrapseg button{padding:8px 11px}
 }
+
+/* ladder page */
+.l-card{margin-top:22px;background:#101010;border:1px solid var(--line);border-radius:14px;padding:16px 14px 10px;position:relative}
+.l-head{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;padding:0 8px 8px}
+.l-head .t{font-weight:700;font-size:14px}
+.l-head .s{color:var(--mut);font-size:12.5px;overflow-wrap:anywhere}
+#l-plot{width:100%;display:block}
+#l-plot text{font-family:var(--font)}
+.l-tip{position:absolute;pointer-events:none;z-index:20;background:#000;border:1px solid var(--red);border-radius:10px;padding:11px 14px;font-size:12.5px;min-width:190px;max-width:300px;box-shadow:0 10px 40px #000c;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+.l-tip.on{opacity:1;transform:none}
+.l-tip .n{font-weight:800;font-size:14px}
+.l-tip .r{font-size:26px;font-weight:900;letter-spacing:-.02em;margin:2px 0 6px}
+.l-tip .m{color:var(--mut);line-height:1.5;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -158,6 +171,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <div class="logo">NEET PG<small>2026</small></div>
   <div class="tabs" role="tablist" id="tabs">
     <button class="tab" role="tab" data-v="cutoff" aria-selected="true">Cutoff</button>
+    <button class="tab" role="tab" data-v="ladder" aria-selected="false">Ladder</button>
     <button class="tab" role="tab" data-v="u10k" aria-selected="false">Branch Analysis</button>
   </div>
   <div class="cwrap">
@@ -192,6 +206,20 @@ button{font-family:inherit;cursor:pointer;color:inherit}
       <div class="acts"><button class="mini" data-a="t-d-all">Select all</button><button class="mini" data-a="t-d-none">Clear all</button></div></div>
       <div class="chips" id="t-d"></div></div>
     <div id="t-out"></div>
+  </section>
+
+  <section class="view" id="v-ladder" hidden>
+    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="l-qc"></span>
+      <div class="acts"><button class="mini" data-la="q-all">Select all</button><button class="mini" data-la="q-none">Clear all</button></div></div>
+      <div class="chips" id="l-q"></div></div>
+    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="l-cc"></span>
+      <div class="acts"><button class="mini" data-la="c-all">Select all</button><button class="mini" data-la="c-none">Clear all</button></div></div>
+      <div class="chips" id="l-c"></div></div>
+    <div class="l-card" id="l-card" hidden>
+      <div class="l-head"><span class="t" id="l-title"></span><span class="s" id="l-sub"></span></div>
+      <div id="l-box"></div>
+      <div class="l-tip" id="l-tip"></div>
+    </div>
   </section>
 
   <section class="view" id="v-u10k" hidden>
@@ -480,13 +508,13 @@ document.addEventListener('click',e=>{if(!e.target.closest('.cwrap'))closeContac
 let view='cutoff';
 function show(v){
   view=v;
-  $('v-cutoff').hidden=v!=='cutoff';$('v-u10k').hidden=v!=='u10k';
-  $('h-word').textContent=v==='u10k'?'branch analysis':'cutoff';
+  $('v-cutoff').hidden=v!=='cutoff';$('v-ladder').hidden=v!=='ladder';$('v-u10k').hidden=v!=='u10k';
+  $('h-word').textContent=v==='u10k'?'branch analysis':v==='ladder'?'ladder':'cutoff';
   $('h-round').textContent=v==='u10k'?'Round 1':(current?current.label:'Round 1');
   document.querySelector('.rounds').hidden=v==='u10k';
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
   if(v==='u10k'){showU10k();return;}
-  if(DS&&v==='cutoff')renderCutoff();
+  if(DS&&v==='cutoff')renderCutoff();else if(DS&&v==='ladder')renderLadder();
 }
 /* subtle metal card-click sound, synthesized (no audio file); played only when the page actually changes */
 let AC=null;
@@ -515,6 +543,95 @@ function metalClick(){
 }
 $('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b){if(b.dataset.v!==view)metalClick();show(b.dataset.v);}};
 
+/* ================= LADDER VIEW =================
+   One scatter plot with every speciality as its own point: closing rank (same calculation and merged speciality grouping as the Cutoff page)
+   for the selected Quota x Category. Quota and Category start from the same defaults as the Cutoff page and keep their own selection. */
+const L={q:new Set(),c:new Set(),init:false};
+const lNiceMax=v=>{const p=Math.pow(10,Math.floor(Math.log10(v)));for(const m of [1,1.5,2,2.5,3,4,5,6,8,10])if(m*p>=v)return m*p;return 10*p;};
+const lNiceStep=(range,target)=>{const raw=range/target,p=Math.pow(10,Math.floor(Math.log10(raw)));for(const m of [1,2,2.5,5,10])if(m*p>=raw)return m*p;return 10*p;};
+const lK=n=>n===0?'0':n>=1000?(n/1000)+'K':String(n);
+function lEl(n,a,p){const e=document.createElementNS('http://www.w3.org/2000/svg',n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function buildLadder(){
+  const ds=DS;if(!ds)return;
+  const SQ=sortNames(ds.quotas),SC=sortNames(ds.cats);
+  if(!L.init){
+    L.q.add(ds.quotas.includes('All India')?'All India':SQ[0]);L.c.add(ds.cats.includes('Open')?'Open':SC[0]);
+    L.init=true;
+  }
+  const keep=(set,arr)=>{for(const v of [...set])if(!arr.includes(v))set.delete(v);};
+  keep(L.q,ds.quotas);keep(L.c,ds.cats);
+  gchips($('l-q'),SQ,i=>L.q.has(SQ[i]),i=>{L.q.has(SQ[i])?L.q.delete(SQ[i]):L.q.add(SQ[i]);renderLadder();},quotaMain(SQ),'Other Quotas',false);
+  gchips($('l-c'),SC,i=>L.c.has(SC[i]),i=>{L.c.has(SC[i])?L.c.delete(SC[i]):L.c.add(SC[i]);renderLadder();},catMain(SC),'PwD',false);
+  renderLadder();
+}
+function renderLadder(){
+  if(!DS||$('v-ladder').hidden)return;
+  const ds=DS;
+  $('l-qc').textContent=L.q.size+' selected';$('l-cc').textContent=L.c.size+' selected';
+  const card=$('l-card'),box=$('l-box'),tip=$('l-tip');tip.classList.remove('on');
+  const qs=idxSet(L.q,ds.quotas),cs=idxSet(L.c,ds.cats);
+  if(!qs.size||!cs.size){card.hidden=true;box.innerHTML='';return;}
+  card.hidden=false;
+  const qn=[...qs].map(i=>ds.quotas[i]).sort(cmp),cn=[...cs].map(i=>ds.cats[i]).sort(cmp);
+  $('l-title').textContent='Closing rank · every speciality';
+  $('l-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
+  const pts=[];
+  ds.mcourses.forEach((c,i)=>{
+    const r=closing(i,qs,cs,true);
+    if(r)pts.push({name:c.t==='D'?c.n+' · Diploma':c.n,t:c.t,max:r.max,cnt:r.cnt});
+  });
+  if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
+  pts.sort((a,b)=>a.max-b.max||cmp(a.name,b.name));   // lowest closing rank (most competitive) at the top
+  box.innerHTML='<svg id="l-plot" role="img" aria-label="Closing rank of every speciality"></svg>';
+  const sv=$('l-plot');
+  const W=Math.max(300,box.clientWidth||900),narrow=W<560;
+  const rowH=narrow?30:27,mt=34,mb=44,ml=narrow?Math.round(W*.42):Math.min(340,Math.round(W*.3)),mr=narrow?52:70;
+  const H=mt+mb+pts.length*rowH;
+  sv.setAttribute('viewBox',`0 0 ${W} ${H}`);sv.setAttribute('width',W);sv.setAttribute('height',H);sv.style.height=H+'px';
+  const xmax=lNiceMax(Math.max(...pts.map(p=>p.max))*1.02),step=lNiceStep(xmax,narrow?4:8);
+  const x=v=>ml+(v/xmax)*(W-ml-mr);
+  pts.forEach((p,k)=>{if(k%2===0)lEl('rect',{x:0,y:mt+k*rowH,width:W,height:rowH,fill:'#fff','fill-opacity':.025},sv);});
+  for(let v=0;v<=xmax+1e-9;v+=step){
+    lEl('line',{x1:x(v),x2:x(v),y1:mt-4,y2:H-mb+4,stroke:'#262626'},sv);
+    for(const ty of [mt-12,H-mb+22]){const t=lEl('text',{x:x(v),y:ty,'text-anchor':'middle',fill:'#8a8a8a','font-size':11},sv);t.textContent=lK(Math.round(v));}
+  }
+  const at=lEl('text',{x:ml+(W-ml-mr)/2,y:H-8,'text-anchor':'middle',fill:'#a3a3a3','font-size':11.5,'font-weight':700,'letter-spacing':'.08em'},sv);
+  at.textContent=narrow?'CLOSING RANK':'CLOSING RANK  (lower = more competitive)';
+  lEl('line',{x1:ml,x2:W-mr,y1:H-mb+4,y2:H-mb+4,stroke:'#555'},sv);
+  const maxChars=Math.floor((ml-16)/(narrow?6.4:6.9));
+  pts.forEach((p,k)=>{
+    const cy=mt+k*rowH+rowH/2,cx=x(p.max),dip=p.t==='D';
+    const row=lEl('g',{tabindex:0,role:'img','aria-label':`${p.name}: closing rank ${fmt(p.max)}`},sv);row.style.outline='none';
+    const hl=lEl('rect',{x:0,y:cy-rowH/2,width:W,height:rowH,fill:'#fff','fill-opacity':0},row);
+    lEl('line',{x1:ml,x2:cx,y1:cy,y2:cy,stroke:'#3a3a3a','stroke-width':1.2,'stroke-dasharray':'2 3'},row);
+    const lbl=lEl('text',{x:ml-10,y:cy+4,'text-anchor':'end',fill:'#d6d6d6','font-size':narrow?10.5:11.5,'font-weight':600},row);
+    lbl.textContent=p.name.length>maxChars?p.name.slice(0,maxChars-1)+'…':p.name;
+    const glow=lEl('circle',{cx,cy,r:11,fill:'#e50914','fill-opacity':0},row);
+    const dot=lEl('circle',{cx,cy,r:6,fill:dip?'#f5f5f1':'#e50914',stroke:dip?'#e50914':'#fff','stroke-width':dip?2.4:1.6},row);
+    const val=lEl('text',{x:cx+13,y:cy+4,fill:'#f5f5f1','font-size':11.5,'font-weight':800},row);val.textContent=fmt(p.max);
+    if(cx+13+val.getComputedTextLength()>W-4){val.setAttribute('x',cx-13);val.setAttribute('text-anchor','end');}
+    const on=()=>{hl.setAttribute('fill-opacity',.06);glow.setAttribute('fill-opacity',.3);dot.setAttribute('r',8);
+      tip.innerHTML=`<div class="n">${esc(p.name)}</div><div class="r">${fmt(p.max)}</div><div class="m">${dip?'Diploma':'MD / MS / DNB'} · ${fmt(p.cnt)} allotment${p.cnt===1?'':'s'}<br>Quota: ${esc(qn.join(', '))}<br>Category: ${esc(cn.join(', '))}</div>`;
+      const cr=card.getBoundingClientRect(),br=box.getBoundingClientRect();
+      const tw=Math.min(300,cr.width-16);tip.style.maxWidth=tw+'px';
+      let left=br.left-cr.left+cx+18;if(left+tw>cr.width-8)left=br.left-cr.left+cx-tw-18;if(left<8)left=8;
+      tip.style.left=left+'px';
+      const th=tip.offsetHeight||110;let top=br.top-cr.top+cy-th/2;top=Math.max(40,Math.min(top,cr.height-th-8));tip.style.top=top+'px';
+      tip.classList.add('on');};
+    const off=()=>{hl.setAttribute('fill-opacity',0);glow.setAttribute('fill-opacity',0);dot.setAttribute('r',6);tip.classList.remove('on');};
+    row.addEventListener('mouseenter',on);row.addEventListener('mouseleave',off);
+    row.addEventListener('focus',on);row.addEventListener('blur',off);row.addEventListener('touchstart',on,{passive:true});
+  });
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-la]');if(!b||!DS)return;
+  const [w,m]=b.dataset.la.split('-'),on=m==='all',ds=DS;
+  const setAll=(set,arr)=>{on?arr.forEach(x=>set.add(x)):arr.forEach(x=>set.delete(x));};
+  if(w==='q')setAll(L.q,ds.quotas);else setAll(L.c,ds.cats);
+  buildLadder();
+});
+let lrz;window.addEventListener('resize',()=>{clearTimeout(lrz);lrz=setTimeout(renderLadder,120);});
+
 /* ================= UNDER 10,000 RANK VIEW (Round 1 / 1.csv only) =================
    Counts allotments with Rank < 10,000 per branch (same branch grouping as the Cutoff page). Uses only the Round 1 dataset,
    never the Stray round. Each row is one candidate's allotment; an exact repeat of the same Rank within the same Quota is ignored. */
@@ -525,9 +642,9 @@ const uClass=(t,raw)=>t==='D'?'D':/^\(NBEMS\)/i.test(raw)?'DNB':/^M\.S\./i.test(
 /* Workload classification by typical RESIDENCY workload (in-house/emergency calls, OT/ICU/ward load, night shifts, duty hours),
    not by lifestyle after training. Every branch name in 1.csv is in exactly one set; a name not listed (e.g. a new course in a
    future file) is classified by keyword so that no branch is ever left out. */
-const U_HECTIC=new Set(['ANAESTHESIOLOGY','CARDIO VASCULAR & THORACIC SURGERY (DIRECT 6 YR)','EMERGENCY MEDICINE','FAMILY MEDICINE','GENERAL MEDICINE','GENERAL SURGERY','GERIATRIC MEDICINE','NEURO SURGERY','OBSTETRICS & GYNAECOLOGY','ORTHOPAEDICS','PAEDIATRIC SURGERY (DIRECT 6 YR)','PAEDIATRICS','PLASTIC & RECONSTRUCTIVE SURGERY (DIRECT 6 YR)','RESPIRATORY MEDICINE','TB & CHEST DISEASES','TRAUMATOLOGY & SURGERY','TROPICAL MEDICINE']);
-const U_CHILL=new Set(['ANATOMY','BIOCHEMISTRY','CLINICAL PATHOLOGY','COMMUNITY HEALTH & HOSPITAL ADMINISTRATION','COMMUNITY MEDICINE','DERMATOLOGY','DIABETOLOGY','ENT (OTORHINOLARYNGOLOGY)','FORENSIC MEDICINE','HEALTH ADMINISTRATION','IMMUNOHAEMATOLOGY & BLOOD TRANSFUSION','LABORATORY MEDICINE','MICROBIOLOGY','MPH EPIDEMIOLOGY','NUCLEAR MEDICINE','OPHTHALMOLOGY','PALLIATIVE MEDICINE','PATHOLOGY','PHARMACOLOGY','PHYSICAL MEDICINE & REHABILITATION','PHYSIOLOGY','PSYCHIATRY','PUBLIC HEALTH','RADIATION MEDICINE','RADIATION ONCOLOGY','RADIO DIAGNOSIS','SPORTS MEDICINE']);
-const uIsHectic=n=>U_HECTIC.has(n)||(!U_CHILL.has(n)&&/SURGER|TRAUMA|CRITICAL|EMERGENCY|ANAESTH|OBSTETRIC|GYNAE|ORTHO|PAEDIATRIC|GENERAL MEDICINE/.test(n));
+const U_HECTIC=new Set(['CARDIO VASCULAR & THORACIC SURGERY (DIRECT 6 YR)','EMERGENCY MEDICINE','GENERAL MEDICINE','GENERAL SURGERY','NEURO SURGERY','OBSTETRICS & GYNAECOLOGY','ORTHOPAEDICS','PAEDIATRIC SURGERY (DIRECT 6 YR)','PAEDIATRICS','PLASTIC & RECONSTRUCTIVE SURGERY (DIRECT 6 YR)','TRAUMATOLOGY & SURGERY','TROPICAL MEDICINE']);
+const U_CHILL=new Set(['ANAESTHESIOLOGY','ANATOMY','BIOCHEMISTRY','CLINICAL PATHOLOGY','COMMUNITY HEALTH & HOSPITAL ADMINISTRATION','COMMUNITY MEDICINE','DERMATOLOGY','DIABETOLOGY','ENT (OTORHINOLARYNGOLOGY)','FAMILY MEDICINE','FORENSIC MEDICINE','GERIATRIC MEDICINE','HEALTH ADMINISTRATION','IMMUNOHAEMATOLOGY & BLOOD TRANSFUSION','LABORATORY MEDICINE','MICROBIOLOGY','MPH EPIDEMIOLOGY','NUCLEAR MEDICINE','OPHTHALMOLOGY','PALLIATIVE MEDICINE','PATHOLOGY','PHARMACOLOGY','PHYSICAL MEDICINE & REHABILITATION','PHYSIOLOGY','PSYCHIATRY','PUBLIC HEALTH','RADIATION MEDICINE','RADIATION ONCOLOGY','RADIO DIAGNOSIS','RESPIRATORY MEDICINE','SPORTS MEDICINE','TB & CHEST DISEASES']);
+const uIsHectic=n=>U_HECTIC.has(n)||(!U_CHILL.has(n)&&/SURGER|TRAUMA|CRITICAL|EMERGENCY|OBSTETRIC|GYNAE|ORTHO|PAEDIATRIC|GENERAL MEDICINE/.test(n));
 function uPrepare(ds){
   const seen=new Set(),rec=[];let dup=0;
   ds.mcourses.forEach((mc,m)=>{
@@ -639,7 +756,7 @@ async function selectRound(r){
     T.q.add(aq);T.c.add(ac);
     first=false;
   }
-  buildCutoff();show(view);
+  buildCutoff();buildLadder();show(view);
   return true;
 }
 (function init(){
