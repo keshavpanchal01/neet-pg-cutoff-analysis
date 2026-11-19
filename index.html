@@ -522,6 +522,12 @@ const U_LIMIT=30000;
 const U={type:'ALL',sort:'rank',band:U_LIMIT,term:'',ds:null,rec:[],dup:0,inited:false};
 const U_BANDS=[[10000,'Under 10K'],[20000,'Under 20K'],[30000,'Under 30K']];
 const uClass=(t,raw)=>t==='D'?'D':/^\(NBEMS\)/i.test(raw)?'DNB':/^M\.S\./i.test(raw)?'MS':/^M\.D\./i.test(raw)?'MD':'OTH';   // course class from the original course text
+/* Workload classification by typical RESIDENCY workload (in-house/emergency calls, OT/ICU/ward load, night shifts, duty hours),
+   not by lifestyle after training. Every branch name in 1.csv is in exactly one set; a name not listed (e.g. a new course in a
+   future file) is classified by keyword so that no branch is ever left out. */
+const U_HECTIC=new Set(['ANAESTHESIOLOGY','CARDIO VASCULAR & THORACIC SURGERY (DIRECT 6 YR)','EMERGENCY MEDICINE','FAMILY MEDICINE','GENERAL MEDICINE','GENERAL SURGERY','GERIATRIC MEDICINE','NEURO SURGERY','OBSTETRICS & GYNAECOLOGY','ORTHOPAEDICS','PAEDIATRIC SURGERY (DIRECT 6 YR)','PAEDIATRICS','PLASTIC & RECONSTRUCTIVE SURGERY (DIRECT 6 YR)','RESPIRATORY MEDICINE','TB & CHEST DISEASES','TRAUMATOLOGY & SURGERY','TROPICAL MEDICINE']);
+const U_CHILL=new Set(['ANATOMY','BIOCHEMISTRY','CLINICAL PATHOLOGY','COMMUNITY HEALTH & HOSPITAL ADMINISTRATION','COMMUNITY MEDICINE','DERMATOLOGY','DIABETOLOGY','ENT (OTORHINOLARYNGOLOGY)','FORENSIC MEDICINE','HEALTH ADMINISTRATION','IMMUNOHAEMATOLOGY & BLOOD TRANSFUSION','LABORATORY MEDICINE','MICROBIOLOGY','MPH EPIDEMIOLOGY','NUCLEAR MEDICINE','OPHTHALMOLOGY','PALLIATIVE MEDICINE','PATHOLOGY','PHARMACOLOGY','PHYSICAL MEDICINE & REHABILITATION','PHYSIOLOGY','PSYCHIATRY','PUBLIC HEALTH','RADIATION MEDICINE','RADIATION ONCOLOGY','RADIO DIAGNOSIS','SPORTS MEDICINE']);
+const uIsHectic=n=>U_HECTIC.has(n)||(!U_CHILL.has(n)&&/SURGER|TRAUMA|CRITICAL|EMERGENCY|ANAESTH|OBSTETRIC|GYNAE|ORTHO|PAEDIATRIC|GENERAL MEDICINE/.test(n));
 function uPrepare(ds){
   const seen=new Set(),rec=[];let dup=0;
   ds.mcourses.forEach((mc,m)=>{
@@ -549,24 +555,31 @@ function uRender(){
     cnt.set(x.m,(cnt.get(x.m)||0)+1);total++;
   }
   if(!total){out.innerHTML='<div class="nodata">No Data Available</div>';return;}
-  // Branch rank: by number of candidates, highest = 1 (equal counts share a rank)
-  const all=[...cnt].map(([m,n])=>({m,n,name:ds.mcourses[m].n,t:ds.mcourses[m].t})).sort((a,b)=>b.n-a.n||cmp(a.name,b.name));
-  let prev=-1,pr=0;all.forEach((x,i)=>{if(x.n!==prev){pr=i+1;prev=x.n;}x.rank=pr;});
+  const pct=n=>(n/total*100).toFixed(2)+'%';
   const term=U.term.trim().toLowerCase();
-  let rows=all.filter(x=>!term||x.name.toLowerCase().includes(term));
-  if(U.sort==='rank')rows.sort((a,b)=>a.rank-b.rank||cmp(a.name,b.name));
-  else if(U.sort==='fewest')rows.sort((a,b)=>a.n-b.n||cmp(a.name,b.name));
-  else if(U.sort==='az')rows.sort((a,b)=>cmp(a.name,b.name)||(a.t<b.t?-1:1));
-  else rows.sort((a,b)=>cmp(b.name,a.name)||(a.t<b.t?-1:1));
-  const maxn=all[0].n,shown=rows.reduce((s,x)=>s+x.n,0),pct=n=>(n/total*100).toFixed(2)+'%';
   let html=`<div class="u-kpis"><div class="u-kpi"><b>Total candidates</b><span>${fmt(total)}</span><small>Rank below ${fmt(U.band)} · Round 1</small></div></div>`;
-  if(!rows.length){out.innerHTML=html+'<div class="nodata">No branch matches</div>';return;}
-  html+=`<div class="u-tablewrap"><table class="u-table"><thead><tr><th>Branch rank</th><th>Branch</th><th class="num">Candidates</th><th class="num">% of total</th><th class="barcol">Share</th></tr></thead><tbody>`;
-  for(const x of rows){
-    const type=x.t==='M'?'MD / MS / DNB':'DIPLOMA';
-    html+=`<tr><td><span class="u-rk${x.rank===1?' top':''}">${x.rank}</span></td><td><span class="u-bname">${esc(x.name)}</span> <span class="tag${x.t==='D'?' r':''}">${type}</span></td><td class="num">${fmt(x.n)}</td><td class="num">${pct(x.n)}</td><td class="barcol"><div class="u-bar"><i style="width:${(x.n/maxn*100).toFixed(1)}%"></i></div></td></tr>`;
+  // Two independent rankings (Hectic / Chill). Each branch belongs to exactly one group; within a group the branch rank is by
+  // number of candidates, highest = 1 (equal counts share a rank). Percentages are of all candidates in the selected rank range.
+  const all=[...cnt].map(([m,n])=>({m,n,name:ds.mcourses[m].n,t:ds.mcourses[m].t,hectic:uIsHectic(ds.mcourses[m].n)}));
+  for(const [title,flag] of [['Hectic Branches',true],['Chill Branches',false]]){
+    const grp=all.filter(x=>x.hectic===flag).sort((a,b)=>b.n-a.n||cmp(a.name,b.name));
+    let prev=-1,pr=0;grp.forEach((x,i)=>{if(x.n!==prev){pr=i+1;prev=x.n;}x.rank=pr;});
+    const gtot=grp.reduce((s,x)=>s+x.n,0);
+    html+=`<div class="group"><div class="ghead"><h3>${title}</h3><span class="cnt">${fmt(gtot)} candidates · ${pct(gtot)}</span></div>`;
+    let rows=grp.filter(x=>!term||x.name.toLowerCase().includes(term));
+    if(U.sort==='rank')rows.sort((a,b)=>a.rank-b.rank||cmp(a.name,b.name));
+    else if(U.sort==='fewest')rows.sort((a,b)=>a.n-b.n||cmp(a.name,b.name));
+    else if(U.sort==='az')rows.sort((a,b)=>cmp(a.name,b.name)||(a.t<b.t?-1:1));
+    else rows.sort((a,b)=>cmp(b.name,a.name)||(a.t<b.t?-1:1));
+    if(!rows.length){html+='<div class="nodata">'+(grp.length?'No branch matches':'No Data Available')+'</div></div>';continue;}
+    const maxn=grp[0].n,shown=rows.reduce((s,x)=>s+x.n,0);
+    html+=`<div class="u-tablewrap"><table class="u-table"><thead><tr><th>Branch rank</th><th>Branch</th><th class="num">Candidates</th><th class="num">% of total</th><th class="barcol">Share</th></tr></thead><tbody>`;
+    for(const x of rows){
+      const type=x.t==='M'?'MD / MS / DNB':'DIPLOMA';
+      html+=`<tr><td><span class="u-rk${x.rank===1?' top':''}">${x.rank}</span></td><td><span class="u-bname">${esc(x.name)}</span> <span class="tag${x.t==='D'?' r':''}">${type}</span></td><td class="num">${fmt(x.n)}</td><td class="num">${pct(x.n)}</td><td class="barcol"><div class="u-bar"><i style="width:${(x.n/maxn*100).toFixed(1)}%"></i></div></td></tr>`;
+    }
+    html+=`</tbody><tfoot><tr><td></td><td>${rows.length===grp.length?'Total':'Shown ('+rows.length+' of '+grp.length+' branches)'}</td><td class="num">${fmt(shown)}</td><td class="num">${pct(shown)}</td><td class="barcol"></td></tr></tfoot></table></div></div>`;
   }
-  html+=`</tbody><tfoot><tr><td></td><td>${rows.length===all.length?'Total':'Shown ('+rows.length+' of '+all.length+' branches)'}</td><td class="num">${fmt(shown)}</td><td class="num">${pct(shown)}</td><td class="barcol"></td></tr></tfoot></table></div>`;
   out.innerHTML=html;
 }
 async function showU10k(){
