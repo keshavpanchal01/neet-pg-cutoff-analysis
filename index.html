@@ -52,7 +52,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:7px}
 .chip{background:var(--card2);border:1px solid var(--line2);color:#d6d6d6;border-radius:8px;padding:8px 9px;min-height:40px;font-size:12px;font-weight:600;line-height:1.25;display:flex;align-items:center;gap:7px;text-align:left;overflow-wrap:break-word;min-width:0;transition:transform .12s,background .15s,border-color .15s,box-shadow .15s}
 .chip:hover{border-color:#777;transform:translateY(-1px)}
-.chip:focus-visible,.mini:focus-visible,.seg button:focus-visible,.sortbtn button:focus-visible,.tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.chip:focus-visible,.mini:focus-visible,.seg button:focus-visible,.tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .chip[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 16px var(--redglow)}
 .chip[aria-pressed=true]::before{content:"✓";font-weight:900;font-size:11px;flex:none}
 .seg{display:inline-flex;background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:3px;gap:3px}
@@ -77,23 +77,6 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .kv dt{color:var(--dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px;font-weight:700}
 .kv dd{font-weight:600;word-break:break-word}
 .sub{color:var(--mut);font-size:13px;margin-top:10px}
-/* scatter */
-.chartcard{margin-top:22px;background:#101010;border:1px solid var(--line);border-radius:14px;padding:16px 14px 10px;position:relative}
-.charthead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 8px 8px}
-.charthead .t{font-weight:700;font-size:14px}
-.charthead .s{color:var(--mut);font-size:12.5px}
-.sortbtn{margin-left:auto;display:inline-flex}
-.sortbtn button{background:var(--card2);border:1px solid var(--line2);padding:5px 11px;font-size:12px;font-weight:700;color:var(--mut)}
-.sortbtn button:first-child{border-radius:8px 0 0 8px}.sortbtn button:last-child{border-radius:0 8px 8px 0}
-.sortbtn button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
-#plot{width:100%;display:block}
-#plot text{font-family:var(--font)}
-.tip{position:absolute;pointer-events:none;z-index:20;background:#000;border:1px solid var(--red);border-radius:10px;padding:11px 14px;font-size:12.5px;min-width:190px;max-width:300px;box-shadow:0 10px 40px #000c;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
-.tip.on{opacity:1;transform:none}
-.tip .n{font-weight:800;font-size:14px}
-.tip .r{font-size:26px;font-weight:900;letter-spacing:-.02em;margin:2px 0 6px}
-.tip .m{color:var(--mut);line-height:1.5;overflow-wrap:anywhere}
-.note{color:var(--dim);font-size:12.5px;padding:8px 10px 6px}
 .nodata{padding:30px;text-align:center;color:var(--red);font-weight:800;font-size:20px}
 @media(max-width:600px){
   .chip{overflow-wrap:anywhere}
@@ -102,7 +85,6 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   .chips{grid-template-columns:repeat(auto-fill,minmax(138px,1fr))}
   .tab{padding:14px 8px 12px;font-size:13px}
   .card{padding:18px 16px}
-  .sortbtn{margin-left:0}
 }
 
 .rounds{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
@@ -137,9 +119,6 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .rk:hover{border-color:#777}
 .rk:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .rk[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
-/* demand page (reuses the scatter styles) */
-#dplot{width:100%;display:block}
-#dplot text{font-family:var(--font)}
 
 /* under-10,000 branch analysis page */
 .u-kpis{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
@@ -179,8 +158,6 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <div class="logo">NEET PG<small>2026</small></div>
   <div class="tabs" role="tablist" id="tabs">
     <button class="tab" role="tab" data-v="cutoff" aria-selected="true">Cutoff</button>
-    <button class="tab" role="tab" data-v="scatter" aria-selected="false">Scatter Plot</button>
-    <button class="tab" role="tab" data-v="demand" aria-selected="false">Demand</button>
     <button class="tab" role="tab" data-v="u10k" aria-selected="false">Branch Analysis</button>
   </div>
   <div class="cwrap">
@@ -217,55 +194,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
     <div id="t-out"></div>
   </section>
 
-  <section class="view" id="v-scatter" hidden>
-    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="s-qc"></span>
-      <div class="acts"><button class="mini" data-a="s-q-all">Select all</button><button class="mini" data-a="s-q-none">Clear all</button></div></div>
-      <div class="chips" id="s-q"></div></div>
-    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="s-cc"></span>
-      <div class="acts"><button class="mini" data-a="s-c-all">Select all</button><button class="mini" data-a="s-c-none">Clear all</button></div></div>
-      <div class="chips" id="s-c"></div></div>
-    <div class="group"><div class="ghead"><h3>Course type</h3>
-      <div class="seg" id="s-type"><button data-v="M" aria-pressed="true">MD / MS / DNB</button><button data-v="D" aria-pressed="false">Diploma</button></div>
-      <span class="cnt" id="s-sc"></span>
-      <div class="acts"><button class="mini" data-a="s-s-all">Select all</button><button class="mini" data-a="s-s-none">Clear all</button></div></div>
-      <div class="chips" id="s-courses"></div></div>
-    <div class="chartcard" id="chartcard" hidden>
-      <div class="charthead"><span class="t" id="c-title"></span><span class="s" id="c-sub"></span>
-        <div class="sortbtn" id="c-sort"><button data-v="asc" aria-pressed="true">Lowest rank first</button><button data-v="desc" aria-pressed="false">Highest first</button></div></div>
-      <div id="plotbox"></div>
-      <div class="note" id="c-note"></div>
-      <div class="tip" id="tip"></div>
-    </div>
-  </section>
-
-  <section class="view" id="v-demand" hidden>
-    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="d-qc"></span>
-      <div class="acts"><button class="mini" data-da="q-all">Select all</button><button class="mini" data-da="q-none">Clear all</button></div></div>
-      <div class="chips" id="d-q"></div></div>
-    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="d-cc"></span>
-      <div class="acts"><button class="mini" data-da="c-all">Select all</button><button class="mini" data-da="c-none">Clear all</button></div></div>
-      <div class="chips" id="d-c"></div></div>
-    <div class="group"><div class="ghead"><h3>Course type</h3>
-      <div class="seg" id="d-type"><button data-v="M" aria-pressed="true">MD / MS / DNB</button><button data-v="D" aria-pressed="false">Diploma</button></div>
-      <span class="cnt" id="d-sc"></span>
-      <div class="acts"><button class="mini" data-da="s-all">Select all</button><button class="mini" data-da="s-none">Clear all</button></div></div>
-      <div class="chips" id="d-courses"></div></div>
-    <div class="chartcard" id="dchartcard" hidden>
-      <div class="charthead"><span class="t" id="dc-title"></span><span class="s" id="dc-sub"></span>
-        <div class="sortbtn" id="dc-sort"><button data-v="desc" aria-pressed="true">Highest demand first</button><button data-v="asc" aria-pressed="false">Lowest first</button></div></div>
-      <div id="dplotbox"></div>
-      <div class="note" id="dc-note"></div>
-      <div class="tip" id="dtip"></div>
-    </div>
-  </section>
-
   <section class="view" id="v-u10k" hidden>
-    <div class="group"><div class="ghead"><h3>Allotted Quota</h3><span class="cnt" id="u-qc"></span>
-      <div class="acts"><button class="mini" data-ua="q-all">Select all</button><button class="mini" data-ua="q-none">Clear all</button></div></div>
-      <div class="chips" id="u-q"></div></div>
-    <div class="group"><div class="ghead"><h3>Allotted Category</h3><span class="cnt" id="u-cc"></span>
-      <div class="acts"><button class="mini" data-ua="c-all">Select all</button><button class="mini" data-ua="c-none">Clear all</button></div></div>
-      <div class="chips" id="u-c"></div></div>
     <div class="group"><div class="ghead"><h3>Rank range</h3>
       <div class="seg wrapseg" id="u-band"></div></div></div>
     <div class="group"><div class="ghead"><h3>Course</h3>
@@ -412,7 +341,6 @@ function topRanks(ci,qs,cs,k){
 
 /* ================= STATE (by name, survives re-upload) ================= */
 const T={q:new Set(),c:new Set(),courses:new Set(),pick:new Map()};          // courses keyed "M|NAME"
-const S={q:new Set(),c:new Set(),sel:new Set(),type:'M',sort:'asc'};
 let first=true;
 const idxSet=(names,arr)=>{const s=new Set();arr.forEach((v,i)=>{if(names.has(v))s.add(i);});return s;};
 
@@ -527,189 +455,6 @@ $('t-out').addEventListener('click',e=>{
   }else{openRank(row,t,j);T.pick.set(t.key,{sig:t.sig,rank:t.list[j].rank});}
 });
 
-/* ================= SCATTER VIEW ================= */
-const SVGNS='http://www.w3.org/2000/svg';
-function el(n,a,p){const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
-function niceMax(v){const p=Math.pow(10,Math.floor(Math.log10(v)));for(const m of [1,1.5,2,2.5,3,4,5,6,8,10])if(m*p>=v)return m*p;return 10*p;}
-function niceStep(range,target){const raw=range/target,p=Math.pow(10,Math.floor(Math.log10(raw)));for(const m of [1,2,2.5,5,10])if(m*p>=raw)return m*p;return 10*p;}
-const kfmt=n=>n===0?'0':n>=1000?(n/1000)+'K':String(n);
-
-function buildScatter(){
-  const ds=DS;
-  const SQ=sortNames(ds.quotas),SC=sortNames(ds.cats);
-  gchips($('s-q'),SQ,i=>S.q.has(SQ[i]),i=>{S.q.has(SQ[i])?S.q.delete(SQ[i]):S.q.add(SQ[i]);renderScatter();},quotaMain(SQ),'Other Quotas',false);
-  gchips($('s-c'),SC,i=>S.c.has(SC[i]),i=>{S.c.has(SC[i])?S.c.delete(SC[i]):S.c.add(SC[i]);renderScatter();},catMain(SC),'PwD',false);
-  buildScatterCourses();renderScatter();
-}
-function buildScatterCourses(){
-  const L=courseIdsOf(S.type);
-  chips($('s-courses'),L.map(x=>x.c.n),j=>S.sel.has(ckey(L[j].c)),j=>{const k=ckey(L[j].c);S.sel.has(k)?S.sel.delete(k):S.sel.add(k);renderScatter();});
-}
-function renderScatter(){
-  if(!DS||$('v-scatter').hidden)return;
-  const ds=DS;
-  $('s-qc').textContent=S.q.size+' selected';$('s-cc').textContent=S.c.size+' selected';
-  const L=courseIdsOf(S.type);
-  $('s-sc').textContent=L.filter(x=>S.sel.has(ckey(x.c))).length+' / '+L.length+' selected';
-  const card=$('chartcard'),box=$('plotbox'),tip=$('tip');tip.classList.remove('on');
-  const qs=idxSet(S.q,ds.quotas),cs=idxSet(S.c,ds.cats);
-  const sel=L.filter(x=>S.sel.has(ckey(x.c)));
-  if(!qs.size||!cs.size||!sel.length){card.hidden=true;box.innerHTML='';return;}
-  card.hidden=false;
-  const qn=[...qs].map(i=>ds.quotas[i]).sort(cmp),cn=[...cs].map(i=>ds.cats[i]).sort(cmp);
-  $('c-title').textContent='Closing rank by speciality · '+(S.type==='M'?'MD / MS / DNB':'Diploma');
-  $('c-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
-  const pts=[],none=[];
-  for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt}):none.push(c.n);}
-  $('c-note').textContent='';
-  if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
-  if(S.sort==='asc')pts.sort((a,b)=>a.max-b.max||a.name.localeCompare(b.name));
-  else if(S.sort==='desc')pts.sort((a,b)=>b.max-a.max||a.name.localeCompare(b.name));
-  else pts.sort((a,b)=>a.name.localeCompare(b.name));
-  box.innerHTML='<svg id="plot" role="img" aria-label="Closing rank by speciality"></svg>';
-  const sv=$('plot');
-  const W=Math.max(300,box.clientWidth||900),narrow=W<560;
-  const rowH=narrow?30:28,mt=14,mb=44,ml=narrow?Math.round(W*.4):Math.min(300,Math.round(W*.27)),mr=narrow?48:66;
-  const H=mt+mb+pts.length*rowH;
-  sv.setAttribute('viewBox',`0 0 ${W} ${H}`);sv.setAttribute('width',W);sv.setAttribute('height',H);sv.style.height=H+'px';
-  const xmax=niceMax(Math.max(...pts.map(p=>p.max))*1.02),step=niceStep(xmax,narrow?4:8);
-  const x=v=>ml+(v/xmax)*(W-ml-mr);
-  for(let v=0;v<=xmax+1e-9;v+=step){
-    el('line',{x1:x(v),x2:x(v),y1:mt-4,y2:H-mb+4,stroke:'#262626'},sv);
-    const t=el('text',{x:x(v),y:H-mb+22,'text-anchor':'middle',fill:'#8a8a8a','font-size':11},sv);t.textContent=kfmt(Math.round(v));
-  }
-  const at=el('text',{x:ml+(W-ml-mr)/2,y:H-8,'text-anchor':'middle',fill:'#a3a3a3','font-size':11.5,'font-weight':700,'letter-spacing':'.08em'},sv);
-  at.textContent=narrow?'CANDIDATE RANK':'CANDIDATE RANK  (closing rank)';
-  el('line',{x1:ml,x2:W-mr,y1:H-mb+4,y2:H-mb+4,stroke:'#555'},sv);
-  const maxChars=Math.floor((ml-16)/(narrow?7.6:8.2));
-  pts.forEach((p,k)=>{
-    const cy=mt+k*rowH+rowH/2,cx=x(p.max);
-    const row=el('g',{tabindex:0,role:'img','aria-label':`${p.name}: closing rank ${fmt(p.max)}`},sv);row.style.outline='none';
-    const hl=el('rect',{x:0,y:cy-rowH/2,width:W,height:rowH,fill:'#fff','fill-opacity':0},row);
-    el('line',{x1:ml,x2:cx,y1:cy,y2:cy,stroke:'#3a3a3a','stroke-width':1.2,'stroke-dasharray':'2 3'},row);
-    const lbl=el('text',{x:ml-10,y:cy+4,'text-anchor':'end',fill:'#d6d6d6','font-size':narrow?11:12.5,'font-weight':600},row);
-    lbl.textContent=p.name.length>maxChars?p.name.slice(0,maxChars-1)+'…':p.name;
-    const glow=el('circle',{cx,cy,r:11,fill:'#e50914','fill-opacity':0},row);
-    const dot=el('circle',{cx,cy,r:6.5,fill:'#e50914',stroke:'#fff','stroke-width':1.6},row);
-    const val=el('text',{x:cx+13,y:cy+4,fill:'#f5f5f1','font-size':11.5,'font-weight':800},row);val.textContent=fmt(p.max);
-    if(cx+13+val.getComputedTextLength()>W-4){val.setAttribute('x',cx-13);val.setAttribute('text-anchor','end');}
-    const on=()=>{hl.setAttribute('fill-opacity',.06);glow.setAttribute('fill-opacity',.3);dot.setAttribute('r',8);
-      tip.innerHTML=`<div class="n">${esc(p.name)}</div><div class="r">${fmt(p.max)}</div><div class="m">Quota: ${esc(qn.join(', '))}<br>Category: ${esc(cn.join(', '))}</div>`;
-      const cr=card.getBoundingClientRect(),br=box.getBoundingClientRect();
-      const tw=Math.min(300,cr.width-16);tip.style.maxWidth=tw+'px';
-      let left=br.left-cr.left+cx+18;if(left+tw>cr.width-8)left=br.left-cr.left+cx-tw-18;if(left<8)left=8;
-      tip.style.left=left+'px';
-      const th=tip.offsetHeight||110;let top=br.top-cr.top+cy-th/2;top=Math.max(40,Math.min(top,cr.height-th-8));tip.style.top=top+'px';
-      tip.classList.add('on');};
-    const off=()=>{hl.setAttribute('fill-opacity',0);glow.setAttribute('fill-opacity',0);dot.setAttribute('r',6.5);tip.classList.remove('on');};
-    row.addEventListener('mouseenter',on);row.addEventListener('mouseleave',off);
-    row.addEventListener('focus',on);row.addEventListener('blur',off);row.addEventListener('touchstart',on,{passive:true});
-  });
-}
-$('s-type').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.type=b.dataset.v;
-  [...$('s-type').children].forEach(x=>x.setAttribute('aria-pressed',x===b));buildScatterCourses();renderScatter();};
-$('c-sort').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.sort=b.dataset.v;
-  [...$('c-sort').children].forEach(x=>x.setAttribute('aria-pressed',x===b));renderScatter();};
-
-/* ================= DEMAND VIEW =================
-   Demand = total allotments / cutoff (closing) rank, per speciality, for the selected Quota x Category.
-   Same structure as the Scatter Plot page; default filters: All India + DNB Quota, Open + OBC. */
-const D={q:new Set(),c:new Set(),sel:new Set(),type:'M',sort:'desc'};
-let dInit=false;
-const dfmt=v=>v.toFixed(4);
-function buildDemand(){
-  const ds=DS;
-  const SQ=sortNames(ds.quotas),SC=sortNames(ds.cats);
-  if(!dInit){
-    ['All India','DNB Quota'].forEach(x=>{if(ds.quotas.includes(x))D.q.add(x);});
-    ['Open','OBC'].forEach(x=>{if(ds.cats.includes(x))D.c.add(x);});
-    ds.courses.forEach(c=>{if(c.t==='M')D.sel.add(ckey(c));});
-    dInit=true;
-  }
-  const keep=(set,arr)=>{for(const v of [...set])if(!arr.includes(v))set.delete(v);};
-  keep(D.q,ds.quotas);keep(D.c,ds.cats);keep(D.sel,ds.courses.map(ckey));
-  gchips($('d-q'),SQ,i=>D.q.has(SQ[i]),i=>{D.q.has(SQ[i])?D.q.delete(SQ[i]):D.q.add(SQ[i]);renderDemand();},quotaMain(SQ),'Other Quotas',false);
-  gchips($('d-c'),SC,i=>D.c.has(SC[i]),i=>{D.c.has(SC[i])?D.c.delete(SC[i]):D.c.add(SC[i]);renderDemand();},catMain(SC),'PwD',false);
-  buildDemandCourses();renderDemand();
-}
-function buildDemandCourses(){
-  const L=courseIdsOf(D.type);
-  chips($('d-courses'),L.map(x=>x.c.n),j=>D.sel.has(ckey(L[j].c)),j=>{const k=ckey(L[j].c);D.sel.has(k)?D.sel.delete(k):D.sel.add(k);renderDemand();});
-}
-function renderDemand(){
-  if(!DS||$('v-demand').hidden)return;
-  const ds=DS;
-  $('d-qc').textContent=D.q.size+' selected';$('d-cc').textContent=D.c.size+' selected';
-  const L=courseIdsOf(D.type);
-  $('d-sc').textContent=L.filter(x=>D.sel.has(ckey(x.c))).length+' / '+L.length+' selected';
-  const card=$('dchartcard'),box=$('dplotbox'),tip=$('dtip');tip.classList.remove('on');
-  const qs=idxSet(D.q,ds.quotas),cs=idxSet(D.c,ds.cats);
-  const sel=L.filter(x=>D.sel.has(ckey(x.c)));
-  if(!qs.size||!cs.size||!sel.length){card.hidden=true;box.innerHTML='';return;}
-  card.hidden=false;
-  const qn=[...qs].map(i=>ds.quotas[i]).sort(cmp),cn=[...cs].map(i=>ds.cats[i]).sort(cmp);
-  $('dc-title').textContent='Demand by speciality · '+(D.type==='M'?'MD / MS / DNB':'Diploma');
-  $('dc-sub').textContent=qn.join(', ')+'  ×  '+cn.join(', ');
-  const pts=[],none=[];
-  for(const {c,i} of sel){const r=closing(i,qs,cs);r?pts.push({name:c.n,max:r.max,cnt:r.cnt,dem:r.cnt/r.max*100}):none.push(c.n);}
-  $('dc-note').textContent='';
-  if(!pts.length){box.innerHTML='<div class="nodata">No Data Available</div>';return;}
-  if(D.sort==='desc')pts.sort((a,b)=>b.dem-a.dem||a.name.localeCompare(b.name));
-  else pts.sort((a,b)=>a.dem-b.dem||a.name.localeCompare(b.name));
-  box.innerHTML='<svg id="dplot" role="img" aria-label="Demand by speciality"></svg>';
-  const sv=$('dplot');
-  const W=Math.max(300,box.clientWidth||900),narrow=W<560;
-  const rowH=narrow?30:28,mt=14,mb=44,ml=narrow?Math.round(W*.4):Math.min(300,Math.round(W*.27)),mr=narrow?56:74;
-  const H=mt+mb+pts.length*rowH;
-  sv.setAttribute('viewBox',`0 0 ${W} ${H}`);sv.setAttribute('width',W);sv.setAttribute('height',H);sv.style.height=H+'px';
-  const xmax=niceMax(Math.max(...pts.map(p=>p.dem))*1.02),step=niceStep(xmax,narrow?4:8);
-  const dec=Math.max(0,Math.min(6,-Math.floor(Math.log10(step)+1e-9)));
-  const x=v=>ml+(v/xmax)*(W-ml-mr);
-  for(let v=0;v<=xmax+step*1e-6;v+=step){
-    el('line',{x1:x(v),x2:x(v),y1:mt-4,y2:H-mb+4,stroke:'#262626'},sv);
-    const t=el('text',{x:x(v),y:H-mb+22,'text-anchor':'middle',fill:'#8a8a8a','font-size':11},sv);t.textContent=v.toFixed(dec);
-  }
-  const at=el('text',{x:ml+(W-ml-mr)/2,y:H-8,'text-anchor':'middle',fill:'#a3a3a3','font-size':11.5,'font-weight':700,'letter-spacing':'.08em'},sv);
-  at.textContent=narrow?'DEMAND':'DEMAND  (allotments ÷ cutoff rank)';
-  el('line',{x1:ml,x2:W-mr,y1:H-mb+4,y2:H-mb+4,stroke:'#555'},sv);
-  const maxChars=Math.floor((ml-16)/(narrow?7.6:8.2));
-  pts.forEach((p,k)=>{
-    const cy=mt+k*rowH+rowH/2,cx=x(p.dem);
-    const row=el('g',{tabindex:0,role:'img','aria-label':`${p.name}: demand ${dfmt(p.dem)}`},sv);row.style.outline='none';
-    const hl=el('rect',{x:0,y:cy-rowH/2,width:W,height:rowH,fill:'#fff','fill-opacity':0},row);
-    el('line',{x1:ml,x2:cx,y1:cy,y2:cy,stroke:'#3a3a3a','stroke-width':1.2,'stroke-dasharray':'2 3'},row);
-    const lbl=el('text',{x:ml-10,y:cy+4,'text-anchor':'end',fill:'#d6d6d6','font-size':narrow?11:12.5,'font-weight':600},row);
-    lbl.textContent=p.name.length>maxChars?p.name.slice(0,maxChars-1)+'…':p.name;
-    const glow=el('circle',{cx,cy,r:11,fill:'#e50914','fill-opacity':0},row);
-    const dot=el('circle',{cx,cy,r:6.5,fill:'#e50914',stroke:'#fff','stroke-width':1.6},row);
-    const val=el('text',{x:cx+13,y:cy+4,fill:'#f5f5f1','font-size':11.5,'font-weight':800},row);val.textContent=dfmt(p.dem);
-    if(cx+13+val.getComputedTextLength()>W-4){val.setAttribute('x',cx-13);val.setAttribute('text-anchor','end');}
-    const on=()=>{hl.setAttribute('fill-opacity',.06);glow.setAttribute('fill-opacity',.3);dot.setAttribute('r',8);
-      tip.innerHTML=`<div class="n">${esc(p.name)}</div><div class="r">${dfmt(p.dem)}</div><div class="m">Allotments: ${fmt(p.cnt)}<br>Cutoff rank: ${fmt(p.max)}<br>Quota: ${esc(qn.join(', '))}<br>Category: ${esc(cn.join(', '))}</div>`;
-      const cr=card.getBoundingClientRect(),br=box.getBoundingClientRect();
-      const tw=Math.min(300,cr.width-16);tip.style.maxWidth=tw+'px';
-      let left=br.left-cr.left+cx+18;if(left+tw>cr.width-8)left=br.left-cr.left+cx-tw-18;if(left<8)left=8;
-      tip.style.left=left+'px';
-      const th=tip.offsetHeight||110;let top=br.top-cr.top+cy-th/2;top=Math.max(40,Math.min(top,cr.height-th-8));tip.style.top=top+'px';
-      tip.classList.add('on');};
-    const off=()=>{hl.setAttribute('fill-opacity',0);glow.setAttribute('fill-opacity',0);dot.setAttribute('r',6.5);tip.classList.remove('on');};
-    row.addEventListener('mouseenter',on);row.addEventListener('mouseleave',off);
-    row.addEventListener('focus',on);row.addEventListener('blur',off);row.addEventListener('touchstart',on,{passive:true});
-  });
-}
-$('d-type').onclick=e=>{const b=e.target.closest('button');if(!b)return;D.type=b.dataset.v;
-  [...$('d-type').children].forEach(x=>x.setAttribute('aria-pressed',x===b));buildDemandCourses();renderDemand();};
-$('dc-sort').onclick=e=>{const b=e.target.closest('button');if(!b)return;D.sort=b.dataset.v;
-  [...$('dc-sort').children].forEach(x=>x.setAttribute('aria-pressed',x===b));renderDemand();};
-document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-da]');if(!b||!DS)return;
-  const [w,m]=b.dataset.da.split('-'),on=m==='all',ds=DS;
-  const setAll=(set,arr)=>{on?arr.forEach(x=>set.add(x)):arr.forEach(x=>set.delete(x));};
-  if(w==='q')setAll(D.q,ds.quotas);else if(w==='c')setAll(D.c,ds.cats);
-  else setAll(D.sel,courseIdsOf(D.type).map(x=>ckey(x.c)));
-  buildDemand();
-});
-
 /* ================= bulk buttons ================= */
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b||!DS)return;
@@ -719,10 +464,6 @@ document.addEventListener('click',e=>{
     if(w==='q')setAll(T.q,ds.quotas);else if(w==='c')setAll(T.c,ds.cats);
     else setAll(T.courses,courseIdsOf(w==='m'?'M':'D',true).map(x=>ckey(x.c)));
     buildCutoff();
-  }else{
-    if(w==='q')setAll(S.q,ds.quotas);else if(w==='c')setAll(S.c,ds.cats);
-    else setAll(S.sel,courseIdsOf(S.type).map(x=>ckey(x.c)));
-    buildScatter();
   }
 });
 
@@ -739,13 +480,13 @@ document.addEventListener('click',e=>{if(!e.target.closest('.cwrap'))closeContac
 let view='cutoff';
 function show(v){
   view=v;
-  $('v-cutoff').hidden=v!=='cutoff';$('v-scatter').hidden=v!=='scatter';$('v-demand').hidden=v!=='demand';$('v-u10k').hidden=v!=='u10k';
-  $('h-word').textContent=v==='demand'?'demand':v==='u10k'?'branch analysis':'cutoff';
+  $('v-cutoff').hidden=v!=='cutoff';$('v-u10k').hidden=v!=='u10k';
+  $('h-word').textContent=v==='u10k'?'branch analysis':'cutoff';
   $('h-round').textContent=v==='u10k'?'Round 1':(current?current.label:'Round 1');
   document.querySelector('.rounds').hidden=v==='u10k';
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
   if(v==='u10k'){showU10k();return;}
-  if(DS){v==='cutoff'?renderCutoff():v==='demand'?renderDemand():renderScatter();}
+  if(DS&&v==='cutoff')renderCutoff();
 }
 /* subtle metal card-click sound, synthesized (no audio file); played only when the page actually changes */
 let AC=null;
@@ -773,14 +514,13 @@ function metalClick(){
   }catch(e){}
 }
 $('tabs').onclick=e=>{const b=e.target.closest('.tab');if(b){if(b.dataset.v!==view)metalClick();show(b.dataset.v);}};
-let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{renderScatter();renderDemand();},120);});
 
 /* ================= UNDER 10,000 RANK VIEW (Round 1 / 1.csv only) =================
    Counts allotments with Rank < 10,000 per branch (same branch grouping as the Cutoff page). Uses only the Round 1 dataset,
    never the Stray round. Each row is one candidate's allotment; an exact repeat of the same Rank within the same Quota is ignored. */
 const U_LIMIT=30000;
-const U={q:new Set(),c:new Set(),type:'ALL',sort:'rank',band:U_LIMIT,term:'',ds:null,rec:[],dup:0,inited:false};
-const U_BANDS=[[10000,'Under 10,000'],[20000,'Under 20,000'],[30000,'Under 30,000']];
+const U={type:'ALL',sort:'rank',band:U_LIMIT,term:'',ds:null,rec:[],dup:0,inited:false};
+const U_BANDS=[[10000,'Under 10K'],[20000,'Under 20K'],[30000,'Under 30K']];
 const uClass=(t,raw)=>t==='D'?'D':/^\(NBEMS\)/i.test(raw)?'DNB':/^M\.S\./i.test(raw)?'MS':/^M\.D\./i.test(raw)?'MD':'OTH';   // course class from the original course text
 function uPrepare(ds){
   const seen=new Set(),rec=[];let dup=0;
@@ -797,20 +537,15 @@ function uPrepare(ds){
   return {rec,dup};
 }
 function uBuildChips(){
-  const SQ=sortNames([...new Set(U.rec.map(x=>x.q))]),SC=sortNames([...new Set(U.rec.map(x=>x.c))]);
-  gchips($('u-q'),SQ,i=>U.q.has(SQ[i]),i=>{U.q.has(SQ[i])?U.q.delete(SQ[i]):U.q.add(SQ[i]);uRender();},quotaMain(SQ),'Other Quotas',false);
-  gchips($('u-c'),SC,i=>U.c.has(SC[i]),i=>{U.c.has(SC[i])?U.c.delete(SC[i]):U.c.add(SC[i]);uRender();},catMain(SC),'PwD',false);
   const bb=$('u-band');bb.innerHTML='';
   U_BANDS.forEach(([v,l])=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.dataset.v=v;b.setAttribute('aria-pressed',U.band===v);bb.appendChild(b);});
 }
 function uRender(){
   const ds=U.ds;if(!ds||$('v-u10k').hidden)return;
-  $('u-qc').textContent=U.q.size+' selected';$('u-cc').textContent=U.c.size+' selected';
   const out=$('u-out');
-  if(!U.q.size||!U.c.size){out.innerHTML='';return;}
   const cnt=new Map();let total=0;
   for(const x of U.rec){
-    if(x.r>=U.band||!U.q.has(x.q)||!U.c.has(x.c)||(U.type!=='ALL'&&x.k!==U.type))continue;
+    if(x.r>=U.band||(U.type!=='ALL'&&x.k!==U.type))continue;
     cnt.set(x.m,(cnt.get(x.m)||0)+1);total++;
   }
   if(!total){out.innerHTML='<div class="nodata">No Data Available</div>';return;}
@@ -824,10 +559,7 @@ function uRender(){
   else if(U.sort==='az')rows.sort((a,b)=>cmp(a.name,b.name)||(a.t<b.t?-1:1));
   else rows.sort((a,b)=>cmp(b.name,a.name)||(a.t<b.t?-1:1));
   const maxn=all[0].n,shown=rows.reduce((s,x)=>s+x.n,0),pct=n=>(n/total*100).toFixed(2)+'%';
-  const top=all[0],tops=all.filter(x=>x.rank===1);
-  let html=`<div class="u-kpis"><div class="u-kpi"><b>Total candidates</b><span>${fmt(total)}</span><small>Rank below ${fmt(U.band)} · Round 1 · selected filters</small></div>`+
-    `<div class="u-kpi"><b>Branches</b><span>${fmt(all.length)}</span><small>with at least one candidate</small></div>`+
-    `<div class="u-kpi"><b>Most popular</b><span class="sm">${tops.map(x=>esc(x.name)).join(', ')}</span><small>${fmt(top.n)} candidate${top.n===1?'':'s'} · ${pct(top.n)}</small></div></div>`;
+  let html=`<div class="u-kpis"><div class="u-kpi"><b>Total candidates</b><span>${fmt(total)}</span><small>Rank below ${fmt(U.band)} · Round 1</small></div></div>`;
   if(!rows.length){out.innerHTML=html+'<div class="nodata">No branch matches</div>';return;}
   html+=`<div class="u-tablewrap"><table class="u-table"><thead><tr><th>Branch rank</th><th>Branch</th><th class="num">Candidates</th><th class="num">% of total</th><th class="barcol">Share</th></tr></thead><tbody>`;
   for(const x of rows){
@@ -835,10 +567,6 @@ function uRender(){
     html+=`<tr><td><span class="u-rk${x.rank===1?' top':''}">${x.rank}</span></td><td><span class="u-bname">${esc(x.name)}</span> <span class="tag${x.t==='D'?' r':''}">${type}</span></td><td class="num">${fmt(x.n)}</td><td class="num">${pct(x.n)}</td><td class="barcol"><div class="u-bar"><i style="width:${(x.n/maxn*100).toFixed(1)}%"></i></div></td></tr>`;
   }
   html+=`</tbody><tfoot><tr><td></td><td>${rows.length===all.length?'Total':'Shown ('+rows.length+' of '+all.length+' branches)'}</td><td class="num">${fmt(shown)}</td><td class="num">${pct(shown)}</td><td class="barcol"></td></tr></tfoot></table></div>`;
-  const skipped=ds.skippedRank+ds.skippedField;
-  html+=`<div class="u-foot">Source: Round 1 only (1.csv). Percentage = candidates in the branch ÷ all ${fmt(total)} candidates matching the selected rank range, quota, category and course. Branch rank is by candidate count; equal counts share a rank.`+
-    (skipped?` ${fmt(skipped)} row${skipped===1?'':'s'} with invalid or missing data in the file ${skipped===1?'was':'were'} skipped.`:'')+
-    (U.dup?` ${fmt(U.dup)} repeated allotment${U.dup===1?'':'s'} (same rank and quota) counted once.`:'')+`</div>`;
   out.innerHTML=html;
 }
 async function showU10k(){
@@ -850,10 +578,6 @@ async function showU10k(){
     }catch(err){say('err','Round 1 could not be loaded — '+err.message);return;}
     $('msg').hidden=true;
   }
-  if(!U.inited){
-    U.rec.forEach(x=>{U.q.add(x.q);U.c.add(x.c);});
-    U.inited=true;
-  }
   uBuildChips();
   if(view==='u10k')uRender();
 }
@@ -864,15 +588,6 @@ $('u-type').onclick=e=>{const b=e.target.closest('button');if(!b)return;U.type=b
 $('u-sort').onclick=e=>{const b=e.target.closest('button');if(!b)return;U.sort=b.dataset.v;
   [...$('u-sort').children].forEach(x=>x.setAttribute('aria-pressed',x===b));uRender();};
 $('u-search').oninput=e=>{U.term=e.target.value;uRender();};
-document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-ua]');if(!b||!U.ds)return;
-  const [w,m]=b.dataset.ua.split('-'),on=m==='all';
-  const set=w==='q'?U.q:U.c,key=w==='q'?'q':'c';
-  const names=[...new Set(U.rec.map(x=>x[key]))];
-  names.forEach(n=>on?set.add(n):set.delete(n));
-  uBuildChips();uRender();
-});
-
 /* ================= counselling rounds (each round = its own CSV file, loaded when the page opens) ================= */
 const ROUNDS=[{n:2,label:'Stray 2025',url:'2.csv'},{n:1,label:'Round 1',url:'1.csv'}];
 const CACHE=new Map();            // round number -> its own parsed dataset (never merged)
@@ -904,15 +619,14 @@ async function selectRound(r){
   document.querySelectorAll('.rbtn').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.n)===r.n));
   // keep earlier selections that still exist in this round
   const keep=(set,arr)=>{for(const v of [...set])if(!arr.includes(v))set.delete(v);};
-  keep(T.q,ds.quotas);keep(T.c,ds.cats);keep(S.q,ds.quotas);keep(S.c,ds.cats);
-  keep(T.courses,ds.mcourses.map(ckey));keep(S.sel,ds.courses.map(ckey));
+  keep(T.q,ds.quotas);keep(T.c,ds.cats);
+  keep(T.courses,ds.mcourses.map(ckey));
   if(first){
     const aq=ds.quotas.includes('All India')?'All India':sortNames(ds.quotas)[0],ac=ds.cats.includes('Open')?'Open':sortNames(ds.cats)[0];
-    T.q.add(aq);T.c.add(ac);S.q.add(aq);S.c.add(ac);
-    ds.courses.forEach(c=>{if(c.t==='M')S.sel.add(ckey(c));});
+    T.q.add(aq);T.c.add(ac);
     first=false;
   }
-  buildCutoff();buildScatter();buildDemand();show(view);
+  buildCutoff();show(view);
   return true;
 }
 (function init(){
